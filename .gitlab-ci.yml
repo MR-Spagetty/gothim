@@ -3,6 +3,7 @@ image: ahmedmorad101/openjdk23-maven
 
 stages:
 - test
+- checkstyle
 
 junit_tests:
   stage: test
@@ -15,3 +16,10 @@ junit_tests:
       junit:
         - target/surefire-reports/*.xml
 
+checkstyle:
+  stage: checkstyle
+  script:
+    - mvn clean install checkstyle:check
+  artifacts:
+    paths:
+      - target/checkstyle-result.xml

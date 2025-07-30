@@ -19,7 +19,7 @@ junit_tests:
 checkstyle:
   stage: checkstyle
   script:
-    - mvn clean install checkstyle:check
+    - mvn clean install checkstyle:check || true
     - |
       python3 -c "
       import xml.etree.ElementTree as ET, json, sys
@@ -39,6 +39,7 @@ checkstyle:
               })
       json.dump(issues, open('gl-code-quality-report.json', 'w'))
       "
+    - mvn checkstyle:check
   tags:
     - docker
   artifacts:

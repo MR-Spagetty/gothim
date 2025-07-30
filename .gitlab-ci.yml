@@ -14,3 +14,12 @@ secret_detection:
   stage: secret-detection
 include:
 - template: Security/Secret-Detection.gitlab-ci.yml
+junit_tests:
+  stage: test
+  script:
+    - mvn test
+  artifacts:
+    reports:
+      junit:
+        - target/surefite-reports/*.xml
+

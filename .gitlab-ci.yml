@@ -20,9 +20,29 @@ checkstyle:
   stage: checkstyle
   script:
     - mvn clean install checkstyle:check
-    - java -jar gitlab-code-quality-plugin.jar target/checkstyle-result.xml gl-code-quality-report.json
+    - |
+      python3 -c "
+      import xml.etree.ElementTree as ET, json, sys
+      tree = ET.parse('target/checkstyle-result.xml')
+      issues = []
+      for file in tree.findall('.//file'):
+          filename = file.attrib['name']
+          for error in file.findall('error'):
+              issues.append({
+                  'description': error.attrib.get('message', ''),
+                  'severity': error.attrib.get('severity', 'major'),
+                  'fingerprint': filename + ':' + error.attrib.get('line', ''),
+                  'location': {
+                      'path': filename,
+                      'lines': {'begin': int(error.attrib.get('line', 1))}
+                  }
+              })
+      json.dump(issues, open('gl-code-quality-report.json', 'w'))
+      "
   tags:
     - docker
   artifacts:
     reports:
       codequality: gl-code-quality-report.json
+    paths:
+      - target/checkstyle-result.xml

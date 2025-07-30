@@ -34,8 +34,7 @@ convert_checkstyle_to_codequality:
   script:
     - |
       python3 -c "
-      import xml.etree.ElementTree as ET, json
-      import os
+      import xml.etree.ElementTree as ET, json, os, sys
       severity_map = {
           'info': 'info',
           'warning': 'minor',
@@ -55,7 +54,10 @@ convert_checkstyle_to_codequality:
                       'lines': {'begin': int(error.attrib.get('line', 1))}
                   }
               })
-      json.dump(issues, open('gl-code-quality-report.json', 'w'), indent=4)
+      with open('gl-code-quality-report.json', 'w') as f:
+          json.dump(issues, f, indent=4)
+      if len(issues) > 0:
+          sys.exit(1)
       "
   tags:
     - docker

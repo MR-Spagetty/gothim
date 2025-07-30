@@ -20,7 +20,7 @@ checkstyle:
   stage: checkstyle
   script:
     - mvn clean install checkstyle:check
-    - java -jar gitlab-code-quality-plugin.jar checkstyle-result.xml gl-code-quality-report.json
+    - java -jar gitlab-code-quality-plugin.jar target/checkstyle-result.xml gl-code-quality-report.json
   tags:
     - docker
   artifacts:

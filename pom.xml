@@ -3,7 +3,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>engr302.team14</groupId>
+  <groupId>engr302.team14.gothim</groupId>
   <artifactId>gothim</artifactId>
   <version>1.0-SNAPSHOT</version>
 
@@ -83,7 +83,19 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.6.1</version>
-        </plugin>
+          </plugin>
+          <!-- For running eventually -->
+          <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.2.0</version>
+          <configuration>
+              <!-- <mainClass>tbd</mainClass> -->
+              <arguments>
+              </arguments>
+          </configuration>
+      </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

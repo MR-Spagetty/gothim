@@ -14,13 +14,13 @@ secret_detection:
   stage: secret-detection
 include:
 - template: Security/Secret-Detection.gitlab-ci.yml
-image: maven:3.9.10-openjdk-23
+# image: maven:3.9.10-openjdk-23
 junit_tests:
   stage: test
   script:
     - mvn test
   tags:
-    - docker
+    - shell
   artifacts:
     reports:
       junit:

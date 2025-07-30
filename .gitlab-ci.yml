@@ -5,22 +5,38 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+image: maven:3.9.11-eclipse-temurin-11
+
+
+
 stages:
 - test
 - secret-detection
+
+before_script:
+  - apt-get update && apt-get install -y wget
+  - wget https://download.java.net/java/early_access/jdk23/12/GPL/openjdk-23_linux-x64_bin.tar.gz
+  - tar -xzf openjdk-23_linux-x64_bin.tar.gz
+  - export JAVA_HOME=$PWD/jdk-23
+  - export PATH=$JAVA_HOME/bin:$PATH
+  - java -version
+
 variables:
   SECRET_DETECTION_ENABLED: 'true'
+
+
 secret_detection:
   stage: secret-detection
 include:
 - template: Security/Secret-Detection.gitlab-ci.yml
-# image: maven:3.9.10-openjdk-23
+
+
 junit_tests:
   stage: test
   script:
     - mvn test
   tags:
-    - shell
+    - docker
   artifacts:
     reports:
       junit:

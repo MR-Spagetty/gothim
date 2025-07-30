@@ -19,6 +19,8 @@ junit_tests:
   stage: test
   script:
     - mvn test
+  tags:
+    - docker
   artifacts:
     reports:
       junit:

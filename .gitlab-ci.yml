@@ -1,9 +1,9 @@
 image: ahmedmorad101/openjdk23-maven
 
-
 stages:
 - test
 - checkstyle
+- codequality
 
 junit_tests:
   stage: test
@@ -20,9 +20,21 @@ checkstyle:
   stage: checkstyle
   script:
     - mvn clean install checkstyle:check || true
+  tags:
+    - docker
+  artifacts:
+    paths:
+      - target/checkstyle-result.xml
+
+convert_checkstyle_to_codequality:
+  image: python:3.11-slim
+  stage: codequality
+  dependencies:
+    - checkstyle
+  script:
     - |
       python3 -c "
-      import xml.etree.ElementTree as ET, json, sys
+      import xml.etree.ElementTree as ET, json
       tree = ET.parse('target/checkstyle-result.xml')
       issues = []
       for file in tree.findall('.//file'):
@@ -39,11 +51,8 @@ checkstyle:
               })
       json.dump(issues, open('gl-code-quality-report.json', 'w'))
       "
-    - mvn checkstyle:check
-  tags:
-    - docker
   artifacts:
     reports:
       codequality: gl-code-quality-report.json
     paths:
-      - target/checkstyle-result.xml
+      - gl-code-quality-report.json

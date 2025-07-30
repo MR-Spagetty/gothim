@@ -30,5 +30,5 @@ junit_tests:
   artifacts:
     reports:
       junit:
-        - target/surefite-reports/*.xml
+        - target/surefire-reports/*.xml
 

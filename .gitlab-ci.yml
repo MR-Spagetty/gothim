@@ -20,6 +20,8 @@ checkstyle:
   stage: checkstyle
   script:
     - mvn clean install checkstyle:check
+  tags:
+    - docker
   artifacts:
     paths:
       - target/checkstyle-result.xml

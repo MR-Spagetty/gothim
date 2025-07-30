@@ -1,4 +1,4 @@
-package engr302.team14;
+package ecs.engr302.team14.gothim;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

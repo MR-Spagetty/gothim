@@ -51,6 +51,8 @@ convert_checkstyle_to_codequality:
               })
       json.dump(issues, open('gl-code-quality-report.json', 'w'))
       "
+  tags:
+    - docker
   artifacts:
     reports:
       codequality: gl-code-quality-report.json

@@ -101,7 +101,7 @@
         <version>3.6.0</version>
         <configuration>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <configLocation>google_checks.xml</configLocation>
+          <configLocation>${project.basedir}/style_checks.xml</configLocation>
           <violationSeverity>warning</violationSeverity>
         </configuration>
       </plugin>

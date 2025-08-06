@@ -66,3 +66,4 @@ convert_checkstyle_to_codequality:
       codequality: gl-code-quality-report.json
     paths:
       - gl-code-quality-report.json
+  allow_failure: true

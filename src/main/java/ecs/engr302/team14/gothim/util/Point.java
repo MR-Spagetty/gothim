@@ -8,10 +8,11 @@ import java.util.Objects;
  *
  * @param x the x coordinate
  * @param y the y coordinate
+ * @author MR-Spagetty
  */
-public record Point(Double x, Double y) implements Comparable<Point> {
+public record Point(double x, double y) implements Comparable<Point> {
     /**
-     * add two points togeather.
+     * add two points together.
      *
      * @param other the point to add ot this one
      * @return the new point sum

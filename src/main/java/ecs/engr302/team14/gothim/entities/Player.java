@@ -1,12 +1,12 @@
 package ecs.engr302.team14.gothim.entities;
+import ecs.engr302.team14.gothim.util.Point;
 
-public class Player {     
-    private String name; 
+public class Player extends Entity{
     private int accessLevel = 0; //default to "public" (change to an ENUM)
     private Area currentArea; 
 
-    public Player(String name){
-        this.name = name; 
+    public Player(String name, Point position){
+        super(name, position);
     }
 
     public void moveTo(Area newArea) {

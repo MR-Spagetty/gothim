@@ -22,4 +22,5 @@ public abstract class PrimitiveTile {
         this.style = style;
     }
 
+    public abstract boolean canEnter();
 }

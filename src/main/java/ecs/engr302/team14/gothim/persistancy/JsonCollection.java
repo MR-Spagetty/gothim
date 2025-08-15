@@ -8,6 +8,6 @@ import java.util.Optional;
  *
  * @param <K> the "key" type of the collection
  */
-public interface JsonCollection<K> extends JsonObject {
-    Optional<JsonObject> get(K position);
+public interface JsonCollection<K> extends JsonType {
+    Optional<JsonType> get(K position);
 }

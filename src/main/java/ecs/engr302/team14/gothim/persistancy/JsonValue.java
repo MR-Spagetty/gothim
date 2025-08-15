@@ -7,7 +7,7 @@ package ecs.engr302.team14.gothim.persistancy;
  * @param <T> the equivalent type in java of the implementing JSON type
  * @author MR-Spagetty
  */
-public interface JsonValue<T> extends JsonObject {
+public interface JsonValue<T> extends JsonType {
     static JsonValue<Object> NULL = () -> null;
     T value();
 }

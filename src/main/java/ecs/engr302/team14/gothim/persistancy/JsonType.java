@@ -5,4 +5,4 @@ package ecs.engr302.team14.gothim.persistancy;
  *
  * @author MR-Spagetty
  */
-public interface JsonObject {}
+public interface JsonType {}

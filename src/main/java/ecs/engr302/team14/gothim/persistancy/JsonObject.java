@@ -1,6 +1,6 @@
 package ecs.engr302.team14.gothim.persistancy;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author MR-Spagetty
  */
 public final class JsonObject extends JsonCollection<String> {
-    private final Map<String, JsonType> items = new HashMap<>();
+    private final Map<String, JsonType> items = new LinkedHashMap<>();
 
     @Override
     public Optional<JsonType> get(String position) {
@@ -47,8 +47,7 @@ public final class JsonObject extends JsonCollection<String> {
         return String.format("""
                 {
                 %s
-                %s}
-                """, serialPairs(true, indentationLevel + 1), indent(indentationLevel));
+                %s}""", serialPairs(true, indentationLevel + 1), indent(indentationLevel));
     }
 
     @Override

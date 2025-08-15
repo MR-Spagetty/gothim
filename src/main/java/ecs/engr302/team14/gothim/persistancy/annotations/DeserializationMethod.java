@@ -4,7 +4,8 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
 
 /**
- * The method to use to reassemble object from the deserialized data.
+ * The method or constructor to use to reassemble object from the deserialized
+ * data.
  *
  * <p>The number, names, and types of the parameters must match those of the
  * fields annotated with {@link SerializedField @SerializedField} where if the
@@ -12,6 +13,6 @@ import java.lang.annotation.Target;
  *
  * @author MR-Spagetty
  */
-@Target(ElementType.METHOD)
+@Target({ ElementType.METHOD, ElementType.CONSTRUCTOR })
 public @interface DeserializationMethod {
 }

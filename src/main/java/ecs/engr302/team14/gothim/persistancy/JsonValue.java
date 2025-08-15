@@ -8,5 +8,6 @@ package ecs.engr302.team14.gothim.persistancy;
  * @author MR-Spagetty
  */
 public interface JsonValue<T> extends JsonObject {
+    static JsonValue<Object> NULL = () -> null;
     T value();
 }

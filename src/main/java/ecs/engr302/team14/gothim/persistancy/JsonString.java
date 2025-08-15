@@ -11,7 +11,7 @@ import static org.apache.commons.text.StringEscapeUtils.escapeJson;
 public record JsonString(String value) implements JsonValue<String> {
     @Override
     public final String toString() {
-        String serialValue = "\"%s\"".formatted(escapeJson(value));
+        final String serialValue = "\"%s\"".formatted(escapeJson(value));
         return serialValue;
     }
 }

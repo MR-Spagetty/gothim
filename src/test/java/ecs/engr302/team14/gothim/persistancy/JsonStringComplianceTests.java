@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests to check that the JSONstrings correctly escape things to be compliant with
+ * json.
+ *
+ * @author MR-Spagetty
+ */
 public class JsonStringComplianceTests {
     @Test
     void newLines() {

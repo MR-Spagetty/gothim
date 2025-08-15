@@ -45,8 +45,8 @@ public class JsonArray extends JsonCollection<Integer> {
                 return col.prettyPrint(indentationLevel + 1);
             }
             return i.toString();
-        }).map(i -> indent(indentationLevel + 1) + i).collect(Collectors.joining(",\n",
-                indent(indentationLevel) + "[\n", indent(indentationLevel) + "\n]"));
+        }).map(i -> indent(indentationLevel + 1) + i)
+                .collect(Collectors.joining(",\n", "[\n", "\n" + indent(indentationLevel) + "]"));
     }
 
     @Override

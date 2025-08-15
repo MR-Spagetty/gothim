@@ -12,10 +12,10 @@ public class JsonStringComplianceTests {
                 fox jumps
                 over the lazy dogs
                 """;
-        String exp = "the quick brown\\nfox jumps\\nover the lazy dogs";
+        String exp = "\"the quick brown\\nfox jumps\\nover the lazy dogs\"";
         JsonString str = new JsonString(val);
         assertEquals(val, str.value());
-        assertEquals(exp, val.toString());
+        assertEquals(exp, str.toString());
     }
 
     @Test

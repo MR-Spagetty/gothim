@@ -28,11 +28,11 @@ public class ToJsonTests {
         Point p = new Point(x, y);
         assertEquals("""
                 {
+                    "class": "ecs.engr302.team14.gothim.util.Point",
                     "fields": {
                         "x": %s,
                         "y": %s
-                    },
-                    "class": "ecs.engr302.team14.gothim.util.Point"
+                    }
                 }""".formatted("" + x, "" + y),
                 ((JsonObject) Serialization.toJson(p)).prettyPrint());
     }
@@ -105,8 +105,8 @@ public class ToJsonTests {
         assertInstanceOf(JsonObject.class, out);
         assertEquals("""
                 {
-                    "kind": "set",
-                    "type": "java.util.HashSet",
+                    "kind": "collection",
+                    "class": "java.util.HashSet",
                     "values": [
                         1.0,
                         2.0,

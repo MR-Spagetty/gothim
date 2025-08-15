@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Stream;
 
 /**
@@ -39,10 +38,8 @@ public final class Serialization {
                 col.stream().map(Serialization::toJson).forEach(arr::add);
                 if (!(col instanceof ArrayList<?>)) {
                     JsonObject obj = new JsonObject();
-                    if (col instanceof Set) {
-                        obj.put("kind", new JsonString("set"));
-                    }
-                    obj.put("type", new JsonString(col.getClass().getName()));
+                    obj.put("kind", new JsonString("collection"));
+                    obj.put("class", new JsonString(col.getClass().getName()));
                     obj.put("values", arr);
                     yield obj;
                 }
@@ -55,6 +52,9 @@ public final class Serialization {
 
     private static JsonObject mapMapToJson(Map<?, ?> map) {
         JsonObject ret = new JsonObject();
+
+        ret.put("kind", new JsonString("map"));
+        ret.put("class", new JsonString(map.getClass().getName()));
         List<Class<?>> keyTypes = new ArrayList<>(
                 map.keySet().parallelStream().map(Object::getClass).distinct().toList());
         for (int i = 0; i < keyTypes.size() - 1;) {
@@ -108,9 +108,6 @@ public final class Serialization {
             ret.put("entries", values);
         }
 
-        ret.put("kind", new JsonString("map"));
-        ret.put("type", new JsonString(map.getClass().getName()));
-
         return ret;
     }
 
@@ -133,9 +130,10 @@ public final class Serialization {
         JsonObject ret = new JsonObject();
         JsonArray failedFields = new JsonArray();
         var fields = new JsonObject();
+        Class<?> thingClass = thing.getClass();
+        ret.put("class", new JsonString(thingClass.getName()));
         ret.put("failedFields", failedFields);
         ret.put("fields", fields);
-        Class<?> thingClass = thing.getClass();
         if (Stream
                 .concat(Stream.of(thingClass.getMethods()),
                         Stream.of(thing.getClass().getConstructors()))
@@ -143,7 +141,6 @@ public final class Serialization {
             throw new IllegalArgumentException("Class: %s (of supplied object is not serializable"
                     .formatted(thingClass.getName()));
         }
-        ret.put("class", new JsonString(thingClass.getName()));
         List<Field> fieldsToSerial = Stream.of(thingClass.getDeclaredFields())
                 .filter(f -> f.isAnnotationPresent(SerializedField.class)).toList();
         fieldsToSerial.stream().forEach(f -> {

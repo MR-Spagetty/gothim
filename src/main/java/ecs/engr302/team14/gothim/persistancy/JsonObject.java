@@ -1,16 +1,17 @@
 package ecs.engr302.team14.gothim.persistancy;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * class for storing object style data in JSON.
  *
  * @author MR-Spagetty
  */
-public final class JsonObject implements JsonCollection<String> {
-    private final Map<String, JsonType> items = new HashMap<>();
+public final class JsonObject extends JsonCollection<String> {
+    private final Map<String, JsonType> items = new LinkedHashMap<>();
 
     @Override
     public Optional<JsonType> get(String position) {
@@ -30,4 +31,28 @@ public final class JsonObject implements JsonCollection<String> {
     public int size() {
         return this.items.size();
     }
+
+    private String serialPairs(boolean pretty, int indentationLevel) {
+        return this.items.entrySet().parallelStream().map(p -> {
+            String key = indent(pretty ? indentationLevel : 0) + new JsonString(p.getKey()) + ": ";
+            if (pretty && p.getValue() instanceof JsonCollection col) {
+                return key + col.prettyPrint(indentationLevel);
+            }
+            return key + p.getValue().toString();
+        }).collect(Collectors.joining(pretty ? ",\n" : ", "));
+    }
+
+    @Override
+    protected String prettyPrint(int indentationLevel) {
+        return String.format("""
+                {
+                %s
+                %s}""", serialPairs(true, indentationLevel + 1), indent(indentationLevel));
+    }
+
+    @Override
+    public String toString() {
+        return "{%s}".formatted(serialPairs(false, 0));
+    }
+
 }

@@ -1,5 +1,7 @@
 package ecs.engr302.team14.gothim.util;
 
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -10,7 +12,13 @@ import java.util.Objects;
  * @param y the y coordinate
  * @author MR-Spagetty
  */
-public record Point(double x, double y) implements Comparable<Point> {
+public record Point(@SerializedField
+        double x, @SerializedField
+        double y) implements Comparable<Point> {
+    @DeserializationMethod
+    public Point {
+    }
+
     /**
      * add two points together.
      *

@@ -46,4 +46,17 @@ public class JsonObjectTests {
         });
         assertFalse(obj.get("other").isPresent());
     }
+
+    @Test
+    void testRemove() {
+        JsonObject obj = new JsonObject();
+        IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> obj.put("" + i, new JsonNum(i)));
+        String key = "" + 3.;
+        JsonNum exp = new JsonNum(3.);
+        assertEquals(40, obj.size());
+        assertTrue(obj.get(key).isPresent());
+        assertEquals(exp, obj.remove(key).get());
+        assertEquals(39, obj.size());
+        assertFalse(obj.get(key).isPresent());
+    }
 }

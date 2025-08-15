@@ -6,8 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import org.junit.jupiter.api.RepeatedTest;
@@ -113,6 +116,53 @@ public class ToJsonTests {
                         3.0,
                         4.0,
                         5.0
+                    ]
+                }""", ((JsonObject) out).prettyPrint());
+    }
+
+    @Test
+    void hashMapToJson() {
+        var map = new HashMap<>(Map.of("a", 2, "b", 3, "c", 4));
+        Object out = Serialization.toJson(map);
+        assertInstanceOf(JsonObject.class, out);
+        assertEquals("""
+                {
+                    "kind": "map",
+                    "class": "java.util.HashMap",
+                    "valueType": "int",
+                    "entries": {
+                        "a": 2.0,
+                        "b": 3.0,
+                        "c": 4.0
+                    }
+                }""", ((JsonObject) out).prettyPrint());
+    }
+
+    @Test
+    void list2dToJson() {
+        var list = new LinkedList<>(
+                List.of(new ArrayList<>(List.of(1, 2, 3)), new LinkedList<>(List.of(4, 5, 6))));
+        Object out = Serialization.toJson(list);
+        assertInstanceOf(JsonObject.class, out);
+        assertEquals("""
+                {
+                    "kind": "collection",
+                    "class": "java.util.LinkedList",
+                    "values": [
+                        [
+                            1.0,
+                            2.0,
+                            3.0
+                        ],
+                        {
+                            "kind": "collection",
+                            "class": "java.util.LinkedList",
+                            "values": [
+                                4.0,
+                                5.0,
+                                6.0
+                            ]
+                        }
                     ]
                 }""", ((JsonObject) out).prettyPrint());
     }

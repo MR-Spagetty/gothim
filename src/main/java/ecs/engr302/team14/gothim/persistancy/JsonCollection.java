@@ -21,7 +21,7 @@ public abstract class JsonCollection<K> implements JsonType {
 
     protected abstract String prettyPrint(int indentationLevel);
 
-    static String indent(int level){
+    static String indent(int level) {
         return "    ".repeat(level);
     }
 }

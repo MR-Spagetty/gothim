@@ -42,7 +42,7 @@ public class JsonObjectTests {
         IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> {
             Optional<JsonType> ret = obj.get("" + i);
             assertTrue(ret.isPresent());
-            assertEquals(i, ret.get());
+            assertEquals(new JsonNum(i), ret.get());
         });
         assertFalse(obj.get("other").isPresent());
     }

@@ -14,7 +14,7 @@ public @interface SerializedField {
      * the name of the parameter to pass this value into in the deserialization
      * method.
      *
-     * <p>if unspecified will use the field name
+     * <p>if unspecified will use the field name or specified as empty string
      */
     public String deserialParamName() default "";
 }

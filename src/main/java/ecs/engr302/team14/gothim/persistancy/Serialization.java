@@ -10,10 +10,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+/**
+ * Serialization class containting various methods to handle serialization and
+ * deserialization of objects.
+ *
+ * @author MR-Spagetty
+ */
 public final class Serialization {
     private Serialization() {
     }
 
+    /**
+     * Serializes the given object into json data.
+     *
+     * @param thing the object to serialize
+     * @return the json data
+     */
     public static JsonType toJson(Object thing) {
         return switch (thing) {
             case JsonType t -> t;

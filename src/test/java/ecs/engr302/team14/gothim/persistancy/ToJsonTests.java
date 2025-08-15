@@ -10,7 +10,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
@@ -106,6 +105,7 @@ public class ToJsonTests {
         assertInstanceOf(JsonObject.class, out);
         assertEquals("""
                 {
+                    "kind": "set",
                     "type": "java.util.HashSet",
                     "values": [
                         1.0,

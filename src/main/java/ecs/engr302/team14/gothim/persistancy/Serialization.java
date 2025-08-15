@@ -62,19 +62,21 @@ public final class Serialization {
         ret.put("failedFields", failedFields);
         ret.put("fields", fields);
         Class<?> thingClass = thing.getClass();
-        if (Stream.of(thingClass.getMethods()).parallel()
-                .noneMatch(m -> m.isAnnotationPresent(DeserializationMethod.class))) {
+        if (Stream
+                .concat(Stream.of(thingClass.getMethods()),
+                        Stream.of(thing.getClass().getConstructors()))
+                .parallel().noneMatch(m -> m.isAnnotationPresent(DeserializationMethod.class))) {
             throw new IllegalArgumentException("Class: %s (of supplied object is not serializable"
                     .formatted(thingClass.getName()));
         }
         ret.put("class", new JsonString(thingClass.getName()));
-        List<Field> fieldsToSerial = Stream.of(thingClass.getFields())
+        List<Field> fieldsToSerial = Stream.of(thingClass.getDeclaredFields())
                 .filter(f -> f.isAnnotationPresent(SerializedField.class)).toList();
         fieldsToSerial.stream().forEach(f -> {
             try {
                 f.setAccessible(true);
                 try {
-                    ret.put(f.getName(), toJson(f.get(thing)));
+                    fields.put(f.getName(), toJson(f.get(thing)));
                 } catch (IllegalArgumentException e) {
                     System.err.println("Error, object lied about its type");
                 } catch (IllegalAccessException e) {
@@ -84,6 +86,9 @@ public final class Serialization {
                 return; // checkstyle doesn't like an empty catch
             }
         });
+        if (failedFields.size() == 0){
+            ret.remove("failedFields");
+        }
         return ret;
     }
 }

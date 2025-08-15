@@ -8,10 +8,20 @@ import java.util.Optional;
  *
  * @param <K> the "key" type of the collection
  */
-public interface JsonCollection<K> extends JsonType {
-    Optional<JsonType> get(K position);
+public abstract class JsonCollection<K> implements JsonType {
+    public abstract Optional<JsonType> get(K position);
 
-    Optional<JsonType> remove(K position);
+    public abstract Optional<JsonType> remove(K position);
 
-    int size();
+    public abstract int size();
+
+    public String prettyPrint() {
+        return prettyPrint(0);
+    }
+
+    protected abstract String prettyPrint(int indentationLevel);
+
+    static String indent(int level){
+        return "    ".repeat(level);
+    }
 }

@@ -3,13 +3,14 @@ package ecs.engr302.team14.gothim.persistancy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * class for storing array or list style data in JSON.
  *
  * @author MR-Spagetty
  */
-public class JsonArray implements JsonCollection<Integer> {
+public class JsonArray extends JsonCollection<Integer> {
 
     private final List<JsonType> items = new ArrayList<>();
 
@@ -35,6 +36,22 @@ public class JsonArray implements JsonCollection<Integer> {
     @Override
     public int size() {
         return this.items.size();
+    }
+
+    @Override
+    protected String prettyPrint(int indentationLevel) {
+        return items.stream().map(i -> {
+            if (i instanceof JsonCollection col) {
+                return col.prettyPrint(indentationLevel + 1);
+            }
+            return i.toString();
+        }).map(i -> indent(indentationLevel) + i)
+                .collect(Collectors.joining(",\n" + indent(indentationLevel), "[", "]"));
+    }
+
+    @Override
+    public String toString() {
+        return items.stream().map(Object::toString).toList().toString();
     }
 
 }

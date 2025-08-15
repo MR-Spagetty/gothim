@@ -13,8 +13,8 @@ import java.util.Objects;
  * @author MR-Spagetty
  */
 public record Point(@SerializedField
-double x, @SerializedField
-double y) implements Comparable<Point> {
+        double x, @SerializedField
+        double y) implements Comparable<Point> {
     @DeserializationMethod
     public Point {
     }

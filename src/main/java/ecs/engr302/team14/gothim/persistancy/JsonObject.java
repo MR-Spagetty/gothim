@@ -22,6 +22,11 @@ public final class JsonObject implements JsonCollection<String> {
     }
 
     @Override
+    public Optional<JsonType> remove(String position) {
+        return Optional.of(items.remove(position));
+    }
+
+    @Override
     public int size() {
         return this.items.size();
     }

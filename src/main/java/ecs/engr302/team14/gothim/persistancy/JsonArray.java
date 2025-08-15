@@ -26,6 +26,13 @@ public class JsonArray implements JsonCollection<Integer> {
     }
 
     @Override
+    public Optional<JsonType> remove(Integer position) {
+        var ret = get(position);
+        this.items.remove((int) position);
+        return ret;
+    }
+
+    @Override
     public int size() {
         return this.items.size();
     }

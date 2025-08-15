@@ -1,5 +1,7 @@
 package ecs.engr302.team14.gothim.persistancy;
 
+import static org.apache.commons.text.StringEscapeUtils.escapeJson;
+
 /**
  * Record for storing Strings in JSON.
  *
@@ -9,6 +11,7 @@ package ecs.engr302.team14.gothim.persistancy;
 public record JsonString(String value) implements JsonValue<String> {
     @Override
     public final String toString() {
-        return "\"%s\"".formatted(value);
+        String serialValue = "\"%s\"".formatted(escapeJson(value));
+        return serialValue;
     }
 }

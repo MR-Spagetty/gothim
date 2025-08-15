@@ -10,4 +10,6 @@ import java.util.Optional;
  */
 public interface JsonCollection<K> extends JsonType {
     Optional<JsonType> get(K position);
+
+    int size();
 }

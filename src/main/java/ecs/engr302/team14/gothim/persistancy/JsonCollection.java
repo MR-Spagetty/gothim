@@ -1,5 +1,8 @@
 package ecs.engr302.team14.gothim.persistancy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.Optional;
 
 /**
@@ -20,6 +23,24 @@ public abstract class JsonCollection<K> implements JsonType {
     }
 
     protected abstract String prettyPrint(int indentationLevel);
+
+    /**
+     * Prints this Json Collection to file.
+     *
+     * @param file the file to print this data to
+     * @throws FileNotFoundException if the file cannot be written to
+     */
+    public final void printToFile(File file) throws FileNotFoundException {
+        try (var ps = new PrintStream(file)) {
+            printToStream(ps);
+        } catch (FileNotFoundException e) {
+            throw e;
+        }
+    }
+
+    public final void printToStream(PrintStream stream) {
+        stream.print(prettyPrint());
+    }
 
     static String indent(int level) {
         return "    ".repeat(level);

@@ -73,4 +73,14 @@ public final class JsonObject extends JsonCollection<String> {
         return "{%s}".formatted(serialPairs(false, 0));
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof JsonObject object && object.items.equals(this.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return items.hashCode();
+    }
+
 }

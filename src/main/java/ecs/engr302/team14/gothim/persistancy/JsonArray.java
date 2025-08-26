@@ -99,13 +99,13 @@ public class JsonArray extends JsonCollection<Integer> {
                 off = ret.getValue();
             } else {
                 throw new IllegalArgumentException(
-                        "Could not parse next item in JsonArray: %s".formatted(jsonData));
+                        "Could not parse next item in JsonArray: \"%s\"".formatted(jsonData));
             }
             arr.add(item);
             jsonData = jsonData.substring(off);
             overallOffset += off;
             if (jsonData.strip().startsWith(",")) {
-                off = jsonData.indexOf(',');
+                off = jsonData.indexOf(',') + 1;
                 jsonData = jsonData.substring(off);
                 overallOffset += off;
             } else if (!jsonData.strip().startsWith("]")) {

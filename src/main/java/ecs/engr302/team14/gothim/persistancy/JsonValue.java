@@ -10,7 +10,17 @@ import java.util.Map;
  * @author MR-Spagetty
  */
 public interface JsonValue<T> extends JsonType {
-    static final JsonValue<Object> NULL = () -> null;
+    static final JsonValue<Object> NULL = new JsonValue<Object>() {
+        @Override
+        public Object value() {
+            return null;
+        }
+
+        @Override
+        public String toString() {
+            return "" + value();
+        }
+    };
 
     /**
      * Parses a JsonNull from the start of the given JSON string.

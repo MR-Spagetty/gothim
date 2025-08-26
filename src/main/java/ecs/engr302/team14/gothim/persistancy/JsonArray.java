@@ -96,7 +96,7 @@ public class JsonArray extends JsonCollection<Integer> {
             } else if (JsonArray.isNext(jsonData)) {
                 var ret = JsonArray.parse(jsonData);
                 item = ret.getKey();
-                off = jsonData.length() - ret.toString().length();
+                off = ret.getValue();
             } else {
                 throw new IllegalArgumentException(
                         "Could not parse next item in JsonArray: %s".formatted(jsonData));

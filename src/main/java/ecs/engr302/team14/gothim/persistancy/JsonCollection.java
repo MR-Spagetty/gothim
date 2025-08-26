@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 /**
  * a basic interface to lump all JSON collection types (array, object) together
@@ -44,5 +45,15 @@ public abstract class JsonCollection<K> implements JsonType {
 
     static String indent(int level) {
         return "    ".repeat(level);
+    }
+
+    protected static final int parseItemSep(String jsonData) {
+        final Pattern pat = Pattern.compile("^\\s*,");
+        var matcher = pat.matcher(jsonData);
+        if (matcher.find()) {
+            return matcher.end();
+        } else {
+            throw new IllegalArgumentException("Expected ',' at: %s".formatted(jsonData));
+        }
     }
 }

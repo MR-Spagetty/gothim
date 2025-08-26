@@ -2,6 +2,7 @@ package ecs.engr302.team14.gothim.persistancy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -52,6 +53,71 @@ public class JsonArray extends JsonCollection<Integer> {
     @Override
     public String toString() {
         return items.stream().map(Object::toString).toList().toString();
+    }
+
+    /**
+     * Parses a JsonArray from the start of the given JSON string.
+     *
+     * @param jsonData the JSON string to parse
+     * @return the parsed JsonArray and the position of the next token in the given string
+     * @throws IllegalArgumentException if the first token in the string is not a JsonArray
+     */
+    public static Map.Entry<JsonArray, Integer> parse(String jsonData) {
+        if (!jsonData.strip().startsWith("[")) {
+            throw new IllegalArgumentException("JsonArray must start with '['");
+        }
+        JsonArray arr = new JsonArray();
+        int overallOffset = jsonData.indexOf('[');
+        jsonData = jsonData.substring(overallOffset);
+        while (!jsonData.strip().startsWith("]") && !jsonData.isEmpty()) {
+            int off;
+            JsonType item;
+            if (JsonValue.isNextNull(jsonData)) {
+                var ret = JsonValue.parseNull(jsonData);
+                item = ret.getKey();
+                off = ret.getValue();
+            } else if (JsonBool.isNext(jsonData)) {
+                var ret = JsonBool.parse(jsonData);
+                item = ret.getKey();
+                off = ret.getValue();
+            } else if (JsonNum.isNext(jsonData)) {
+                var ret = JsonNum.parse(jsonData);
+                item = ret.getKey();
+                off = ret.getValue();
+            } else if (JsonString.isNext(jsonData)) {
+                var ret = JsonString.parse(jsonData);
+                item = ret.getKey();
+                off = ret.getValue();
+                // } else if (JsonObject.isNext(jsonData)) { // TODO implement JsonObject parsing
+                // JsonObject parsing
+                // var ret = JsonObject.parse(jsonData);
+                // item = ret.getKey();
+                // off = ret.getValue();
+            } else if (JsonArray.isNext(jsonData)) {
+                var ret = JsonArray.parse(jsonData);
+                item = ret.getKey();
+                off = jsonData.length() - ret.toString().length();
+            } else {
+                throw new IllegalArgumentException(
+                        "Could not parse next item in JsonArray: %s".formatted(jsonData));
+            }
+            arr.add(item);
+            jsonData = jsonData.substring(off);
+            overallOffset += off;
+            if (jsonData.strip().startsWith(",")) {
+                off = jsonData.indexOf(',');
+                jsonData = jsonData.substring(off);
+                overallOffset += off;
+            } else if (!jsonData.strip().startsWith("]")) {
+                throw new IllegalArgumentException("JsonArray must end with ']'");
+            }
+        }
+        overallOffset += jsonData.indexOf(']');
+        return Map.entry(arr, overallOffset + 1);
+    }
+
+    public static boolean isNext(String jsonData) {
+        return jsonData.strip().startsWith("[");
     }
 
 }

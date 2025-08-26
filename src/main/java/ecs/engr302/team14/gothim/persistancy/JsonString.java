@@ -51,11 +51,6 @@ public record JsonString(String value) implements JsonValue<String> {
      * @return whether the next token is a JsonString
      */
     public static boolean isNext(String jsonData) {
-        try {
-            parse(jsonData);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        return pattern.matcher(jsonData).find();
     }
 }

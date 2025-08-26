@@ -43,4 +43,19 @@ public record JsonNum(Double value) implements JsonValue<Double> {
         }
     }
 
+    /**
+     * Checks if the next token in the given JSON string is a JsonNum.
+     *
+     * @param jsonData the JSON string to check
+     * @return whether the next token is a JsonNum
+     */
+    public static boolean isNext(String jsonData) {
+        try {
+            parse(jsonData);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
+
 }

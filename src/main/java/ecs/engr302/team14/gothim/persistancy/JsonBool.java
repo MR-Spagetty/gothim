@@ -46,4 +46,19 @@ public enum JsonBool implements JsonValue<Boolean> {
                     "First JSON token in: %s \n is not a valid JsonBool".formatted(jsonData));
         }
     }
+
+    /**
+     * Checks if the next token in the given JSON string is a JsonBool.
+     *
+     * @param jsonData the JSON string to check
+     * @return whether the next token is a JsonBool
+     */
+    public static boolean isNext(String jsonData) {
+        try {
+            parse(jsonData);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+    }
 }

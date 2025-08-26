@@ -23,8 +23,24 @@ public final class JsonArray extends JsonCollection<Integer> {
         return Optional.of(items.get(position));
     }
 
+    /**
+     * Adds a new item to the end of this JsonArray.
+     *
+     * @param newItem the item to add
+     * @throws IllegalArgumentException if adding the new item would create a cycle
+     *      in the JSON structure
+     */
     public void add(JsonType newItem) {
+        if (newItem == this || newItem instanceof JsonCollection col && col.containsExactly(this)) {
+            throw new IllegalArgumentException("Collection Cycles are not permitted");
+        }
         this.items.add(newItem);
+    }
+
+    @Override
+    protected boolean containsExactly(JsonType jsonItem) {
+        return items.parallelStream().anyMatch(i -> i == jsonItem
+        || (i instanceof JsonCollection col && col.containsExactly(jsonItem)));
     }
 
     @Override

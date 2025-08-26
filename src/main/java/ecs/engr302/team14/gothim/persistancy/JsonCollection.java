@@ -56,4 +56,6 @@ public abstract class JsonCollection<K> implements JsonType {
             throw new IllegalArgumentException("Expected ',' at: %s".formatted(jsonData));
         }
     }
+
+    protected abstract boolean containsExactly(JsonType jsonItem);
 }

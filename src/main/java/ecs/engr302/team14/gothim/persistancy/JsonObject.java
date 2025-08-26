@@ -18,8 +18,26 @@ public final class JsonObject extends JsonCollection<String> {
         return Optional.ofNullable(this.items.get(position));
     }
 
+    /**
+     * Adds or updates an item in this JsonObject.
+     *
+     * @param position the key to add or update
+     * @param newItem the item to add or update
+     * @return the previous item at the given key, or empty if there was none
+     * @throws IllegalArgumentException if adding the new item would create a cycle
+     *      in the JSON structure
+     */
     public Optional<JsonType> put(String position, JsonType newItem) {
+        if (newItem == this || newItem instanceof JsonCollection col && col.containsExactly(this)) {
+            throw new IllegalArgumentException("Collection Cycles are not permitted");
+        }
         return Optional.ofNullable(this.items.put(position, newItem));
+    }
+
+    @Override
+    protected boolean containsExactly(JsonType jsonItem) {
+        return items.values().parallelStream().anyMatch(i -> i == jsonItem
+        || (i instanceof JsonCollection col && col.containsExactly(jsonItem)));
     }
 
     @Override

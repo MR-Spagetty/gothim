@@ -52,6 +52,14 @@ public class JsonNumParsingTests {
     }
 
     @Test
+    void valid6() {
+        var exp = new JsonNum(-0.0);
+        var ret = JsonNum.parse("-0");
+        assertEquals(2, ret.getValue());
+        assertEquals(exp, ret.getKey());
+    }
+
+    @Test
     void invalid1() {
         assertThrows(IllegalArgumentException.class, () -> JsonNum.parse(""));
     }
@@ -64,10 +72,5 @@ public class JsonNumParsingTests {
     @Test
     void invalid3() {
         assertThrows(IllegalArgumentException.class, () -> JsonNum.parse("1.2.3"));
-    }
-
-    @Test
-    void invalid4() {
-        assertThrows(IllegalArgumentException.class, () -> JsonNum.parse("-0"));
     }
 }

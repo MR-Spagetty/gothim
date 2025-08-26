@@ -105,7 +105,6 @@ public class JsonObjectParsingTests {
 
     @Test
     void validSuperNested() {
-        var exp = new JsonObject();
         var inner1 = new JsonArray();
         inner1.add(new JsonNum(1.0));
         var inner2 = new JsonArray();
@@ -120,6 +119,7 @@ public class JsonObjectParsingTests {
         inner3.add(inner4);
         inner2.add(inner3);
         inner1.add(inner2);
+        var exp = new JsonObject();
         exp.put("a", inner1);
         var ret = JsonObject.parse("{\"a\": [1, [false, [\"hello\", [null, {\"key\": 5}]]]]}");
         assertEquals(50, ret.getValue());

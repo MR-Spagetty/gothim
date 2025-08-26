@@ -134,6 +134,11 @@ public final class JsonArray extends JsonCollection<Integer> {
                 off = jsonData.indexOf(',') + 1;
                 jsonData = jsonData.substring(off);
                 overallOffset += off;
+                if (jsonData.strip().startsWith("]")) {
+                    throw new IllegalArgumentException(
+                        "Trailing comma in JsonArray is not permitted"
+                    );
+                }
             } else if (!jsonData.strip().startsWith("]")) {
                 throw new IllegalArgumentException("JsonArray must end with ']'");
             }

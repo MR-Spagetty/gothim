@@ -25,7 +25,7 @@ public record JsonNum(Double value) implements JsonValue<Double> {
      *      a JsonNum
      */
     public static Map.Entry<JsonNum, Integer> parse(String jsonData) {
-        int end = 1;
+        int end = 0;
         while (end < jsonData.length() && Character.isWhitespace(jsonData.charAt(end))) {
             end++;
         }

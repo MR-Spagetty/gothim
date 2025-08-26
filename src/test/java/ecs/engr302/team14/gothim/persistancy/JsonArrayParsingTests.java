@@ -41,7 +41,7 @@ public class JsonArrayParsingTests {
     }
 
     @Test
-    void validBools(){
+    void validBools() {
         var exp = new JsonArray();
         exp.add(JsonBool.TRUE);
         exp.add(JsonBool.FALSE);

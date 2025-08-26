@@ -40,6 +40,11 @@
       <artifactId>junit-jupiter-params</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-text</artifactId>
+      <version>1.14.0</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -101,7 +106,7 @@
         <version>3.6.0</version>
         <configuration>
           <includeTestSourceDirectory>true</includeTestSourceDirectory>
-          <configLocation>google_checks.xml</configLocation>
+          <configLocation>${project.basedir}/style_checks.xml</configLocation>
           <violationSeverity>warning</violationSeverity>
         </configuration>
       </plugin>

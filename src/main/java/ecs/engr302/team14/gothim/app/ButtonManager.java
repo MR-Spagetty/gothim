@@ -21,18 +21,28 @@ public class ButtonManager {
         JButton newGameButton = this.createButton("Start New Game", (e) -> {
             ActionHandler.handleNewGame();
         });
-
         JButton loadGameButton = this.createButton("Load Previous Game", (e) -> {
             ActionHandler.handleLoadGame();
         });
-
         JButton openInstructionsButton = this.createButton("Instructions", (e) -> {
             ActionHandler.handleOpenInstructions();
         });
-
         menuButtons.add(newGameButton);
         menuButtons.add(loadGameButton);
         menuButtons.add(openInstructionsButton);
+
+        JButton openTaskbookButton = this.createButton("Taskbook", (e) -> {
+            ActionHandler.handleOpenTaskbook();
+        });
+        JButton saveGameButton = this.createButton("Save Current Game", (e) -> {
+            ActionHandler.handleSaveGame();
+        });
+        JButton quitGameButton = this.createButton("Quit", (e) -> {
+            ActionHandler.handleQuit();
+        });
+        playingButtons.add(openTaskbookButton);
+        playingButtons.add(saveGameButton);
+        playingButtons.add(quitGameButton);
 
     }
 

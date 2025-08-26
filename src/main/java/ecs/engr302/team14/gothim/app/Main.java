@@ -9,12 +9,14 @@ public class Main {
     public static JFrame frame;
     public static JPanel rendererPanel, buttonPanel;
     public static GameState currentState;
+    private KeybindManager keyBinds;
 
     private Main(){
         currentState = GameState.Menu;
         frame = new JFrame();
         rendererPanel = new JPanel();
         buttonPanel = new JPanel();
+        keyBinds = new KeybindManager();
         new ButtonManager();
 
         //Set frame size
@@ -24,6 +26,9 @@ public class Main {
         buttonPanel.setBackground(new Color(73,157,208));
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
+
+        keyBinds.applyBindings(rendererPanel);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         updateGUI();

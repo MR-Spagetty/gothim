@@ -3,6 +3,15 @@ package ecs.engr302.team14.gothim.app;
 public class ActionHandler {
     public ActionHandler() {}
 
+    public static void handleMove(/*Direction direction*/) {
+        //GameManager.movePlayer(direction);
+        System.out.println("Moving...");
+        if (Main.rendererPanel != null) {
+            Main.rendererPanel.revalidate();
+            Main.rendererPanel.repaint();
+        }
+    }
+
     public static void handleNewGame(){
         System.out.println("Starting a new game. . .");
         Main main = Main.getMainInstance();

@@ -149,6 +149,23 @@ public final class Serialization {
         return valueClass.getName();
     }
 
+    private static Class<?> mapValueTypeDet(String className) {
+        return switch (className) {
+            case "String" -> String.class;
+            case "double" -> Double.class;
+            case "long" -> Long.class;
+            case "float" -> Float.class;
+            case "int" -> Integer.class;
+            default -> {
+                try {
+                    yield Class.forName(className);
+                } catch (ClassNotFoundException e) {
+                    yield Object.class;
+                }
+            }
+        };
+    }
+
     private static JsonObject serializeObject(Object thing) {
         JsonObject ret = new JsonObject();
         JsonArray failedFields = new JsonArray();
@@ -186,7 +203,26 @@ public final class Serialization {
         return ret;
     }
 
-    public Object fromJson(JsonType json) {
+    private static <O, T> T cast(O obj, Class<T> to) {
+        if (obj instanceof Number num) {
+            if (to.equals(Double.class)) {
+                return to.cast(num.doubleValue());
+            } else if (to.equals(Float.class)) {
+                return to.cast(num.floatValue());
+            } else if (to.equals(Long.class)) {
+                return to.cast(num.longValue());
+            } else if (to.equals(Integer.class)) {
+                return to.cast(num.intValue());
+            } else if (to.equals(Short.class)) {
+                return to.cast(num.shortValue());
+            } else if (to.equals(Byte.class)) {
+                return to.cast(num.byteValue());
+            }
+        }
+        return to.cast(obj);
+    }
+
+    public static Object fromJson(JsonType json) {
         if (json == JsonValue.NULL) {
             return null;
         }
@@ -206,7 +242,7 @@ public final class Serialization {
         };
     }
 
-    private <K, V> Map<K, V> deserializeMap(JsonObject o, Class<K> keyType, Class<V> valueType) {
+    private static <K, V> Map<K, V> deserializeMap(JsonObject o, Class<K> keyType, Class<V> valueType) {
         @SuppressWarnings("unchecked")
         Class<? extends Map<K, V>> mapClass = o.get("class")
                 .map(v -> v instanceof JsonString js ? js.value() : null).map(className -> {
@@ -226,21 +262,21 @@ public final class Serialization {
         };
         Map<K, V> ret = mapSupp.get();
 
-        JsonCollection<?> entries = o.get("values")
+        JsonCollection<?> entries = o.get("entries")
                 .map(v -> v instanceof JsonCollection jc ? jc : null).orElseThrow();
 
         if (entries instanceof JsonArray arr) {
             IntStream.range(0, arr.size()).forEach(i -> {
                 JsonObject entry = arr.get(i).map(v -> v instanceof JsonObject jo ? jo : null)
                         .orElseThrow();
-                K key = keyType.cast(fromJson(entry.get("key").orElseThrow()));
-                V value = valueType.cast(fromJson(entry.get("value").orElseThrow()));
+                K key = cast(fromJson(entry.get("key").orElseThrow()), keyType);
+                V value = cast(fromJson(entry.get("value").orElseThrow()), valueType);
                 ret.put(key, value);
             });
         } else if (entries instanceof JsonObject obj) {
             for (String key : obj.keySet()) {
-                K k = keyType.cast(key);
-                V v = valueType.cast(fromJson(obj.get(key).orElseThrow()));
+                K k = cast(key, keyType);
+                V v = cast(fromJson(obj.get(key).orElseThrow()), valueType);
                 ret.put(k, v);
             }
         }
@@ -248,7 +284,7 @@ public final class Serialization {
         return ret;
     }
 
-    private Collection<?> deserializeCollection(JsonObject o) {
+    private static Collection<?> deserializeCollection(JsonObject o) {
         JsonArray valuesDat = o.get("values").map(v -> v instanceof JsonArray ja ? ja : null)
                 .orElseThrow();
         List<Object> values = IntStream.range(0, valuesDat.size())
@@ -272,44 +308,32 @@ public final class Serialization {
         return ret;
     }
 
-    private Object deserializeFromObject(JsonObject o) {
+    private static Object deserializeFromObject(JsonObject o) {
         String kind = o.get("kind").map(v -> v instanceof JsonString js ? js.value() : null)
                 .orElse(null);
         switch (kind) {
             case "map" -> {
                 Class<?> keyType = o.get("keyType").map(v -> {
                     if (v instanceof JsonString js) {
-                        return js;
+                        return js.value();
                     }
                     throw new IllegalArgumentException(
                             "\"keyType\" field in map was not a JsonString "
                                     + "but instead a %s with value:\n%s"
                                             .formatted(o.getClass().getSimpleName(), o.toString()));
-                }).map(js -> {
-                    try {
-                        return Class.forName(js.value());
-                    } catch (ClassNotFoundException e) {
-                        return null;
-                    }
-                }).orElse(null);
+                }).map(Serialization::mapValueTypeDet).orElse(null);
                 if (keyType == null) {
                     keyType = String.class;
                 }
                 Class<?> valueType = o.get("valueType").map(v -> {
                     if (v instanceof JsonString js) {
-                        return js;
+                        return js.value();
                     }
                     throw new IllegalArgumentException(
                             "\"valueType\" field in map was not a JsonString "
                                     + "but instead a %s with value:\n%s"
                                             .formatted(o.getClass().getSimpleName(), o.toString()));
-                }).map(js -> {
-                    try {
-                        return Class.forName(js.value());
-                    } catch (ClassNotFoundException e) {
-                        return null;
-                    }
-                }).orElseThrow(() -> new IllegalArgumentException(
+                }).map(Serialization::mapValueTypeDet).orElseThrow(() -> new IllegalArgumentException(
                         "Could not determine the value type of the map in object:\n%s"
                                 .formatted(o.prettyPrint())));
                 return deserializeMap(o, keyType, valueType);

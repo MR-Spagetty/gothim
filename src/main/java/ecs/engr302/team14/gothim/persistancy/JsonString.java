@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  */
 public record JsonString(String value) implements JsonValue<String> {
 
-    static final String regex = "^\\s*\\\"(.*?[^\\\\])?\\\"";
+    static final String regex = "^\\s*\\\"(.*?(?:(?:\\\\\\\\)|[^\\\\]))?\\\"";
     static final Pattern pattern = Pattern.compile(regex);
 
     @Override

@@ -1,8 +1,11 @@
 package ecs.engr302.team14.gothim.persistancy;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -44,6 +47,18 @@ public final class JsonObject extends JsonCollection<String> {
     @Override
     public Optional<JsonType> remove(String position) {
         return Optional.of(items.remove(position));
+    }
+
+    public Set<String> keySet() {
+        return this.items.keySet();
+    }
+
+    public Set<Map.Entry<String, JsonType>> entrySet() {
+        return this.items.entrySet();
+    }
+
+    public Collection<JsonType> values() {
+        return this.items.values();
     }
 
     @Override

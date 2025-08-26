@@ -6,8 +6,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InaccessibleObjectException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -161,5 +165,127 @@ public final class Serialization {
             ret.remove("failedFields");
         }
         return ret;
+    }
+
+    public Object fromJson(JsonType json) {
+        if (json == JsonValue.NULL) {
+            return null;
+        }
+        return switch (json) {
+            case JsonString s -> s.value();
+            case JsonNum n -> n.value();
+            case JsonBool b -> b.value();
+            case JsonArray a -> {
+                List<Object> list = new ArrayList<>();
+                IntStream.range(0, a.size()).<Object>mapToObj(i -> fromJson(a.get(i).get()))
+                        .forEachOrdered(list::add);
+                yield list;
+            }
+            case JsonObject o -> deserializeFromObject(o);
+            default -> throw new RuntimeException(
+                    "Should not have reached here, given value was: %s".formatted(json));
+        };
+    }
+
+    private <K, V> Map<K, V> deserializeMap(JsonObject o, Class<K> keyType, Class<V> valueType) {
+        @SuppressWarnings("unchecked")
+        Class<? extends Map<K, V>> mapClass = o.get("class")
+                .map(v -> v instanceof JsonString js ? js.value() : null).map(className -> {
+                    try {
+                        return (Class<? extends Map<K, V>>) Class.forName(className);
+                    } catch (ClassNotFoundException e) {
+                        return null;
+                    }
+                }).orElseThrow();
+
+        Supplier<Map<K, V>> mapSupp = () -> {
+            try {
+                return mapClass.getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                return new HashMap<>(); // Fallback if instantiation fails
+            }
+        };
+        Map<K, V> ret = mapSupp.get();
+
+        JsonCollection<?> entries = o.get("values")
+                .map(v -> v instanceof JsonCollection jc ? jc : null).orElseThrow();
+
+        if (entries instanceof JsonArray arr) {
+            IntStream.range(0, arr.size()).forEach(i -> {
+                JsonObject entry = arr.get(i).map(v -> v instanceof JsonObject jo ? jo : null)
+                        .orElseThrow();
+                K key = keyType.cast(fromJson(entry.get("key").orElseThrow()));
+                V value = valueType.cast(fromJson(entry.get("value").orElseThrow()));
+                ret.put(key, value);
+            });
+        } else if (entries instanceof JsonObject obj) {
+            for (String key : obj.keySet()) {
+                K k = keyType.cast(key);
+                V v = valueType.cast(fromJson(obj.get(key).orElseThrow()));
+                ret.put(k, v);
+            }
+        }
+
+        return ret;
+    }
+
+    private Collection<?> deserializeCollection(JsonObject o) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deserializeCollection'");
+    }
+
+    private Object deserializeFromObject(JsonObject o) {
+        String kind = o.get("kind").map(v -> v instanceof JsonString js ? js.value() : null)
+                .orElse(null);
+        switch (kind) {
+            case "map" -> {
+                Class<?> keyType = o.get("keyType").map(v -> {
+                    if (v instanceof JsonString js) {
+                        return js;
+                    }
+                    throw new IllegalArgumentException(
+                            "\"keyType\" field in map was not a JsonString "
+                                    + "but instead a %s with value:\n%s"
+                                            .formatted(o.getClass().getSimpleName(), o.toString()));
+                }).map(js -> {
+                    try {
+                        return Class.forName(js.value());
+                    } catch (ClassNotFoundException e) {
+                        return null;
+                    }
+                }).orElse(null);
+                if (keyType == null) {
+                    keyType = String.class;
+                }
+                Class<?> valueType = o.get("valueType").map(v -> {
+                    if (v instanceof JsonString js) {
+                        return js;
+                    }
+                    throw new IllegalArgumentException(
+                            "\"valueType\" field in map was not a JsonString "
+                                    + "but instead a %s with value:\n%s"
+                                            .formatted(o.getClass().getSimpleName(), o.toString()));
+                }).map(js -> {
+                    try {
+                        return Class.forName(js.value());
+                    } catch (ClassNotFoundException e) {
+                        return null;
+                    }
+                }).orElseThrow(() -> new IllegalArgumentException(
+                        "Could not determine the value type of the map in object:\n%s"
+                                .formatted(o.prettyPrint())));
+                return deserializeMap(o, keyType, valueType);
+            }
+            case "collection" -> {
+                return deserializeCollection(o);
+            }
+
+            case null -> {
+            }
+
+            default -> throw new RuntimeException("Unexpcted value of kind: %s".formatted(kind));
+        }
+
+        return null;
     }
 }

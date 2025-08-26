@@ -2,15 +2,18 @@ package ecs.engr302.team14.gothim.persistancy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ecs.engr302.team14.gothim.util.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
-import ecs.engr302.team14.gothim.util.Point;
-
+/**
+ * Tests Serialization.fromJson.
+ *
+ * @author MR-Spagetty
+ */
 public class FromJsonTests {
     @Test
     void basicArrayList() {
@@ -125,7 +128,7 @@ public class FromJsonTests {
     }
 
     @Test
-    void point(){
+    void point() {
         var exp = new Point(0, 0);
         var res = Serialization.fromJson(JsonObject.parse("""
                 {

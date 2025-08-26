@@ -73,7 +73,6 @@ public class JsonArrayParsingTests {
 
     @Test
     void validObjects() {
-        //! Will fail until JsonObject parsing is implemented
         var exp = new JsonArray();
         var obj1 = new JsonObject();
         obj1.put("a", new JsonNum(1.0));
@@ -102,7 +101,6 @@ public class JsonArrayParsingTests {
 
     @Test
     void validMixedNested() {
-        //! Will fail until JsonObject parsing is implemented
         var exp = new JsonArray();
         exp.add(new JsonNum(1.0));
         var inner1 = new JsonArray();
@@ -118,7 +116,7 @@ public class JsonArrayParsingTests {
         inner1.add(inner2);
         exp.add(inner1);
         var ret = JsonArray.parse("[1, [false, [\"hello\", [null, {\"key\": 5}]]]]");
-        assertEquals(31, ret.getValue());
+        assertEquals(43, ret.getValue());
         assertEquals(exp, ret.getKey());
     }
 

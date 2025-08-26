@@ -89,49 +89,20 @@ public final class JsonArray extends JsonCollection<Integer> {
      * @throws IllegalArgumentException if the first token in the string is not a JsonArray
      */
     public static Map.Entry<JsonArray, Integer> parse(String jsonData) {
-        if (!jsonData.strip().startsWith("[")) {
+        if (!isNext(jsonData)) {
             throw new IllegalArgumentException("JsonArray must start with '['");
         }
         JsonArray arr = new JsonArray();
         int overallOffset = jsonData.indexOf('[') + 1;
         jsonData = jsonData.substring(overallOffset);
         while (!jsonData.strip().startsWith("]") && !jsonData.isEmpty()) {
-            int off;
-            JsonType item;
-            if (JsonValue.isNextNull(jsonData)) {
-                var ret = JsonValue.parseNull(jsonData);
-                item = ret.getKey();
-                off = ret.getValue();
-            } else if (JsonBool.isNext(jsonData)) {
-                var ret = JsonBool.parse(jsonData);
-                item = ret.getKey();
-                off = ret.getValue();
-            } else if (JsonNum.isNext(jsonData)) {
-                var ret = JsonNum.parse(jsonData);
-                item = ret.getKey();
-                off = ret.getValue();
-            } else if (JsonString.isNext(jsonData)) {
-                var ret = JsonString.parse(jsonData);
-                item = ret.getKey();
-                off = ret.getValue();
-                // } else if (JsonObject.isNext(jsonData)) { // TODO implement JsonObject parsing
-                // JsonObject parsing
-                // var ret = JsonObject.parse(jsonData);
-                // item = ret.getKey();
-                // off = ret.getValue();
-            } else if (JsonArray.isNext(jsonData)) {
-                var ret = JsonArray.parse(jsonData);
-                item = ret.getKey();
-                off = ret.getValue();
-            } else {
-                throw new IllegalArgumentException(
-                        "Could not parse next item in JsonArray: \"%s\"".formatted(jsonData));
-            }
-            arr.add(item);
+            var itemDat = parseItem(jsonData);
+            int off = itemDat.getValue();
+            arr.add(itemDat.getKey());
             jsonData = jsonData.substring(off);
             overallOffset += off;
-            if (jsonData.strip().startsWith(",")) {
-                off = jsonData.indexOf(',') + 1;
+            if (parseItemSep(jsonData) >= 0) {
+                off = parseItemSep(jsonData);
                 jsonData = jsonData.substring(off);
                 overallOffset += off;
                 if (jsonData.strip().startsWith("]")) {
@@ -143,8 +114,8 @@ public final class JsonArray extends JsonCollection<Integer> {
                 throw new IllegalArgumentException("JsonArray must end with ']'");
             }
         }
-        overallOffset += jsonData.indexOf(']');
-        return Map.entry(arr, overallOffset + 1);
+        overallOffset += jsonData.indexOf(']') + 1;
+        return Map.entry(arr, overallOffset);
     }
 
     public static boolean isNext(String jsonData) {

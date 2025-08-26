@@ -3,6 +3,7 @@ package ecs.engr302.team14.gothim.persistancy;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -53,8 +54,42 @@ public abstract class JsonCollection<K> implements JsonType {
         if (matcher.find()) {
             return matcher.end();
         } else {
-            throw new IllegalArgumentException("Expected ',' at: %s".formatted(jsonData));
+            return -1;
         }
+    }
+
+    protected static final Map.Entry<JsonType, Integer> parseItem(String jsonData) {
+        JsonType item;
+        int off;
+        if (JsonValue.isNextNull(jsonData)) {
+            var ret = JsonValue.parseNull(jsonData);
+            item = ret.getKey();
+            off = ret.getValue();
+        } else if (JsonBool.isNext(jsonData)) {
+            var ret = JsonBool.parse(jsonData);
+            item = ret.getKey();
+            off = ret.getValue();
+        } else if (JsonNum.isNext(jsonData)) {
+            var ret = JsonNum.parse(jsonData);
+            item = ret.getKey();
+            off = ret.getValue();
+        } else if (JsonString.isNext(jsonData)) {
+            var ret = JsonString.parse(jsonData);
+            item = ret.getKey();
+            off = ret.getValue();
+        } else if (JsonObject.isNext(jsonData)) {
+            var ret = JsonObject.parse(jsonData);
+            item = ret.getKey();
+            off = ret.getValue();
+        } else if (JsonArray.isNext(jsonData)) {
+            var ret = JsonArray.parse(jsonData);
+            item = ret.getKey();
+            off = ret.getValue();
+        } else {
+            throw new IllegalArgumentException(
+                    "Could not parse next item in JSON collection: \"%s\"".formatted(jsonData));
+        }
+        return Map.entry(item, off);
     }
 
     protected abstract boolean containsExactly(JsonType jsonItem);

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * tests Serialization.toJson that the output is correct.
+ * tests Serialization.toJson.
  *
  * @author MR-Spagetty
  */

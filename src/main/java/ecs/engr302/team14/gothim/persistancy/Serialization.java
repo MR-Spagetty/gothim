@@ -2,14 +2,18 @@ package ecs.engr302.team14.gothim.persistancy;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import java.lang.annotation.AnnotationFormatError;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Executable;
 import java.lang.reflect.Field;
 import java.lang.reflect.InaccessibleObjectException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -204,6 +208,11 @@ public final class Serialization {
     }
 
     private static <O, T> T cast(O obj, Class<T> to) {
+        if (to.isPrimitive()) {
+            @SuppressWarnings("unchecked")
+            T unboxed = (T) obj;
+            return unboxed;
+        }
         if (obj instanceof Number num) {
             if (to.equals(Double.class)) {
                 return to.cast(num.doubleValue());
@@ -222,6 +231,13 @@ public final class Serialization {
         return to.cast(obj);
     }
 
+    /**
+     * Deserializes the given JSON data to the appropriate Objects where
+     * possible.
+     *
+     * @param json the JSON data
+     * @return the deserialized object
+     */
     public static Object fromJson(JsonType json) {
         if (json == JsonValue.NULL) {
             return null;
@@ -242,7 +258,8 @@ public final class Serialization {
         };
     }
 
-    private static <K, V> Map<K, V> deserializeMap(JsonObject o, Class<K> keyType, Class<V> valueType) {
+    private static <K, V> Map<K, V> deserializeMap(JsonObject o, Class<K> keyType,
+            Class<V> valueType) {
         @SuppressWarnings("unchecked")
         Class<? extends Map<K, V>> mapClass = o.get("class")
                 .map(v -> v instanceof JsonString js ? js.value() : null).map(className -> {
@@ -333,9 +350,10 @@ public final class Serialization {
                             "\"valueType\" field in map was not a JsonString "
                                     + "but instead a %s with value:\n%s"
                                             .formatted(o.getClass().getSimpleName(), o.toString()));
-                }).map(Serialization::mapValueTypeDet).orElseThrow(() -> new IllegalArgumentException(
-                        "Could not determine the value type of the map in object:\n%s"
-                                .formatted(o.prettyPrint())));
+                }).map(Serialization::mapValueTypeDet)
+                        .orElseThrow(() -> new IllegalArgumentException(
+                                "Could not determine the value type of the map in object:\n%s"
+                                        .formatted(o.prettyPrint())));
                 return deserializeMap(o, keyType, valueType);
             }
             case "collection" -> {
@@ -343,11 +361,80 @@ public final class Serialization {
             }
 
             case null -> {
+                return deserializeObject(o);
             }
 
             default -> throw new RuntimeException("Unexpcted value of kind: %s".formatted(kind));
         }
+    }
 
+    private static Object deserializeObject(JsonObject o) {
+        Class<?> thingClass = o.get("class").map(v -> {
+            if (v instanceof JsonString js) {
+                return js.value();
+            }
+            throw new IllegalArgumentException("\"class\" field in object was not a JsonString but "
+                    + "instead a %s with value:\n%s".formatted(o.getClass().getSimpleName(),
+                            o.toString()));
+        }).map(className -> {
+            try {
+                return Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                throw new IllegalArgumentException(
+                        "Could not find class named %s specified in object:\n%s"
+                                .formatted(className, o.prettyPrint()));
+            }
+        }).orElseThrow(() -> new IllegalArgumentException(
+                "Could not determine the class of the object from json:\n%s"
+                        .formatted(o.prettyPrint())));
+
+        Executable deserialMeth = Stream
+                .concat(Stream.of(thingClass.getDeclaredMethods()),
+                        Stream.of(thingClass.getDeclaredConstructors()))
+                .parallel().filter(m -> m.isAnnotationPresent(DeserializationMethod.class))
+                .reduce((a, b) -> {
+                    throw new AnnotationFormatError(
+                            "Expected only one DeserializationMethod found at least: %s and %s"
+                                    .formatted(a, b));
+                })
+                .orElseThrow(() -> new AnnotationFormatError("Expected one DeserializationMethod"));
+        deserialMeth.setAccessible(true);
+        Object[] args = new Object[deserialMeth.getParameterCount()];
+        JsonObject fields = o.get("fields").map(v -> v instanceof JsonObject jo ? jo : null)
+                .orElse(new JsonObject());
+        JsonArray failed = o.get("failedFields").map(v -> v instanceof JsonArray arr ? arr : null)
+                .orElse(new JsonArray());
+        IntStream.range(0, failed.size()).mapToObj(failed::get)
+                .flatMap(op -> op.map(v -> v instanceof JsonString js ? js.value() : null).stream())
+                .forEach(v -> fields.put(v, JsonValue.NULL));
+        if (args.length != fields.size()) {
+            throw new AnnotationFormatError("Expected same number of args and stored fields");
+        }
+        for (int argInd = 0; argInd < args.length; argInd++) {
+            Class<?> argType = deserialMeth.getParameterTypes()[argInd];
+            String argName = deserialMeth.getParameters()[argInd].getName();
+            args[argInd] = cast(
+                    fromJson(fields.get(argName).orElseThrow(
+                            () -> new IllegalArgumentException("Could not find field:" + argName))),
+                    argType);
+        }
+        if (deserialMeth instanceof Constructor cons) {
+            try {
+                return cons.newInstance(args);
+            } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+                    | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        } else if (deserialMeth instanceof Method meth) {
+            try {
+                return meth.invoke(null, args);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NullPointerException npe) {
+                throw new AnnotationFormatError(
+                        "Deserialization method should be static or a constructor");
+            }
+        }
         return null;
     }
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  *
  * @author MR-Spagetty
  */
-public class JsonArray extends JsonCollection<Integer> {
+public final class JsonArray extends JsonCollection<Integer> {
 
     private final List<JsonType> items = new ArrayList<>();
 
@@ -53,6 +53,16 @@ public class JsonArray extends JsonCollection<Integer> {
     @Override
     public String toString() {
         return items.stream().map(Object::toString).toList().toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof JsonArray arr && arr.items.equals(this.items);
+    }
+
+    @Override
+    public int hashCode() {
+        return items.hashCode();
     }
 
     /**

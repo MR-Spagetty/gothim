@@ -25,6 +25,30 @@ public final class Serialization {
     }
 
     /**
+     * Method for finding the lowest common ancestor of two classes.
+     *
+     * @param a the first class
+     * @param b the second class
+     * @return the most specific common super class of both classes
+     */
+    public static Class<?> lowestCommonAncestor(Class<?> a, Class<?> b) {
+        if (a.equals(b)) {
+            return a;
+        }
+        if (b.isAssignableFrom(a)) {
+            return b;
+        }
+        Class<?> curr = a;
+        while (curr != null) {
+            if (curr.isAssignableFrom(b)) {
+                return curr;
+            }
+            curr = curr.getSuperclass();
+        }
+        return Object.class;
+    }
+
+    /**
      * Serializes the given object into json data.
      *
      * @param thing the object to serialize
@@ -72,14 +96,9 @@ public final class Serialization {
         }
         List<Class<?>> valueTypes = new ArrayList<>(
                 map.values().parallelStream().map(Object::getClass).distinct().toList());
-        for (int i = 0; i < valueTypes.size() - 1;) {
-            if (valueTypes.get(i).isAssignableFrom(valueTypes.get(i + 1))) {
-                valueTypes.remove(i + 1);
-            } else if (valueTypes.get(i + 1).isAssignableFrom(valueTypes.get(i))) {
-                valueTypes.remove(i);
-            } else {
-                i++;
-            }
+        while (valueTypes.size() > 1) {
+            valueTypes
+                    .add(lowestCommonAncestor(valueTypes.removeFirst(), valueTypes.removeFirst()));
         }
         boolean stringKey = false;
         if (keyTypes.size() == 1) {
@@ -230,8 +249,27 @@ public final class Serialization {
     }
 
     private Collection<?> deserializeCollection(JsonObject o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deserializeCollection'");
+        JsonArray valuesDat = o.get("values").map(v -> v instanceof JsonArray ja ? ja : null)
+                .orElseThrow();
+        List<Object> values = IntStream.range(0, valuesDat.size())
+                .mapToObj(i -> fromJson(valuesDat.get(i).get())).toList();
+        @SuppressWarnings("unchecked")
+        Class<? extends Collection<?>> colClass = o.get("class")
+                .<String>map(v -> v instanceof JsonString js ? js.value() : null).map(className -> {
+                    try {
+                        return (Class<? extends Collection<?>>) Class.forName(className);
+                    } catch (ClassNotFoundException e) {
+                        return null;
+                    }
+                }).orElseThrow();
+        Collection<?> ret;
+        try {
+            ret = colClass.getDeclaredConstructor().newInstance(values);
+        } catch (Exception e) {
+            ret = new ArrayList<>(values); // Fallback if instantiation fails
+        }
+
+        return ret;
     }
 
     private Object deserializeFromObject(JsonObject o) {

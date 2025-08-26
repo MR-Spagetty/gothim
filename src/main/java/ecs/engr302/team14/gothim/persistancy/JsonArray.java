@@ -67,7 +67,7 @@ public class JsonArray extends JsonCollection<Integer> {
             throw new IllegalArgumentException("JsonArray must start with '['");
         }
         JsonArray arr = new JsonArray();
-        int overallOffset = jsonData.indexOf('[');
+        int overallOffset = jsonData.indexOf('[') + 1;
         jsonData = jsonData.substring(overallOffset);
         while (!jsonData.strip().startsWith("]") && !jsonData.isEmpty()) {
             int off;

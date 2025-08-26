@@ -50,12 +50,10 @@ public record JsonNum(Double value) implements JsonValue<Double> {
      * @return whether the next token is a JsonNum
      */
     public static boolean isNext(String jsonData) {
-        try {
-            parse(jsonData);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+        return switch (jsonData.strip().charAt(0)) {
+            case '-', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' -> true;
+            default -> false;
+        };
     }
 
 }

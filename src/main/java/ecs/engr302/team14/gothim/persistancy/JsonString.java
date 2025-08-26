@@ -26,21 +26,36 @@ public record JsonString(String value) implements JsonValue<String> {
     /**
      * Parses a JsonString from the start of the given JSON string.
      *
-     * @param json the JSON string to parse from
+     * @param jsonData the JSON string to parse from
      * @return the parsed JsonString and the position of the next token in the
      *      given string
      * @throws IllegalArgumentException if the first token in the string is not
      *      a JsonString
      */
-    public static Map.Entry<JsonString, Integer> parse(String json) {
-        var matcher = pattern.matcher(json);
+    public static Map.Entry<JsonString, Integer> parse(String jsonData) {
+        var matcher = pattern.matcher(jsonData);
         if (matcher.find()) {
             return Map.entry(
                     new JsonString(matcher.group(1) == null ? "" : unescapeJson(matcher.group(1))),
                     matcher.end());
         } else {
             throw new IllegalArgumentException(
-                    "First JSON token in: %s \n is not a valid JsonString".formatted(json));
+                    "First JSON token in: %s \n is not a valid JsonString".formatted(jsonData));
+        }
+    }
+
+    /**
+     * checks if the next token in the given JSON string is a JsonString.
+     *
+     * @param jsonData the JSON string to check
+     * @return whether the next token is a JsonString
+     */
+    public static boolean isNext(String jsonData) {
+        try {
+            parse(jsonData);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
         }
     }
 }

@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.util.Point;
 
 /**
@@ -9,6 +10,7 @@ import ecs.engr302.team14.gothim.util.Point;
  */
 public class Passable extends PrimitiveTile {
 
+    @DeserializationMethod
     public Passable(Point pos, String style) {
         super(pos, style);
     }

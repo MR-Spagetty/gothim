@@ -408,7 +408,8 @@ public final class Serialization {
                 .flatMap(op -> op.map(v -> v instanceof JSONString js ? js.value() : null).stream())
                 .forEach(v -> fields.put(v, JSONValue.NULL));
         if (args.length != fields.size()) {
-            throw new AnnotationFormatError("Expected same number of args and stored fields");
+            throw new AnnotationFormatError("Expected same number of args and stored fields,"
+                    + " got %d, expcted %d".formatted(args.length, fields.size()));
         }
         for (int argInd = 0; argInd < args.length; argInd++) {
             Class<?> argType = deserialMeth.getParameterTypes()[argInd];

@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
  * @param value the string value of this object
  * @author MR-Spagetty
  */
-public record JsonString(String value) implements JsonValue<String> {
+public record JSONString(String value) implements JSONValue<String> {
 
     static final String regex = "^\\s*\\\"(.*?(?:(?:\\\\\\\\)|[^\\\\]))?\\\"";
     static final Pattern pattern = Pattern.compile(regex);
@@ -24,31 +24,31 @@ public record JsonString(String value) implements JsonValue<String> {
     }
 
     /**
-     * Parses a JsonString from the start of the given JSON string.
+     * Parses a JSONString from the start of the given JSON string.
      *
      * @param jsonData the JSON string to parse from
-     * @return the parsed JsonString and the position of the next token in the
+     * @return the parsed JSONString and the position of the next token in the
      *      given string
      * @throws IllegalArgumentException if the first token in the string is not
-     *      a JsonString
+     *      a JSONString
      */
-    public static Map.Entry<JsonString, Integer> parse(String jsonData) {
+    public static Map.Entry<JSONString, Integer> parse(String jsonData) {
         var matcher = pattern.matcher(jsonData);
         if (matcher.find()) {
             return Map.entry(
-                    new JsonString(matcher.group(1) == null ? "" : unescapeJson(matcher.group(1))),
+                    new JSONString(matcher.group(1) == null ? "" : unescapeJson(matcher.group(1))),
                     matcher.end());
         } else {
             throw new IllegalArgumentException(
-                    "First JSON token in: %s \n is not a valid JsonString".formatted(jsonData));
+                    "First JSON token in: %s \n is not a valid JSONString".formatted(jsonData));
         }
     }
 
     /**
-     * checks if the next token in the given JSON string is a JsonString.
+     * checks if the next token in the given JSON string is a JSONString.
      *
      * @param jsonData the JSON string to check
-     * @return whether the next token is a JsonString
+     * @return whether the next token is a JSONString
      */
     public static boolean isNext(String jsonData) {
         return pattern.matcher(jsonData).find();

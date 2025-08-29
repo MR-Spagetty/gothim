@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
  *
  * @author MR-Spagetty
  */
-public final class JsonArray extends JsonCollection<Integer> {
+public final class JSONArray extends JSONCollection<Integer> {
 
-    private final List<JsonType> items = new ArrayList<>();
+    private final List<JSONType> items = new ArrayList<>();
 
     @Override
-    public Optional<JsonType> get(Integer position) {
+    public Optional<JSONType> get(Integer position) {
         if (position < 0 || position >= size()) {
             return Optional.empty();
         }
@@ -24,27 +24,27 @@ public final class JsonArray extends JsonCollection<Integer> {
     }
 
     /**
-     * Adds a new item to the end of this JsonArray.
+     * Adds a new item to the end of this JSONArray.
      *
      * @param newItem the item to add
      * @throws IllegalArgumentException if adding the new item would create a cycle
      *      in the JSON structure
      */
-    public void add(JsonType newItem) {
-        if (newItem == this || newItem instanceof JsonCollection col && col.containsExactly(this)) {
+    public void add(JSONType newItem) {
+        if (newItem == this || newItem instanceof JSONCollection col && col.containsExactly(this)) {
             throw new IllegalArgumentException("Collection Cycles are not permitted");
         }
         this.items.add(newItem);
     }
 
     @Override
-    protected boolean containsExactly(JsonType jsonItem) {
+    protected boolean containsExactly(JSONType jsonItem) {
         return items.parallelStream().anyMatch(i -> i == jsonItem
-        || (i instanceof JsonCollection col && col.containsExactly(jsonItem)));
+        || (i instanceof JSONCollection col && col.containsExactly(jsonItem)));
     }
 
     @Override
-    public Optional<JsonType> remove(Integer position) {
+    public Optional<JSONType> remove(Integer position) {
         var ret = get(position);
         this.items.remove((int) position);
         return ret;
@@ -58,7 +58,7 @@ public final class JsonArray extends JsonCollection<Integer> {
     @Override
     protected String prettyPrint(int indentationLevel) {
         return items.stream().map(i -> {
-            if (i instanceof JsonCollection col) {
+            if (i instanceof JSONCollection col) {
                 return col.prettyPrint(indentationLevel + 1);
             }
             return i.toString();
@@ -73,7 +73,7 @@ public final class JsonArray extends JsonCollection<Integer> {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof JsonArray arr && arr.items.equals(this.items);
+        return obj instanceof JSONArray arr && arr.items.equals(this.items);
     }
 
     @Override
@@ -82,17 +82,17 @@ public final class JsonArray extends JsonCollection<Integer> {
     }
 
     /**
-     * Parses a JsonArray from the start of the given JSON string.
+     * Parses a JSONArray from the start of the given JSON string.
      *
      * @param jsonData the JSON string to parse
-     * @return the parsed JsonArray and the position of the next token in the given string
-     * @throws IllegalArgumentException if the first token in the string is not a JsonArray
+     * @return the parsed JSONArray and the position of the next token in the given string
+     * @throws IllegalArgumentException if the first token in the string is not a JSONArray
      */
-    public static Map.Entry<JsonArray, Integer> parse(String jsonData) {
+    public static Map.Entry<JSONArray, Integer> parse(String jsonData) {
         if (!isNext(jsonData)) {
-            throw new IllegalArgumentException("JsonArray must start with '['");
+            throw new IllegalArgumentException("JSONArray must start with '['");
         }
-        JsonArray arr = new JsonArray();
+        JSONArray arr = new JSONArray();
         int overallOffset = jsonData.indexOf('[') + 1;
         jsonData = jsonData.substring(overallOffset);
         while (!jsonData.strip().startsWith("]") && !jsonData.isEmpty()) {
@@ -107,11 +107,11 @@ public final class JsonArray extends JsonCollection<Integer> {
                 overallOffset += off;
                 if (jsonData.strip().startsWith("]")) {
                     throw new IllegalArgumentException(
-                        "Trailing comma in JsonArray is not permitted"
+                        "Trailing comma in JSONArray is not permitted"
                     );
                 }
             } else if (!jsonData.strip().startsWith("]")) {
-                throw new IllegalArgumentException("JsonArray must end with ']'");
+                throw new IllegalArgumentException("JSONArray must end with ']'");
             }
         }
         overallOffset += jsonData.indexOf(']') + 1;

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
  *
  * @author MR-Spagetty
  */
-public class JsonStringComplianceTests {
+public class JSONStringComplianceTests {
     @Test
     void newLines() {
         String val = """
@@ -18,18 +18,18 @@ public class JsonStringComplianceTests {
                 fox jumps
                 over the lazy dogs""";
         String exp = "\"the quick brown\\nfox jumps\\nover the lazy dogs\"";
-        JsonString str = new JsonString(val);
+        JSONString str = new JSONString(val);
         assertEquals(val, str.value());
         assertEquals(exp, str.toString());
     }
 
     @Test
     void otherEscapes() {
-        assertEquals("\"\\\"\"", new JsonString("\"").toString());
-        assertEquals("\"\\\\\"", new JsonString("\\").toString());
-        assertEquals("\"\\b\"", new JsonString("\b").toString());
-        assertEquals("\"\\f\"", new JsonString("\f").toString());
-        assertEquals("\"\\r\"", new JsonString("\r").toString());
-        assertEquals("\"\\t\"", new JsonString("\t").toString());
+        assertEquals("\"\\\"\"", new JSONString("\"").toString());
+        assertEquals("\"\\\\\"", new JSONString("\\").toString());
+        assertEquals("\"\\b\"", new JSONString("\b").toString());
+        assertEquals("\"\\f\"", new JSONString("\f").toString());
+        assertEquals("\"\\r\"", new JSONString("\r").toString());
+        assertEquals("\"\\t\"", new JSONString("\t").toString());
     }
 }

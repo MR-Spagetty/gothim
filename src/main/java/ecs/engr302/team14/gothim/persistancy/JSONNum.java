@@ -8,7 +8,7 @@ import java.util.Map;
  * @param value the numeric value of this object
  * @author MR-Spagetty
  */
-public record JsonNum(Double value) implements JsonValue<Double> {
+public record JSONNum(Double value) implements JSONValue<Double> {
 
     @Override
     public final String toString() {
@@ -16,15 +16,15 @@ public record JsonNum(Double value) implements JsonValue<Double> {
     }
 
     /**
-     * Parses a JsonNum from the start of the given JSON string.
+     * Parses a JSONNum from the start of the given JSON string.
      *
      * @param jsonData the JSON string to parse from
-     * @return the parsed JsonNum and the position of the next token in the
+     * @return the parsed JSONNum and the position of the next token in the
      *      given string
      * @throws IllegalArgumentException if the first token in the string is not
-     *      a JsonNum
+     *      a JSONNum
      */
-    public static Map.Entry<JsonNum, Integer> parse(String jsonData) {
+    public static Map.Entry<JSONNum, Integer> parse(String jsonData) {
         int end = 0;
         while (end < jsonData.length() && Character.isWhitespace(jsonData.charAt(end))) {
             end++;
@@ -36,18 +36,18 @@ public record JsonNum(Double value) implements JsonValue<Double> {
             end++;
         }
         try {
-            return Map.entry(new JsonNum(Double.parseDouble(jsonData.substring(0, end))), end);
+            return Map.entry(new JSONNum(Double.parseDouble(jsonData.substring(0, end))), end);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(
-                    "First JSON token in: %s \n is not a valid JsonNum".formatted(jsonData));
+                    "First JSON token in: %s \n is not a valid JSONNum".formatted(jsonData));
         }
     }
 
     /**
-     * Checks if the next token in the given JSON string is a JsonNum.
+     * Checks if the next token in the given JSON string is a JSONNum.
      *
      * @param jsonData the JSON string to check
-     * @return whether the next token is a JsonNum
+     * @return whether the next token is a JSONNum
      */
     public static boolean isNext(String jsonData) {
         return switch (jsonData.strip().charAt(0)) {

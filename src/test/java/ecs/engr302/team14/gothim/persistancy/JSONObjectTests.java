@@ -9,50 +9,50 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 /**
- * Testing of the implementation JsonObject.
+ * Testing of the implementation JSONObject.
  *
  * @author MR-Spagetty
  */
-public class JsonObjectTests {
+public class JSONObjectTests {
     @Test
     void testInitialState() {
-        JsonObject obj = new JsonObject();
+        JSONObject obj = new JSONObject();
         assertEquals(0, obj.size());
-        assertTrue(obj.put("blah", JsonValue.NULL).isEmpty());
+        assertTrue(obj.put("blah", JSONValue.NULL).isEmpty());
     }
 
     @Test
     void testPut() {
-        JsonObject obj = new JsonObject();
+        JSONObject obj = new JSONObject();
         assertEquals(0, obj.size());
-        obj.put("blah", JsonBool.of(true));
+        obj.put("blah", JSONBool.of(true));
         assertEquals(1, obj.size());
-        Optional<JsonType> val = obj.put("blah", JsonBool.of(false));
+        Optional<JSONType> val = obj.put("blah", JSONBool.of(false));
         assertTrue(val.isPresent());
-        assertEquals(JsonBool.of(true), val.get());
-        Optional<JsonType> ret = obj.put("2", JsonValue.NULL);
+        assertEquals(JSONBool.of(true), val.get());
+        Optional<JSONType> ret = obj.put("2", JSONValue.NULL);
         assertEquals(2, obj.size());
         assertFalse(ret.isPresent());
     }
 
     @Test
     void testGet() {
-        JsonObject obj = new JsonObject();
-        IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> obj.put("" + i, new JsonNum(i)));
+        JSONObject obj = new JSONObject();
+        IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> obj.put("" + i, new JSONNum(i)));
         IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> {
-            Optional<JsonType> ret = obj.get("" + i);
+            Optional<JSONType> ret = obj.get("" + i);
             assertTrue(ret.isPresent());
-            assertEquals(new JsonNum(i), ret.get());
+            assertEquals(new JSONNum(i), ret.get());
         });
         assertFalse(obj.get("other").isPresent());
     }
 
     @Test
     void testRemove() {
-        JsonObject obj = new JsonObject();
-        IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> obj.put("" + i, new JsonNum(i)));
+        JSONObject obj = new JSONObject();
+        IntStream.range(-20, 20).mapToDouble(i -> i).forEach(i -> obj.put("" + i, new JSONNum(i)));
         String key = "" + 3.;
-        JsonNum exp = new JsonNum(3.);
+        JSONNum exp = new JSONNum(3.);
         assertEquals(40, obj.size());
         assertTrue(obj.get(key).isPresent());
         assertEquals(exp, obj.remove(key).get());

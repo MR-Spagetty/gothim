@@ -13,10 +13,10 @@ import java.util.regex.Pattern;
  *
  * @param <K> the "key" type of the collection
  */
-public abstract class JsonCollection<K> implements JsonType {
-    public abstract Optional<JsonType> get(K position);
+public abstract class JSONCollection<K> implements JSONType {
+    public abstract Optional<JSONType> get(K position);
 
-    public abstract Optional<JsonType> remove(K position);
+    public abstract Optional<JSONType> remove(K position);
 
     public abstract int size();
 
@@ -27,7 +27,7 @@ public abstract class JsonCollection<K> implements JsonType {
     protected abstract String prettyPrint(int indentationLevel);
 
     /**
-     * Prints this Json Collection to file.
+     * Prints this JSON Collection to file.
      *
      * @param file the file to print this data to
      * @throws FileNotFoundException if the file cannot be written to
@@ -58,31 +58,31 @@ public abstract class JsonCollection<K> implements JsonType {
         }
     }
 
-    protected static final Map.Entry<JsonType, Integer> parseItem(String jsonData) {
-        JsonType item;
+    protected static final Map.Entry<JSONType, Integer> parseItem(String jsonData) {
+        JSONType item;
         int off;
-        if (JsonValue.isNextNull(jsonData)) {
-            var ret = JsonValue.parseNull(jsonData);
+        if (JSONValue.isNextNull(jsonData)) {
+            var ret = JSONValue.parseNull(jsonData);
             item = ret.getKey();
             off = ret.getValue();
-        } else if (JsonBool.isNext(jsonData)) {
-            var ret = JsonBool.parse(jsonData);
+        } else if (JSONBool.isNext(jsonData)) {
+            var ret = JSONBool.parse(jsonData);
             item = ret.getKey();
             off = ret.getValue();
-        } else if (JsonNum.isNext(jsonData)) {
-            var ret = JsonNum.parse(jsonData);
+        } else if (JSONNum.isNext(jsonData)) {
+            var ret = JSONNum.parse(jsonData);
             item = ret.getKey();
             off = ret.getValue();
-        } else if (JsonString.isNext(jsonData)) {
-            var ret = JsonString.parse(jsonData);
+        } else if (JSONString.isNext(jsonData)) {
+            var ret = JSONString.parse(jsonData);
             item = ret.getKey();
             off = ret.getValue();
-        } else if (JsonObject.isNext(jsonData)) {
-            var ret = JsonObject.parse(jsonData);
+        } else if (JSONObject.isNext(jsonData)) {
+            var ret = JSONObject.parse(jsonData);
             item = ret.getKey();
             off = ret.getValue();
-        } else if (JsonArray.isNext(jsonData)) {
-            var ret = JsonArray.parse(jsonData);
+        } else if (JSONArray.isNext(jsonData)) {
+            var ret = JSONArray.parse(jsonData);
             item = ret.getKey();
             off = ret.getValue();
         } else {
@@ -92,5 +92,5 @@ public abstract class JsonCollection<K> implements JsonType {
         return Map.entry(item, off);
     }
 
-    protected abstract boolean containsExactly(JsonType jsonItem);
+    protected abstract boolean containsExactly(JSONType jsonItem);
 }

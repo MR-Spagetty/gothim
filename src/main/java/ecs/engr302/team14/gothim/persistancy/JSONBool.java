@@ -8,13 +8,13 @@ import java.util.regex.Pattern;
  *
  * @author MR-Spagetty
  */
-public enum JsonBool implements JsonValue<Boolean> {
+public enum JSONBool implements JSONValue<Boolean> {
     TRUE, FALSE;
 
     static final String regex = "^\\s*(true|false)";
     static final Pattern pattern = Pattern.compile(regex);
 
-    public static JsonBool of(boolean value) {
+    public static JSONBool of(boolean value) {
         return value ? TRUE : FALSE;
     }
 
@@ -29,29 +29,29 @@ public enum JsonBool implements JsonValue<Boolean> {
     }
 
     /**
-     * Parses a JsonBool from the start of the given JSON string.
+     * Parses a JSONBool from the start of the given JSON string.
      *
      * @param jsonData the JSON string to parse from
-     * @return the parsed JsonBool and the position of the next token in the
+     * @return the parsed JSONBool and the position of the next token in the
      *      given string
      * @throws IllegalArgumentException if the first token in the string is not
-     *      a JsonBool
+     *      a JSONBool
      */
-    public static Map.Entry<JsonBool, Integer> parse(String jsonData) {
+    public static Map.Entry<JSONBool, Integer> parse(String jsonData) {
         var matcher = pattern.matcher(jsonData);
         if (matcher.find()) {
             return Map.entry(matcher.group(1).equals("true") ? TRUE : FALSE, matcher.end());
         } else {
             throw new IllegalArgumentException(
-                    "First JSON token in: %s \n is not a valid JsonBool".formatted(jsonData));
+                    "First JSON token in: %s \n is not a valid JSONBool".formatted(jsonData));
         }
     }
 
     /**
-     * Checks if the next token in the given JSON string is a JsonBool.
+     * Checks if the next token in the given JSON string is a JSONBool.
      *
      * @param jsonData the JSON string to check
-     * @return whether the next token is a JsonBool
+     * @return whether the next token is a JSONBool
      */
     public static boolean isNext(String jsonData) {
         try {

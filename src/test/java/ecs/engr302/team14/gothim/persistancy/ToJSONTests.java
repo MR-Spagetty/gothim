@@ -17,15 +17,15 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 /**
- * tests Serialization.toJson.
+ * tests Serialization.toJSON.
  *
  * @author MR-Spagetty
  */
-public class ToJsonTests {
+public class ToJSONTests {
     static final Random rand = new Random();
 
     @RepeatedTest(50)
-    void pointToJson0() {
+    void pointToJSON0() {
         double x = rand.nextDouble();
         double y = rand.nextDouble();
         Point p = new Point(x, y);
@@ -37,60 +37,60 @@ public class ToJsonTests {
                         "y": %s
                     }
                 }""".formatted("" + x, "" + y),
-                ((JsonObject) Serialization.toJson(p)).prettyPrint());
+                ((JSONObject) Serialization.toJSON(p)).prettyPrint());
     }
 
     @Test
-    void stringToJson() {
+    void stringToJSON() {
         String exp = "Hello World!!";
-        Object out = Serialization.toJson(exp);
-        assertInstanceOf(JsonString.class, out);
-        assertEquals(exp, ((JsonString) out).value());
+        Object out = Serialization.toJSON(exp);
+        assertInstanceOf(JSONString.class, out);
+        assertEquals(exp, ((JSONString) out).value());
     }
 
     @RepeatedTest(50)
-    void doubleToJson() {
+    void doubleToJSON() {
         double exp = rand.nextDouble();
-        Object out = Serialization.toJson(exp);
-        assertInstanceOf(JsonNum.class, out);
-        assertEquals(exp, ((JsonNum) out).value());
+        Object out = Serialization.toJSON(exp);
+        assertInstanceOf(JSONNum.class, out);
+        assertEquals(exp, ((JSONNum) out).value());
     }
 
     @RepeatedTest(50)
-    void longToJson() {
+    void longToJSON() {
         long exp = rand.nextLong();
-        Object out = Serialization.toJson(exp);
-        assertInstanceOf(JsonNum.class, out);
-        assertEquals(exp, ((JsonNum) out).value());
+        Object out = Serialization.toJSON(exp);
+        assertInstanceOf(JSONNum.class, out);
+        assertEquals(exp, ((JSONNum) out).value());
     }
 
     @RepeatedTest(50)
-    void intToJson() {
+    void intToJSON() {
         int exp = rand.nextInt();
-        Object out = Serialization.toJson(exp);
-        assertInstanceOf(JsonNum.class, out);
-        assertEquals(exp, ((JsonNum) out).value());
+        Object out = Serialization.toJSON(exp);
+        assertInstanceOf(JSONNum.class, out);
+        assertEquals(exp, ((JSONNum) out).value());
     }
 
     @RepeatedTest(50)
-    void floatToJson() {
+    void floatToJSON() {
         float exp = rand.nextFloat();
-        Object out = Serialization.toJson(exp);
-        assertInstanceOf(JsonNum.class, out);
-        assertEquals(exp, ((JsonNum) out).value());
+        Object out = Serialization.toJSON(exp);
+        assertInstanceOf(JSONNum.class, out);
+        assertEquals(exp, ((JSONNum) out).value());
     }
 
     @Test
-    void booleanToJson() {
-        assertSame(JsonBool.TRUE, Serialization.toJson(true));
-        assertSame(JsonBool.FALSE, Serialization.toJson(false));
+    void booleanToJSON() {
+        assertSame(JSONBool.TRUE, Serialization.toJSON(true));
+        assertSame(JSONBool.FALSE, Serialization.toJSON(false));
     }
 
     @Test
-    void arrayListToJson() {
+    void arrayListToJSON() {
         var list = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        Object out = Serialization.toJson(list);
-        assertInstanceOf(JsonArray.class, out);
+        Object out = Serialization.toJSON(list);
+        assertInstanceOf(JSONArray.class, out);
         assertEquals("""
                 [
                     1.0,
@@ -98,14 +98,14 @@ public class ToJsonTests {
                     3.0,
                     4.0,
                     5.0
-                ]""", ((JsonArray) out).prettyPrint());
+                ]""", ((JSONArray) out).prettyPrint());
     }
 
     @Test
-    void hashSetToJson() {
+    void hashSetToJSON() {
         var set = new HashSet<>(Set.of(1, 2, 3, 4, 5));
-        Object out = Serialization.toJson(set);
-        assertInstanceOf(JsonObject.class, out);
+        Object out = Serialization.toJSON(set);
+        assertInstanceOf(JSONObject.class, out);
         assertEquals("""
                 {
                     "kind": "collection",
@@ -117,14 +117,14 @@ public class ToJsonTests {
                         4.0,
                         5.0
                     ]
-                }""", ((JsonObject) out).prettyPrint());
+                }""", ((JSONObject) out).prettyPrint());
     }
 
     @Test
-    void hashMapToJson() {
+    void hashMapToJSON() {
         var map = new HashMap<>(Map.of("a", 2, "b", 3, "c", 4));
-        Object out = Serialization.toJson(map);
-        assertInstanceOf(JsonObject.class, out);
+        Object out = Serialization.toJSON(map);
+        assertInstanceOf(JSONObject.class, out);
         assertEquals("""
                 {
                     "kind": "map",
@@ -135,15 +135,15 @@ public class ToJsonTests {
                         "b": 3.0,
                         "c": 4.0
                     }
-                }""", ((JsonObject) out).prettyPrint());
+                }""", ((JSONObject) out).prettyPrint());
     }
 
     @Test
-    void list2dToJson() {
+    void list2dToJSON() {
         var list = new LinkedList<>(
                 List.of(new ArrayList<>(List.of(1, 2, 3)), new LinkedList<>(List.of(4, 5, 6))));
-        Object out = Serialization.toJson(list);
-        assertInstanceOf(JsonObject.class, out);
+        Object out = Serialization.toJSON(list);
+        assertInstanceOf(JSONObject.class, out);
         assertEquals("""
                 {
                     "kind": "collection",
@@ -164,6 +164,6 @@ public class ToJsonTests {
                             ]
                         }
                     ]
-                }""", ((JsonObject) out).prettyPrint());
+                }""", ((JSONObject) out).prettyPrint());
     }
 }

@@ -13,16 +13,16 @@ import java.util.stream.Collectors;
  *
  * @author MR-Spagetty
  */
-public final class JsonObject extends JsonCollection<String> {
-    private final Map<String, JsonType> items = new LinkedHashMap<>();
+public final class JSONObject extends JSONCollection<String> {
+    private final Map<String, JSONType> items = new LinkedHashMap<>();
 
     @Override
-    public Optional<JsonType> get(String position) {
+    public Optional<JSONType> get(String position) {
         return Optional.ofNullable(this.items.get(position));
     }
 
     /**
-     * Adds or updates an item in this JsonObject.
+     * Adds or updates an item in this JSONObject.
      *
      * @param position the key to add or update
      * @param newItem the item to add or update
@@ -30,21 +30,21 @@ public final class JsonObject extends JsonCollection<String> {
      * @throws IllegalArgumentException if adding the new item would create a
      *      cycle in the JSON structure
      */
-    public Optional<JsonType> put(String position, JsonType newItem) {
-        if (newItem == this || newItem instanceof JsonCollection col && col.containsExactly(this)) {
+    public Optional<JSONType> put(String position, JSONType newItem) {
+        if (newItem == this || newItem instanceof JSONCollection col && col.containsExactly(this)) {
             throw new IllegalArgumentException("Collection Cycles are not permitted");
         }
         return Optional.ofNullable(this.items.put(position, newItem));
     }
 
     @Override
-    protected boolean containsExactly(JsonType jsonItem) {
+    protected boolean containsExactly(JSONType jsonItem) {
         return items.values().parallelStream().anyMatch(i -> i == jsonItem
-                || (i instanceof JsonCollection col && col.containsExactly(jsonItem)));
+                || (i instanceof JSONCollection col && col.containsExactly(jsonItem)));
     }
 
     @Override
-    public Optional<JsonType> remove(String position) {
+    public Optional<JSONType> remove(String position) {
         return Optional.of(items.remove(position));
     }
 
@@ -52,11 +52,11 @@ public final class JsonObject extends JsonCollection<String> {
         return this.items.keySet();
     }
 
-    public Set<Map.Entry<String, JsonType>> entrySet() {
+    public Set<Map.Entry<String, JSONType>> entrySet() {
         return this.items.entrySet();
     }
 
-    public Collection<JsonType> values() {
+    public Collection<JSONType> values() {
         return this.items.values();
     }
 
@@ -67,8 +67,8 @@ public final class JsonObject extends JsonCollection<String> {
 
     private String serialPairs(boolean pretty, int indentationLevel) {
         return this.items.entrySet().parallelStream().map(p -> {
-            String key = indent(pretty ? indentationLevel : 0) + new JsonString(p.getKey()) + ": ";
-            if (pretty && p.getValue() instanceof JsonCollection col) {
+            String key = indent(pretty ? indentationLevel : 0) + new JSONString(p.getKey()) + ": ";
+            if (pretty && p.getValue() instanceof JSONCollection col) {
                 return key + col.prettyPrint(indentationLevel);
             }
             return key + p.getValue().toString();
@@ -90,7 +90,7 @@ public final class JsonObject extends JsonCollection<String> {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof JsonObject object && object.items.equals(this.items);
+        return obj instanceof JSONObject object && object.items.equals(this.items);
     }
 
     @Override
@@ -99,24 +99,24 @@ public final class JsonObject extends JsonCollection<String> {
     }
 
     /**
-     * Parses a JsonObject from the start of the given string.
+     * Parses a JSONObject from the start of the given string.
      *
      * @param jsonData the JSON string to parse
-     * @return the parsed JsonObject and the position of the next token in the
+     * @return the parsed JSONObject and the position of the next token in the
      *      given string
      * @throws IllegalArgumentException if the first token in the string is not
-     *      a JsonObject
+     *      a JSONObject
      */
-    public static Map.Entry<JsonObject, Integer> parse(String jsonData) {
+    public static Map.Entry<JSONObject, Integer> parse(String jsonData) {
         if (!isNext(jsonData)) {
             throw new IllegalArgumentException(
-                    "First JSON token in: %s \n is not a valid JsonObject".formatted(jsonData));
+                    "First JSON token in: %s \n is not a valid JSONObject".formatted(jsonData));
         }
         int overallOffset = jsonData.indexOf('{') + 1;
         jsonData = jsonData.substring(overallOffset);
-        JsonObject obj = new JsonObject();
+        JSONObject obj = new JSONObject();
         while (!jsonData.strip().startsWith("}") && !jsonData.isEmpty()) {
-            var keyDat = JsonString.parse(jsonData);
+            var keyDat = JSONString.parse(jsonData);
             String key = keyDat.getKey().value();
             overallOffset += keyDat.getValue();
             jsonData = jsonData.substring(keyDat.getValue());
@@ -127,7 +127,7 @@ public final class JsonObject extends JsonCollection<String> {
                 overallOffset += matcher.end();
             } else {
                 throw new IllegalArgumentException(
-                        "Expected ':' after key in JsonObject at: %s".formatted(key + jsonData));
+                        "Expected ':' after key in JSONObject at: %s".formatted(key + jsonData));
             }
             var itemDat = parseItem(jsonData);
             int off = itemDat.getValue();
@@ -140,12 +140,12 @@ public final class JsonObject extends JsonCollection<String> {
                 overallOffset += off;
                 if (jsonData.strip().startsWith("}")) {
                     throw new IllegalArgumentException(
-                        "Trailing comma in JsonObject is not permitted"
+                        "Trailing comma in JSONObject is not permitted"
                     );
                 }
             } else if (!jsonData.strip().startsWith("}")) {
                 throw new IllegalArgumentException(
-                        "Expected ',' or '}' in JsonObject at: %s".formatted(jsonData));
+                        "Expected ',' or '}' in JSONObject at: %s".formatted(jsonData));
             }
         }
         overallOffset += jsonData.indexOf('}') + 1;

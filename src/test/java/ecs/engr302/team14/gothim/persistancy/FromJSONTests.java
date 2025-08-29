@@ -10,15 +10,15 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests Serialization.fromJson.
+ * Tests Serialization.fromJSON.
  *
  * @author MR-Spagetty
  */
-public class FromJsonTests {
+public class FromJSONTests {
     @Test
     void basicArrayList() {
         var exp = new ArrayList<Double>(List.of(1.0, 2.0, 3.0, 4.0, 5.0));
-        var res = Serialization.fromJson(JsonArray.parse("""
+        var res = Serialization.fromJSON(JSONArray.parse("""
                 [
                     1,
                     2,
@@ -35,7 +35,7 @@ public class FromJsonTests {
     void nestedArrayList() {
         var exp = new ArrayList<List<Double>>(List.of(new ArrayList<>(List.of(1.0, 2.0, 3.0)),
                 new ArrayList<>(List.of(4.0, 5.0))));
-        var res = Serialization.fromJson(JsonArray.parse("""
+        var res = Serialization.fromJSON(JSONArray.parse("""
                 [
                     [
                         1,
@@ -54,7 +54,7 @@ public class FromJsonTests {
     @Test
     void stringKeyMap() {
         var exp = new HashMap<String, Double>(Map.of("a", 1.0, "b", 2.0, "c", 3.0));
-        var res = Serialization.fromJson(JsonObject.parse("""
+        var res = Serialization.fromJSON(JSONObject.parse("""
                 {
                     "kind": "map",
                     "class": "java.util.HashMap",
@@ -72,7 +72,7 @@ public class FromJsonTests {
     @Test
     void intKeyMap() {
         var exp = new HashMap<Integer, Double>(Map.of(1, 1.0, 2, 2.0, 3, 3.0));
-        var res = Serialization.fromJson(JsonObject.parse("""
+        var res = Serialization.fromJSON(JSONObject.parse("""
                 {
                     "kind": "map",
                     "class": "java.util.HashMap",
@@ -92,7 +92,7 @@ public class FromJsonTests {
     void complexMap() {
         var exp = new HashMap<List<Double>, Map<String, Double>>(Map.of(List.of(1.0, 2., 3.),
                 Map.of("a", 1.0, "b", 2.0), List.of(4., 5.), Map.of("c", 3.0)));
-        var res = Serialization.fromJson(JsonObject.parse("""
+        var res = Serialization.fromJSON(JSONObject.parse("""
                 {
                     "kind": "map",
                     "class": "java.util.HashMap",
@@ -130,7 +130,7 @@ public class FromJsonTests {
     @Test
     void point() {
         var exp = new Point(0, 0);
-        var res = Serialization.fromJson(JsonObject.parse("""
+        var res = Serialization.fromJSON(JSONObject.parse("""
                 {
                     "class": "ecs.engr302.team14.gothim.util.Point",
                     "fields": {

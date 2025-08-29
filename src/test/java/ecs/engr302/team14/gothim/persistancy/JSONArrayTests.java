@@ -9,34 +9,34 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 
 /**
- * Tests for the implimentation of JsonArray.
+ * Tests for the implimentation of JSONArray.
  *
  * @author MR-Spagetty
  */
-public class JsonArrayTests {
+public class JSONArrayTests {
     @Test
     void testInitalState() {
-        JsonArray arr = new JsonArray();
+        JSONArray arr = new JSONArray();
         assertEquals(0, arr.size());
         assertFalse(arr.get(0).isPresent());
     }
 
     @Test
     void testAdd() {
-        JsonArray arr = new JsonArray();
-        IntStream.range(0, 20).mapToDouble(i -> i).mapToObj(JsonNum::new).forEach(arr::add);
+        JSONArray arr = new JSONArray();
+        IntStream.range(0, 20).mapToDouble(i -> i).mapToObj(JSONNum::new).forEach(arr::add);
         assertEquals(20, arr.size());
     }
 
     @Test
     void testGet() {
-        JsonArray arr = new JsonArray();
-        IntStream.range(0, 20).mapToDouble(i -> i).mapToObj(JsonNum::new).forEach(arr::add);
+        JSONArray arr = new JSONArray();
+        IntStream.range(0, 20).mapToDouble(i -> i).mapToObj(JSONNum::new).forEach(arr::add);
         assertEquals(20, arr.size());
         IntStream.range(0, 20).forEach(i -> {
-            Optional<JsonType> ret = arr.get(i);
+            Optional<JSONType> ret = arr.get(i);
             assertTrue(ret.isPresent());
-            assertEquals(new JsonNum((double) i), ret.get());
+            assertEquals(new JSONNum((double) i), ret.get());
         });
         assertFalse(arr.get(-1).isPresent());
         assertFalse(arr.get(20).isPresent());
@@ -44,13 +44,13 @@ public class JsonArrayTests {
 
     @Test
     void testRemove() {
-        JsonArray arr = new JsonArray();
-        IntStream.range(0, 20).mapToDouble(i -> i).mapToObj(JsonNum::new).forEach(arr::add);
+        JSONArray arr = new JSONArray();
+        IntStream.range(0, 20).mapToDouble(i -> i).mapToObj(JSONNum::new).forEach(arr::add);
         assertEquals(20, arr.size());
-        Optional<JsonType> ret = arr.remove(3);
+        Optional<JSONType> ret = arr.remove(3);
         assertTrue(ret.isPresent());
-        assertEquals(new JsonNum(3.), ret.get());
-        assertEquals(new JsonNum(4.), arr.get(3).get());
+        assertEquals(new JSONNum(3.), ret.get());
+        assertEquals(new JSONNum(4.), arr.get(3).get());
         assertFalse(arr.get(19).isPresent());
     }
 }

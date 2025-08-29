@@ -9,8 +9,8 @@ import java.util.Map;
  * @param <T> the equivalent type in java of the implementing JSON type
  * @author MR-Spagetty
  */
-public interface JsonValue<T> extends JsonType {
-    static final JsonValue<Object> NULL = new JsonValue<Object>() {
+public interface JSONValue<T> extends JSONType {
+    static final JSONValue<Object> NULL = new JSONValue<Object>() {
         @Override
         public Object value() {
             return null;
@@ -23,28 +23,28 @@ public interface JsonValue<T> extends JsonType {
     };
 
     /**
-     * Parses a JsonNull from the start of the given JSON string.
+     * Parses a JSONNull from the start of the given JSON string.
      *
      * @param jsonData the JSON string to parse from
-     * @return the parsed JsonNull and the position of the next token in the
+     * @return the parsed JSONNull and the position of the next token in the
      *      given string
      * @throws IllegalArgumentException if the first token in the string is not
-     *      a JsonNull
+     *      a JSONNull
      */
-    public static Map.Entry<JsonValue<Object>, Integer> parseNull(String jsonData) {
+    public static Map.Entry<JSONValue<Object>, Integer> parseNull(String jsonData) {
         if (jsonData.stripLeading().startsWith("null")) {
             return Map.entry(NULL, jsonData.indexOf("null") + 4);
         } else {
             throw new IllegalArgumentException(
-                    "First JSON token in: %s \n is not a valid JsonNull".formatted(jsonData));
+                    "First JSON token in: %s \n is not a valid JSONNull".formatted(jsonData));
         }
     }
 
     /**
-     * Checks if the next token in the given JSON string is a JsonNull.
+     * Checks if the next token in the given JSON string is a JSONNull.
      *
      * @param jsonData the JSON string to check
-     * @return whether the next token is a JsonNull
+     * @return whether the next token is a JSONNull
      */
     public static boolean isNextNull(String jsonData) {
         try {

@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.tiles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import ecs.engr302.team14.gothim.persistancy.JSONObject;
 import ecs.engr302.team14.gothim.persistancy.Serialization;
@@ -19,16 +20,24 @@ public class CanSerializeTests {
     void passable() {
         var exp = new Passable(new Point(-23, 42), "super duper secret test");
         String serial = Serialization.toJSON(exp).toString();
-        var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
-        assertEquals(exp, out);
+        try {
+            var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
+            assertEquals(exp, out);
+        } catch (IllegalArgumentException iae) {
+            fail(serial, iae);
+        }
     }
 
     @Test
     void solid() {
         var exp = new Solid(new Point(-23, 42), "super duper secret test");
         String serial = Serialization.toJSON(exp).toString();
-        var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
-        assertEquals(exp, out);
+        try {
+            var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
+            assertEquals(exp, out);
+        } catch (IllegalArgumentException iae) {
+            fail(serial, iae);
+        }
     }
 
     @Test
@@ -36,8 +45,12 @@ public class CanSerializeTests {
         var exp = new BasicRelativeTeleportTile(new Point(-23, 42), "super duper secret test",
                 new Point(0, 23));
         String serial = Serialization.toJSON(exp).toString();
-        var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
-        assertEquals(exp, out);
+        try {
+            var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
+            assertEquals(exp, out);
+        } catch (IllegalArgumentException iae) {
+            fail(serial, iae);
+        }
     }
 
     @Test
@@ -45,7 +58,11 @@ public class CanSerializeTests {
         var exp = new BasicAbsoluteTeleportTile(new Point(-23, 42), "super duper secret test",
                 new Point(0, 0));
         String serial = Serialization.toJSON(exp).toString();
-        var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
-        assertEquals(exp, out);
+        try {
+            var out = Serialization.fromJSON(JSONObject.parse(serial).getKey());
+            assertEquals(exp, out);
+        } catch (IllegalArgumentException iae) {
+            fail(serial, iae);
+        }
     }
 }

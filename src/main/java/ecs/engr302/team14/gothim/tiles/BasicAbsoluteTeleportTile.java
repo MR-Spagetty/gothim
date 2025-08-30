@@ -16,7 +16,7 @@ public class BasicAbsoluteTeleportTile extends PrimitiveEffectTile {
     @SerializedField(deserialParamName = "destination")
     protected final Point dest;
 
-    @DeserializationMethod
+    @DeserializationMethod(serialFieldNames = { "pos", "style", "destination" })
     public BasicAbsoluteTeleportTile(Point pos, String style,
             Point destination /* , Region reg?? */) {
         super(pos, style);

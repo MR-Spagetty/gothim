@@ -10,7 +10,7 @@ import ecs.engr302.team14.gothim.util.Point;
  */
 public class Passable extends PrimitiveTile {
 
-    @DeserializationMethod
+    @DeserializationMethod(serialFieldNames = { "pos", "style" })
     public Passable(Point pos, String style) {
         super(pos, style);
     }

@@ -16,7 +16,7 @@ public class BasicRelativeTeleportTile extends PrimitiveEffectTile {
     @SerializedField(deserialParamName = "destinationOffset")
     protected final Point destOffset;
 
-    @DeserializationMethod
+    @DeserializationMethod(serialFieldNames = { "pos", "style", "destinationOffset" })
     public BasicRelativeTeleportTile(Point pos, String style, Point destinationOffset) {
         super(pos, style);
         this.destOffset = Objects.requireNonNull(destinationOffset);

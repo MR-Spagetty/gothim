@@ -187,7 +187,7 @@ public final class Serialization {
                                 + annotation.value().getName()
                                 + ") but Class B is not assignable from Class A");
                     }
-                    if (curr.equals(annotation.value())){
+                    if (curr.equals(annotation.value())) {
                         break;
                     }
                     curr = (Class<? super V>) annotation.value();
@@ -438,9 +438,11 @@ public final class Serialization {
             throw new AnnotationFormatError("Expected same number of args and stored fields,"
                     + " got %d, expcted %d".formatted(args.length, fields.size()));
         }
+        String[] paramNames = deserialMeth.getAnnotation(DeserializationMethod.class)
+                .serialFieldNames();
         for (int argInd = 0; argInd < args.length; argInd++) {
             Class<?> argType = deserialMeth.getParameterTypes()[argInd];
-            String argName = deserialMeth.getParameters()[argInd].getName();
+            String argName = paramNames[argInd];
             args[argInd] = cast(
                     fromJSON(fields.get(argName).orElseThrow(
                             () -> new IllegalArgumentException("Could not find field:" + argName))),

@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.persistancy;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.lang.annotation.AnnotationFormatError;
 import java.lang.reflect.Constructor;
@@ -170,6 +171,33 @@ public final class Serialization {
         };
     }
 
+    @SuppressWarnings("unchecked")
+    private static <V> List<Field> fieldsToSerial(Class<V> from) {
+        return Stream.of(from).parallel().<Class<? super V>>mapMulti((clazz, cons) -> {
+            Class<? super V> curr = clazz;
+            cons.accept(curr);
+            while (curr.isAnnotationPresent(SerializationExtends.class)) {
+                SerializationExtends annotation = curr.getAnnotation(SerializationExtends.class);
+                if (annotation == null) {
+                    curr = curr.getSuperclass();
+                } else {
+                    if (!annotation.value().isAssignableFrom(curr)) {
+                        throw new AnnotationFormatError("Class A (" + curr.getName()
+                                + ") is declared to inherit serializable fields from Class B ("
+                                + annotation.value().getName()
+                                + ") but Class B is not assignable from Class A");
+                    }
+                    if (curr.equals(annotation.value())){
+                        break;
+                    }
+                    curr = (Class<? super V>) annotation.value();
+                }
+                cons.accept(curr);
+            }
+        }).flatMap(clazz -> Stream.of(clazz.getDeclaredFields()))
+                .filter(f -> f.isAnnotationPresent(SerializedField.class)).toList();
+    }
+
     private static JSONObject serializeObject(Object thing) {
         JSONObject ret = new JSONObject();
         JSONArray failedFields = new JSONArray();
@@ -185,8 +213,7 @@ public final class Serialization {
             throw new IllegalArgumentException("Class: %s (of supplied object is not serializable"
                     .formatted(thingClass.getName()));
         }
-        List<Field> fieldsToSerial = Stream.of(thingClass.getDeclaredFields())
-                .filter(f -> f.isAnnotationPresent(SerializedField.class)).toList();
+        List<Field> fieldsToSerial = fieldsToSerial(thingClass);
         fieldsToSerial.stream().forEach(f -> {
             try {
                 f.setAccessible(true);

@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
 
@@ -8,6 +9,7 @@ import ecs.engr302.team14.gothim.util.Point;
  *
  * @author MR-Spagetty
  */
+@SerializationExtends(PrimitiveTile.class)
 public abstract class PrimitiveTile {
     @SerializedField
     protected final Point pos;

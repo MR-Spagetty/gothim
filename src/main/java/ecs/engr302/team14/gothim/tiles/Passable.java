@@ -20,4 +20,10 @@ public class Passable extends PrimitiveTile {
         return true;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass().equals(obj.getClass()) && ((Passable) obj).pos.equals(this.pos)
+                && ((Passable) obj).style.equals(this.style);
+    }
+
 }

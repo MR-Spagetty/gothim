@@ -19,4 +19,10 @@ public class Solid extends PrimitiveTile {
     public boolean canEnter() {
         return false;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass().equals(obj.getClass()) && ((Solid) obj).pos.equals(this.pos)
+                && ((Solid) obj).style.equals(this.style);
+    }
 }

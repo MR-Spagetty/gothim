@@ -23,6 +23,14 @@ public class BasicRelativeTeleportTile extends PrimitiveEffectTile {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        return this.getClass().equals(obj.getClass())
+                && ((BasicRelativeTeleportTile) obj).pos.equals(this.pos)
+                && ((BasicRelativeTeleportTile) obj).style.equals(this.style)
+                && ((BasicRelativeTeleportTile) obj).destOffset.equals(this.destOffset);
+    }
+
+    @Override
     public boolean canEnter() {
         return true;
     }

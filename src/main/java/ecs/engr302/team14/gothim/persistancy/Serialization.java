@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -217,8 +218,10 @@ public final class Serialization {
         fieldsToSerial.stream().forEach(f -> {
             try {
                 f.setAccessible(true);
+                String annotatedName = f.getAnnotation(SerializedField.class).deserialParamName();
                 try {
-                    fields.put(f.getName(), toJSON(f.get(thing)));
+                    fields.put(annotatedName.isBlank() ? f.getName() : annotatedName,
+                            toJSON(f.get(thing)));
                 } catch (IllegalArgumentException e) {
                     System.err.println("Error, object lied about its type");
                 } catch (IllegalAccessException e) {

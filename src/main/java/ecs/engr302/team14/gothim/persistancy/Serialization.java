@@ -190,13 +190,17 @@ public final class Serialization {
         fieldsToSerial.stream().forEach(f -> {
             try {
                 f.setAccessible(true);
+                Object value;
                 try {
-                    fields.put(f.getName(), toJSON(f.get(thing)));
+                    value = f.get(thing);
                 } catch (IllegalArgumentException e) {
                     System.err.println("Error, object lied about its type");
+                    return;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+                    return;
                 }
+                fields.put(f.getName(), toJSON(value));
             } catch (InaccessibleObjectException ioe) {
                 return; // checkstyle doesn't like an empty catch
             }

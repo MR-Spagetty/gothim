@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.persistancy;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.HasSerializedConstants;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.lang.annotation.AnnotationFormatError;
@@ -10,6 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InaccessibleObjectException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -200,10 +202,14 @@ public final class Serialization {
     }
 
     private static JSONObject serializeObject(Object thing) {
+        Class<?> thingClass = thing.getClass();
+        Optional<JSONObject> constant = serializeByConstant(thing, thingClass);
+        if (constant.isPresent()) {
+            return constant.get();
+        }
         JSONObject ret = new JSONObject();
         JSONArray failedFields = new JSONArray();
         var fields = new JSONObject();
-        Class<?> thingClass = thing.getClass();
         ret.put("class", new JSONString(thingClass.getName()));
         ret.put("failedFields", failedFields);
         ret.put("fields", fields);
@@ -235,6 +241,33 @@ public final class Serialization {
             ret.remove("failedFields");
         }
         return ret;
+    }
+
+    private static Optional<JSONObject> serializeByConstant(Object thing, Class<?> thingClass) {
+        final int staticFinal = (Modifier.STATIC | Modifier.FINAL);
+        if (!thingClass.isAnnotationPresent(HasSerializedConstants.class)) {
+            return Optional.empty();
+        }
+        JSONObject ret = new JSONObject();
+        ret.put("kind", new JSONString("constant"));
+        ret.put("class", new JSONString(thingClass.getName()));
+        Optional<Field> constant = Stream.of(thingClass.getDeclaredFields()).parallel()
+                .filter(f -> ((f.getModifiers() & staticFinal) == staticFinal)
+                        && thingClass.isAssignableFrom(f.getType()))
+                .filter(f -> {
+                    f.setAccessible(true);
+                    try {
+                        return f.get(null).equals(thing);
+                    } catch (IllegalArgumentException | IllegalAccessException e) {
+                        return false;
+                    }
+                }).findFirst();
+        if (constant.isEmpty()) {
+            return Optional.empty();
+        }
+        ret.put("name", new JSONString(constant.get().getName()));
+        return Optional.of(ret);
+
     }
 
     private static <O, T> T cast(O obj, Class<T> to) {
@@ -389,6 +422,9 @@ public final class Serialization {
             case "collection" -> {
                 return deserializeCollection(o);
             }
+            case "constant" -> {
+                return deserializeConstant(o);
+            }
 
             case null -> {
                 return deserializeObject(o);
@@ -469,5 +505,43 @@ public final class Serialization {
             }
         }
         return null;
+    }
+
+    private static Object deserializeConstant(JSONObject o) {
+        Class<?> thingClass = o.get("class").map(v -> {
+            if (v instanceof JSONString js) {
+                return js.value();
+            }
+            throw new IllegalArgumentException("\"class\" field in object was not a JSONString but "
+                    + "instead a %s with value:\n%s".formatted(o.getClass().getSimpleName(),
+                            o.toString()));
+        }).map(className -> {
+            try {
+                return Class.forName(className);
+            } catch (ClassNotFoundException e) {
+                throw new IllegalArgumentException(
+                        "Could not find class named %s specified in object:\n%s"
+                                .formatted(className, o.prettyPrint()));
+            }
+        }).orElseThrow(() -> new IllegalArgumentException(
+                "Could not determine the class of the object from json:\n%s"
+                        .formatted(o.prettyPrint())));
+        Field field;
+        try {
+            field = thingClass.getDeclaredField(((JSONString) o.get("name").get()).value());
+        } catch (NoSuchFieldException e) {
+            throw new AnnotationFormatError("The specified constant does not exist", e);
+        }
+        field.setAccessible(true);
+        try {
+            return field.get(null);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Could not access constant: %s.%s"
+                    .formatted(thingClass.getName(), field.getName()), e);
+        } catch (NullPointerException npe) {
+            throw new AnnotationFormatError("Specified constant is not a constant", npe);
+        }
     }
 }

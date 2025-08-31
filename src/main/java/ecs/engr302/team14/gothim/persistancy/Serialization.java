@@ -434,8 +434,8 @@ public final class Serialization {
         }
     }
 
-    private static Object deserializeObject(JSONObject o) {
-        Class<?> thingClass = o.get("class").map(v -> {
+    private static Class<?> getClassFromJson(JSONObject o) {
+        return o.get("class").map(v -> {
             if (v instanceof JSONString js) {
                 return js.value();
             }
@@ -453,7 +453,10 @@ public final class Serialization {
         }).orElseThrow(() -> new IllegalArgumentException(
                 "Could not determine the class of the object from json:\n%s"
                         .formatted(o.prettyPrint())));
+    }
 
+    private static Object deserializeObject(JSONObject o) {
+        Class<?> thingClass = getClassFromJson(o);
         Executable deserialMeth = Stream
                 .concat(Stream.of(thingClass.getDeclaredMethods()),
                         Stream.of(thingClass.getDeclaredConstructors()))
@@ -508,24 +511,7 @@ public final class Serialization {
     }
 
     private static Object deserializeConstant(JSONObject o) {
-        Class<?> thingClass = o.get("class").map(v -> {
-            if (v instanceof JSONString js) {
-                return js.value();
-            }
-            throw new IllegalArgumentException("\"class\" field in object was not a JSONString but "
-                    + "instead a %s with value:\n%s".formatted(o.getClass().getSimpleName(),
-                            o.toString()));
-        }).map(className -> {
-            try {
-                return Class.forName(className);
-            } catch (ClassNotFoundException e) {
-                throw new IllegalArgumentException(
-                        "Could not find class named %s specified in object:\n%s"
-                                .formatted(className, o.prettyPrint()));
-            }
-        }).orElseThrow(() -> new IllegalArgumentException(
-                "Could not determine the class of the object from json:\n%s"
-                        .formatted(o.prettyPrint())));
+        Class<?> thingClass = getClassFromJson(o);
         Field field;
         try {
             field = thingClass.getDeclaredField(((JSONString) o.get("name").get()).value());

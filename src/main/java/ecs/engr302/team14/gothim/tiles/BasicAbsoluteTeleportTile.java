@@ -1,5 +1,7 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.Objects;
 
@@ -11,12 +13,22 @@ import java.util.Objects;
  */
 public class BasicAbsoluteTeleportTile extends PrimitiveEffectTile {
 
+    @SerializedField(deserialParamName = "destination")
     protected final Point dest;
 
+    @DeserializationMethod(serialFieldNames = { "pos", "style", "destination" })
     public BasicAbsoluteTeleportTile(Point pos, String style,
             Point destination /* , Region reg?? */) {
         super(pos, style);
         this.dest = Objects.requireNonNull(destination);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass().equals(obj.getClass())
+                && ((BasicAbsoluteTeleportTile) obj).pos.equals(this.pos)
+                && ((BasicAbsoluteTeleportTile) obj).style.equals(this.style)
+                && ((BasicAbsoluteTeleportTile) obj).dest.equals(this.dest);
     }
 
     @Override

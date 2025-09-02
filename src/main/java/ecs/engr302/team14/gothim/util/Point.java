@@ -15,7 +15,7 @@ import java.util.Objects;
 public record Point(@SerializedField
         double x, @SerializedField
         double y) implements Comparable<Point> {
-    @DeserializationMethod
+    @DeserializationMethod(serialFieldNames = { "x", "y" })
     public Point {
     }
 

@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.util.Point;
 
 /**
@@ -9,6 +10,7 @@ import ecs.engr302.team14.gothim.util.Point;
  */
 public class Solid extends PrimitiveTile {
 
+    @DeserializationMethod(serialFieldNames = { "pos", "style" })
     public Solid(Point pos, String style) {
         super(pos, style);
     }
@@ -16,5 +18,11 @@ public class Solid extends PrimitiveTile {
     @Override
     public boolean canEnter() {
         return false;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass().equals(obj.getClass()) && ((Solid) obj).pos.equals(this.pos)
+                && ((Solid) obj).style.equals(this.style);
     }
 }

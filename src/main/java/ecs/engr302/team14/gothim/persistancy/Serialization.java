@@ -225,14 +225,17 @@ public final class Serialization {
             try {
                 f.setAccessible(true);
                 String annotatedName = f.getAnnotation(SerializedField.class).deserialParamName();
+                JSONType value;
                 try {
-                    fields.put(annotatedName.isBlank() ? f.getName() : annotatedName,
-                            toJSON(f.get(thing)));
+                    value = toJSON(f.get(thing));
                 } catch (IllegalArgumentException e) {
                     System.err.println("Error, object lied about its type");
+                    return;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+                    return;
                 }
+                fields.put(annotatedName.isBlank() ? f.getName() : annotatedName, value);
             } catch (InaccessibleObjectException ioe) {
                 return; // checkstyle doesn't like an empty catch
             }

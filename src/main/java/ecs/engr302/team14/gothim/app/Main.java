@@ -3,6 +3,7 @@ package ecs.engr302.team14.gothim.app;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import ecs.engr302.team14.gothim.renderer.Renderer;
 
 public class Main {
     private static Main instance;
@@ -10,11 +11,12 @@ public class Main {
     public static JPanel rendererPanel, buttonPanel;
     public static GameState currentState;
     private KeybindManager keyBinds;
+    private static Renderer renderer = Renderer.getInstance();
 
     private Main(){
         currentState = GameState.Menu;
         frame = new JFrame();
-        rendererPanel = new JPanel();
+        rendererPanel = Renderer.getInstance();
         buttonPanel = new JPanel();
         keyBinds = new KeybindManager();
         new ButtonManager();

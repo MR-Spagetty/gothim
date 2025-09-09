@@ -1,5 +1,7 @@
 package ecs.engr302.team14.gothim.app;
 
+import ecs.engr302.team14.gothim.renderer.Renderer;
+
 public class ActionHandler {
     public ActionHandler() {}
 
@@ -28,6 +30,7 @@ public class ActionHandler {
 
     public static void handleOpenTaskbook(){
         System.out.println("Opening taskbook. . .");
+        Renderer.getInstance().toggleTaskbook();
     }
 
     public static void handleSaveGame(){

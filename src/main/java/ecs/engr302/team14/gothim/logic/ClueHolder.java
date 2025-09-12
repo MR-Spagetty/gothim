@@ -2,7 +2,6 @@ package ecs.engr302.team14.gothim.logic;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -16,7 +15,7 @@ import java.util.function.Consumer;
  */
 public class ClueHolder {
     @SerializedField
-    private List<Clue> clues = new ArrayList<>();
+    private Set<Clue> clues = new HashSet<>();
     @SerializedField
     private Set<String> foundClues = new HashSet<>();
 
@@ -29,8 +28,8 @@ public class ClueHolder {
      * @param clues the clues to store in this holder
      * @see #ClueHolder(List, List)
      */
-    public ClueHolder(List<Clue> clues) {
-        this(clues, List.of());
+    public ClueHolder(Set<Clue> clues) {
+        this(clues, Set.of());
     }
 
     /**
@@ -42,7 +41,7 @@ public class ClueHolder {
      *                                  not present in the clues
      */
     @DeserializationMethod(serialFieldNames = { "clues", "foundClues" })
-    public ClueHolder(List<Clue> clues, List<String> foundClues) {
+    public ClueHolder(Set<Clue> clues, Set<String> foundClues) {
         this.clues.addAll(clues);
         List<String> invalidFound = foundClues.stream()
                 .filter(id -> clues.parallelStream().anyMatch(c -> !id.equals(c.id()))).toList();
@@ -100,6 +99,118 @@ public class ClueHolder {
     public void clearObservers() {
         this.clueObserver = unused -> {
         };
+    }
+
+    /**
+     * Have all the clues in this holder been found.
+     *
+     * @return whether they have all been found
+     */
+    public boolean allCluesFound() {
+        return clues.size() == foundClues.size();
+    }
+
+    /**
+     * the number of Clues that exist in this holder that are of the Public access
+     * modifier.
+     *
+     * @return the number of Public clues
+     */
+    public int totalPublic() {
+        return (int) clues.parallelStream()
+                .filter(c -> c.modifier() == AccessModifier.Public).count();
+    }
+
+    /**
+     * the number of Clues that have been found that are of the Public access
+     * modifier.
+     *
+     * @return the number of found Public clues
+     */
+    public int foundPublic() {
+        return (int) clues.parallelStream()
+                .filter(
+                        c -> c.modifier() == AccessModifier.Public && foundClues.contains(c.id()))
+                .count();
+    }
+
+    /**
+     * the number of Clues that are yet to be found that are of the Public access
+     * modifier.
+     *
+     * @return the number of yet to be found Public clues
+     */
+    public int remainingPublic() {
+        return totalPublic() - foundPublic();
+    }
+
+    /**
+     * the number of Clues that exist in this holder that are of the Private access
+     * modifier.
+     *
+     * @return the number of Private clues
+     */
+    public int totalPrivate() {
+        return (int) clues.parallelStream()
+                .filter(c -> c.modifier() == AccessModifier.Private).count();
+    }
+
+    /**
+     * the number of Clues that have been found that are of the Private access
+     * modifier.
+     *
+     * @return the number of found Private clues
+     */
+    public int foundPrivate() {
+        return (int) clues.parallelStream()
+                .filter(
+                        c -> c.modifier() == AccessModifier.Private && foundClues.contains(c.id()))
+                .count();
+    }
+
+    /**
+     * the number of Clues that are yet to be found that are of the Private access
+     * modifier.
+     *
+     * @return the number of yet to be found Private clues
+     */
+    public int remainingPrivate() {
+        return totalPrivate() - foundPrivate();
+    }
+
+    /**
+     * the number of Clues that exist in this holder that are of the Static access
+     * modifier.
+     *
+     * @return the number of Static clues
+     */
+
+    public int totalStatic() {
+        return (int) clues.parallelStream()
+                .filter(c -> c.modifier() == AccessModifier.Static).count();
+    }
+
+    /**
+     * the number of Clues that have been found that are of the Static access
+     * modifier.
+     *
+     * @return the number of found Static clues
+     */
+    public int foundStatic() {
+        return (int) clues.parallelStream()
+                .filter(
+                        c -> c.modifier() == AccessModifier.Static && foundClues.contains(c.id()))
+                .count();
+    }
+
+    /**
+     * the number of Clues that are yet to be found that are of the Static access
+     * modifier.
+     *
+     * @return the number of yet to be found Static clues
+     */
+    public int remainingStatic() {
+        return totalStatic() - foundStatic();
     }
 
 }

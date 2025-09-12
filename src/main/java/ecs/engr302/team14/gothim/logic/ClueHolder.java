@@ -4,6 +4,7 @@ import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -19,7 +20,7 @@ public class ClueHolder {
     @SerializedField
     private Set<String> foundClues = new HashSet<>();
 
-    Consumer<String> clueObserver = unused -> {
+    Consumer<String> clueObserver = _ -> {
     };
 
     /**
@@ -35,13 +36,17 @@ public class ClueHolder {
     /**
      * Creates a new Clue holder with the given clues and found clues.
      *
-     * @param clues      the clues to hold
+     * @param clues the clues to hold
      * @param foundClues the clue ids that have already been found
-     * @throws IllegalArgumentException if the found clues contains any ids that are
-     *                                  not present in the clues
+     * @throws IllegalArgumentException if the found clues contains any ids that
+     *      are not present in the clues
      */
     @DeserializationMethod(serialFieldNames = { "clues", "foundClues" })
     public ClueHolder(Set<Clue> clues, Set<String> foundClues) {
+        if (clues.parallelStream().map(Clue::id).distinct().count() != clues.size()) {
+            throw new IllegalArgumentException(
+                    "Found atleast 1 duplicate clue id in clues:\n" + clues);
+        }
         this.clues.addAll(clues);
         List<String> invalidFound = foundClues.stream()
                 .filter(id -> clues.parallelStream().anyMatch(c -> !id.equals(c.id()))).toList();
@@ -52,21 +57,76 @@ public class ClueHolder {
         this.foundClues.addAll(foundClues);
     }
 
+    public boolean clueExists(String id) {
+        return clues.parallelStream().anyMatch(c -> c.id().equals(id));
+    }
+
+    /**
+     * gets the clue with the specified id.
+     *
+     * @param id the id of the clue to get
+     * @return the clue
+     * @throws NoSuchElementException if no clue exists with that id
+     */
+    public Clue getClue(String id) {
+        if (!clueExists(id)) {
+            throw new NoSuchElementException("Unknown clue: " + id);
+        }
+        return clues.parallelStream().filter(c -> c.id().equals(id)).reduce((_, _) -> {
+            throw new IllegalStateException("Multiple clues with same id found");
+        }).get();
+    }
+
     /**
      * Marks the specified clue id as found.
      *
      * @param id the id of the clue to mark as found
-     * @throws IllegalArgumentException if the clue id does not correspond to a clue
+     * @throws NoSuchElementException if the clue id does not correspond to a
+     *      clue
      */
     public void findClue(String id) {
         if (foundClues.contains(id)) {
             return;
         }
-        if (clues.parallelStream().noneMatch(c -> c.id().equals(id))) {
-            throw new IllegalArgumentException("Unknown clue: " + id);
+        if (!clueExists(id)) {
+            throw new NoSuchElementException("Unknown clue: " + id);
         }
         foundClues.add(id);
         clueObserver.accept(id);
+    }
+
+    /**
+     * check if the given clue has been found already.
+     *
+     * @param clue the clue to check
+     * @return if it has been found
+     * @throws IllegalArgumentException if the clue does not match any known
+     *      clue
+     * @see #isFound(String)
+     */
+    public boolean isFound(Clue clue) {
+        if (!clues.contains(clue)) {
+            throw new IllegalArgumentException(
+                    "clue \"%s\" does not correspond to any known clue".formatted(clue));
+        }
+        return foundClues.contains(clue.id());
+    }
+
+    /**
+     * check if a clue with the given id has been found already.
+     *
+     * @param id the clue id to check
+     * @return if a clue with that id has been found
+     * @throws IllegalArgumentException if no clue by that id is known
+     * @see #isFound(Clue)
+     */
+    public boolean isFound(String id) {
+        try {
+            getClue(id);
+        } catch (NoSuchElementException nse) {
+            throw new IllegalArgumentException(nse.getMessage());
+        }
+        return foundClues.contains(id);
     }
 
     /**
@@ -97,7 +157,7 @@ public class ClueHolder {
      * Clears all observers from this holder.
      */
     public void clearObservers() {
-        this.clueObserver = unused -> {
+        this.clueObserver = _ -> {
         };
     }
 
@@ -111,14 +171,14 @@ public class ClueHolder {
     }
 
     /**
-     * the number of Clues that exist in this holder that are of the Public access
-     * modifier.
+     * the number of Clues that exist in this holder that are of the Public
+     * access modifier.
      *
      * @return the number of Public clues
      */
     public int totalPublic() {
-        return (int) clues.parallelStream()
-                .filter(c -> c.modifier() == AccessModifier.Public).count();
+        return (int) clues.parallelStream().filter(c -> c.modifier() == AccessModifier.Public)
+                .count();
     }
 
     /**
@@ -129,14 +189,13 @@ public class ClueHolder {
      */
     public int foundPublic() {
         return (int) clues.parallelStream()
-                .filter(
-                        c -> c.modifier() == AccessModifier.Public && foundClues.contains(c.id()))
+                .filter(c -> c.modifier() == AccessModifier.Public && foundClues.contains(c.id()))
                 .count();
     }
 
     /**
-     * the number of Clues that are yet to be found that are of the Public access
-     * modifier.
+     * the number of Clues that are yet to be found that are of the Public
+     * access modifier.
      *
      * @return the number of yet to be found Public clues
      */
@@ -145,14 +204,14 @@ public class ClueHolder {
     }
 
     /**
-     * the number of Clues that exist in this holder that are of the Private access
-     * modifier.
+     * the number of Clues that exist in this holder that are of the Private
+     * access modifier.
      *
      * @return the number of Private clues
      */
     public int totalPrivate() {
-        return (int) clues.parallelStream()
-                .filter(c -> c.modifier() == AccessModifier.Private).count();
+        return (int) clues.parallelStream().filter(c -> c.modifier() == AccessModifier.Private)
+                .count();
     }
 
     /**
@@ -163,14 +222,13 @@ public class ClueHolder {
      */
     public int foundPrivate() {
         return (int) clues.parallelStream()
-                .filter(
-                        c -> c.modifier() == AccessModifier.Private && foundClues.contains(c.id()))
+                .filter(c -> c.modifier() == AccessModifier.Private && foundClues.contains(c.id()))
                 .count();
     }
 
     /**
-     * the number of Clues that are yet to be found that are of the Private access
-     * modifier.
+     * the number of Clues that are yet to be found that are of the Private
+     * access modifier.
      *
      * @return the number of yet to be found Private clues
      */
@@ -179,15 +237,15 @@ public class ClueHolder {
     }
 
     /**
-     * the number of Clues that exist in this holder that are of the Static access
-     * modifier.
+     * the number of Clues that exist in this holder that are of the Static
+     * access modifier.
      *
      * @return the number of Static clues
      */
 
     public int totalStatic() {
-        return (int) clues.parallelStream()
-                .filter(c -> c.modifier() == AccessModifier.Static).count();
+        return (int) clues.parallelStream().filter(c -> c.modifier() == AccessModifier.Static)
+                .count();
     }
 
     /**
@@ -198,14 +256,13 @@ public class ClueHolder {
      */
     public int foundStatic() {
         return (int) clues.parallelStream()
-                .filter(
-                        c -> c.modifier() == AccessModifier.Static && foundClues.contains(c.id()))
+                .filter(c -> c.modifier() == AccessModifier.Static && foundClues.contains(c.id()))
                 .count();
     }
 
     /**
-     * the number of Clues that are yet to be found that are of the Static access
-     * modifier.
+     * the number of Clues that are yet to be found that are of the Static
+     * access modifier.
      *
      * @return the number of yet to be found Static clues
      */

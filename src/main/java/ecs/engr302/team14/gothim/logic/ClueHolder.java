@@ -2,6 +2,9 @@ package ecs.engr302.team14.gothim.logic;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -93,6 +96,14 @@ public class ClueHolder {
         }
         foundClues.add(id);
         clueObserver.accept(id);
+    }
+
+    public Collection<Clue> getAllClues() {
+        return Collections.unmodifiableCollection(clues);
+    }
+
+    public Collection<String> getAllClueIds() {
+        return getAllClues().stream().map(Clue::id).toList();
     }
 
     /**

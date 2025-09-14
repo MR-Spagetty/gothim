@@ -5,6 +5,7 @@ import java.awt.*;
 import java.util.List;
 import ecs.engr302.team14.gothim.renderer.Renderer;
 
+
 public class Main {
     private static Main instance;
     public static JFrame frame;

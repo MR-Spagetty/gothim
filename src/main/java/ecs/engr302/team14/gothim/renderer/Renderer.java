@@ -7,20 +7,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.imageio.ImageIO;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
+import java.util.List;
+import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.entities.NPC;
 
 public class Renderer extends JPanel {
-
     private static Renderer instance;
     private boolean showTaskbook = false;
     private BufferedImage taskbook;
     private Rectangle taskbookBounds;
-
+    private Player player;
+    private List<NPC> npcs;
 
     /**
      * Constructs a Renderer instance
@@ -39,6 +36,9 @@ public class Renderer extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Set background
+        setBackground(new Color(30, 30, 30));
 
         // Mouse listener for interaction
         this.addMouseListener(new MouseAdapter() {
@@ -64,9 +64,17 @@ public class Renderer extends JPanel {
         return instance;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setNPCs(List<NPC> npcs) {
+        this.npcs = npcs;
+    }
+
     public void toggleTaskbook() {
         showTaskbook = !showTaskbook;
-        repaint(); // Force repaint when state changes
+        repaint();
         System.out.println("paint called");
     }
 
@@ -74,9 +82,19 @@ public class Renderer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Draw game entities
+        if (player != null) {
+            player.render(g);
+        }
+
+        if (npcs != null) {
+            for (NPC npc : npcs) {
+                npc.render(g);
+            }
+        }
+
         if (showTaskbook && taskbook != null) {
             int targetWidth = 700;
-
             double aspectRatio = (double) taskbook.getHeight() / taskbook.getWidth();
             int targetHeight = (int) (targetWidth * aspectRatio);
 
@@ -86,17 +104,13 @@ public class Renderer extends JPanel {
             g.drawImage(taskbook, x, y, targetWidth, targetHeight, this);
 
             taskbookBounds.setBounds(x, y, targetWidth, targetHeight);
-            g.setFont(new Font("Serif", Font.PLAIN, 24)); // choose your font and size
+            g.setFont(new Font("Serif", Font.PLAIN, 24));
             g.setColor(Color.BLACK);
 
-            // Text to draw
             String text = "Taskbook.";
-
-            // Draw text inside the book with some padding
             drawWrappedText(g, text, x + 100, y + 50, targetWidth - 2 * 50);
         }
     }
-
     /**
      * Draws the taskbook
      *

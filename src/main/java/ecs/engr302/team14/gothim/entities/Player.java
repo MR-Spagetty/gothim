@@ -20,12 +20,12 @@ public class Player extends Entity {
     public Player(String name, Point position) {
         super(name, position);
 
-        try {
-
-            sprite = ImageIO.read(getClass().getResource("/assets/player1.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//
+//            sprite = ImageIO.read(getClass().getResource("/assets/player1.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void moveTo(Area newArea) {

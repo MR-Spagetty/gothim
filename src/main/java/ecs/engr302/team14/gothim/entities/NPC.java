@@ -16,11 +16,11 @@ public class NPC extends InteractableEntity{
         super(name, position);
         this.dialogue = dialogue;
 
-        try {
-            sprite = ImageIO.read(getClass().getResource("/assets/npc.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            sprite = ImageIO.read(getClass().getResource("/assets/npc.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     //Complete interaction

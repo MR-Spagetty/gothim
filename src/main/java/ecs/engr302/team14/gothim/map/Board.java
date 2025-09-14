@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.entities.NPC;
@@ -54,6 +55,19 @@ public class Board {
     public PrimitiveTile getTile(Point p){
         return board.get(p);
     }
+
+    public List<PrimitiveTile> getTiles(Point topleft, Point bottomRight){
+        List<PrimitiveTile> ls = new ArrayList<>();
+        for(double x = topleft.x(); x <= bottomRight.x(); x++){
+            for(double y = topleft.y(); y <= bottomRight.y(); y++){
+                //get an option from the board and add to list, otherwise do nothing
+                Optional.ofNullable(board.get(new Point(x, y))).ifPresent(ls::add);
+            }
+        }
+        return ls;
+    }
+
+
 
     /*---------------------- Player Stuff -----------------------*/
 

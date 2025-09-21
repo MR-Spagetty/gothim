@@ -29,7 +29,7 @@ public abstract class PrimitiveTile {
 
     public abstract boolean canEnter();
 
-    public Point pos(){
+    public Point pos() {
         return this.pos;
     }
 }

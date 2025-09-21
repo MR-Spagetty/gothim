@@ -1,0 +1,36 @@
+{
+  "comment1": "Comments cna kind of be inserted by using an unused key",
+  "class": "ecs.engr302.team14.gothim.logic.LevelHolder",
+  "fields": {
+    "levelID": "Level 1",
+    "map": {
+      "comment1": "Map stuff goes here"
+
+    },
+    "clues": {
+      "class":"ecs.engr302.team14.gothim.logic.ClueHolder",
+      "fields":{
+        "clues": {
+          "kind": "collection",
+          "class": "java.util.HashSet",
+          "comment1": "Clues go into the values array as show by the example below",
+          "values": [
+            {
+              "class": "ecs.engr302.team14.gothim.logic.Clue",
+              "fields": {
+                "modifier": {
+                  "kind": "constant",
+                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                  "value": "Public"
+                },
+                "id": "exampleClue",
+                "description": "An example clue."
+              }
+              }
+          ]
+        },
+        "foundClues": {}
+      }
+    }
+  }
+}

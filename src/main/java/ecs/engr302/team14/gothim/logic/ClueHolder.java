@@ -2,7 +2,6 @@ package ecs.engr302.team14.gothim.logic;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;

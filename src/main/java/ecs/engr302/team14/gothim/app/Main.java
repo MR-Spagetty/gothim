@@ -1,33 +1,43 @@
 package ecs.engr302.team14.gothim.app;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.util.List;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+/**
+ * Class for initialising the game and running it.
+ */
 public class Main {
     private static Main instance;
     public static JFrame frame;
-    public static JPanel rendererPanel, buttonPanel;
+    public static JPanel rendererPanel;
+    public static JPanel buttonPanel;
     public static GameState currentState;
-    private KeybindManager keyBinds;
 
-    private Main(){
+    private Main() {
         currentState = GameState.Menu;
         frame = new JFrame();
         rendererPanel = new JPanel();
         buttonPanel = new JPanel();
-        keyBinds = new KeybindManager();
         new ButtonManager();
 
         //Set frame size
         frame.setSize(900, 900);
         buttonPanel.setPreferredSize(new Dimension(174, 800));
 
-        buttonPanel.setBackground(new Color(73,157,208));
+        buttonPanel.setBackground(new Color(73, 157, 208));
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
 
-        keyBinds.applyBindings(rendererPanel);
+        KeybindManager.applyBindings(rendererPanel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -35,9 +45,14 @@ public class Main {
         frame.setVisible(true);
     }
 
-    public static Main getMainInstance(){
+    /**
+     * Initialises the game if it hasn't been already and returns the instance.
+     *
+     * @return the instance
+     */
+    public static Main getMainInstance() {
         if (instance == null) {
-            if(frame != null) {
+            if (frame != null) {
                 frame.dispose();
             }
             instance = new Main();
@@ -45,14 +60,14 @@ public class Main {
         return instance;
     }
 
-    private void updateGUI(){
+    private void updateGUI() {
         buttonPanel.removeAll();
 
         List<JButton> buttons = getStateButtons();
-        for(JButton button : buttons){
+        for (JButton button : buttons) {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.setMargin(new Insets(5, 15, 5, 15));
-            button.setMinimumSize(new Dimension(250,30));
+            button.setMinimumSize(new Dimension(250, 30));
             button.setMaximumSize(new Dimension(250, 30));
             button.setBackground(new Color(124, 196, 241));
             button.setForeground(Color.white);
@@ -62,11 +77,11 @@ public class Main {
     }
 
     public void setGameState(GameState newState) {
-        this.currentState = newState;
+        Main.currentState = newState;
         updateGUI();
     }
 
-    private List<JButton> getStateButtons(){
+    private List<JButton> getStateButtons() {
         return switch (currentState) {
             case Menu -> ButtonManager.getMenuButtons();
             case Playing -> ButtonManager.getPlayingButtons();

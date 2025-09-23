@@ -3,27 +3,36 @@ package ecs.engr302.team14.gothim.entities;
 import ecs.engr302.team14.gothim.logic.AccessModifier;
 import ecs.engr302.team14.gothim.util.Day;
 import ecs.engr302.team14.gothim.util.Task;
+import ecs.engr302.team14.gothim.logic.Clue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Taskbook {
-    private Player player;
 
-    private Map<Day, Task> tasks;
+    private Map<Day, List<Task>> tasks = new HashMap<>();
+    private List<Clue> discoveredInformation = new ArrayList<>();
 
-    private Map<AccessModifier, String> discoveredInformation;
+    public Taskbook() {
+        tasks.put(Day.ONE, List.of(
+                new Task(AccessModifier.Static, "Find something about purple cabbage"),
+                new Task(AccessModifier.Public, "Talk to someone about the cow")
+        ));
 
-    public Taskbook(Player player) {}
-
-    public Map<Day, Task> getTasks() {
-        return tasks;
+        tasks.put(Day.TWO, List.of(
+                new Task(AccessModifier.Private, "Talk to a Robberson")
+        ));
+        discoveredInformation.add(
+                new Clue(AccessModifier.Static, "Day1_Cabbage", "Purple cabbage make purple cow pats")
+        );
     }
 
-    public Map<AccessModifier, String> getDiscoveredInformation() {
-        return discoveredInformation;
-    }
+    public Map<Day, List<Task>> getTasks() {return tasks;}
+    public List<Clue> getDiscoveredInformation() { return discoveredInformation; }
 
-    public void setDiscoveredInformation(Map<AccessModifier, String> discoveredInformation) {
-        this.discoveredInformation = discoveredInformation;
+    public void addDiscoveredInformation(Clue clue) {
+        discoveredInformation.add(clue);
     }
 }

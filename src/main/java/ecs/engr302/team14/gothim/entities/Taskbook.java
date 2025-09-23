@@ -44,4 +44,3 @@ public class Taskbook {
         }
     }
 }
-//Taskbook has pages for each of the days. Shows to-do list of tasks on one page and discovered information on the other. Closes #23

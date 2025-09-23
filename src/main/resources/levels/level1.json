@@ -25,7 +25,7 @@
             "class": "ecs.engr302.team14.gothim.tiles.Solid",
             "fields": {
               "pos": {
-                "class": "ecs.engr302.team14.gothim.tiles.Solid",
+                "class": "ecs.engr302.team14.gothim.tiles.Point",
                 "fields": {
                   "x": 1,
                   "y": 0

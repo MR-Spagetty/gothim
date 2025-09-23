@@ -35,7 +35,10 @@ public class Board {
     @DeserializationMethod(serialFieldNames = { "tiles", "entities" })
     Board(List<PrimitiveTile> tiles, List<Entity> entities) {
         this.allTiles = new ArrayList<>(tiles);
-        this.allTiles.stream().forEach(t -> this.board.put(t.pos(), t));
+        this.allTiles.stream().forEach(t -> {
+            this.board.put(t.pos(), t);
+            t.linkMap(this);
+        });
         this.allEntities = new ArrayList<>(entities);
         this.allEntities.forEach(e -> {
             switch (e) {

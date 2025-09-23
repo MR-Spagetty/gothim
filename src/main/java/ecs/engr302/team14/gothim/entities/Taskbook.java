@@ -16,14 +16,16 @@ public class Taskbook {
     private List<Clue> discoveredInformation = new ArrayList<>();
 
     public Taskbook() {
-        tasks.put(Day.ONE, List.of(
-                new Task(AccessModifier.Static, "Find something about purple cabbage"),
-                new Task(AccessModifier.Public, "Talk to someone about the cow")
-        ));
+        // Use ArrayList so we can modify later
+        List<Task> dayOneTasks = new ArrayList<>();
+        dayOneTasks.add(new Task(AccessModifier.Static, "Find something about purple cabbage"));
+        dayOneTasks.add(new Task(AccessModifier.Public, "Talk to someone about the cow"));
+        tasks.put(Day.ONE, dayOneTasks);
 
-        tasks.put(Day.TWO, List.of(
-                new Task(AccessModifier.Private, "Talk to a Robberson")
-        ));
+        List<Task> dayTwoTasks = new ArrayList<>();
+        dayTwoTasks.add(new Task(AccessModifier.Private, "Talk to a Robberson"));
+        tasks.put(Day.TWO, dayTwoTasks);
+
         discoveredInformation.add(
                 new Clue(AccessModifier.Static, "Day1_Cabbage", "Purple cabbage make purple cow pats")
         );
@@ -35,4 +37,11 @@ public class Taskbook {
     public void addDiscoveredInformation(Clue clue) {
         discoveredInformation.add(clue);
     }
+    public void completeTask(Day day, Task task) {
+        List<Task> dayTasks = tasks.get(day);
+        if (dayTasks != null) {
+            dayTasks.remove(task);
+        }
+    }
 }
+//Taskbook has pages for each of the days. Shows to-do list of tasks on one page and discovered information on the other. Closes #23

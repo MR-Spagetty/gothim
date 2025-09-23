@@ -5859,7 +5859,7 @@
             }
           },
           {
-            "class": "ecs.engr302.team14.gothim.tiles.Passable",
+            "class": "ecs.engr302.team14.gothim.tiles.Solid",
             "fields": {
               "pos": {
                 "class": "ecs.engr302.team14.gothim.util.Point",

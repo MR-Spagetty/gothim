@@ -1,21 +1,23 @@
 package ecs.engr302.team14.gothim.entities;
 
 import ecs.engr302.team14.gothim.logic.AccessModifier;
+import ecs.engr302.team14.gothim.util.Day;
+import ecs.engr302.team14.gothim.util.Task;
 
 import java.util.Map;
 
 public class Taskbook {
     private Player player;
-    private Map<AccessModifier, String> tasks;
+
+    private Map<Day, Task> tasks;
+
     private Map<AccessModifier, String> discoveredInformation;
 
     public Taskbook(Player player) {}
 
-    public Map<AccessModifier, String> getTasks() {
+    public Map<Day, Task> getTasks() {
         return tasks;
     }
-
-    public void setTasks(Map<AccessModifier, String> tasks) {}
 
     public Map<AccessModifier, String> getDiscoveredInformation() {
         return discoveredInformation;

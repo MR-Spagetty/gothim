@@ -7,6 +7,8 @@ import ecs.engr302.team14.gothim.tiles.Passable;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.tiles.Solid;
 import ecs.engr302.team14.gothim.util.Point;
+
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,16 +23,20 @@ public abstract class Shape {
     @SerializedField
     HashMap<String, Object> properties;
 
-    Shape(String type, HashMap<String, Object> properties) {
+    Shape(String type, Map<String, Object> properties) {
         if (!validate(type, properties)) {
             throw new IllegalArgumentException("Invalid shape type or properties");
         }
         this.type = type;
-        this.properties = properties;
+        this.properties = new HashMap<>(properties);
     }
 
     public String type() {
         return type;
+    }
+
+    public Map<String, Object> properties() {
+        return Collections.unmodifiableMap(properties);
     }
 
     public void build(Map<Point, PrimitiveTile> map) {
@@ -39,9 +45,9 @@ public abstract class Shape {
 
     protected abstract Map<Point, PrimitiveTile> build();
 
-    protected abstract boolean placeTile(Point at);
+    public abstract boolean placeTile(Point at);
 
-    static boolean validate(String type, HashMap<String, Object> properties) {
+    static boolean validate(String type, Map<String, Object> properties) {
 
         return switch (type) {
             case "solid", "wall" -> true;
@@ -49,13 +55,13 @@ public abstract class Shape {
                     && properties.get("relativeDestination") instanceof Point;
             case "teleport" -> properties.containsKey("destination")
                     && properties.get("destination") instanceof Point;
-            case "open", "passable", "floor" -> true;
+            case "open", "passable", "floor", "walkable" -> true;
 
             default -> throw new IllegalArgumentException("Unknown shape type: " + type);
         } && properties.containsKey("style") && properties.get("style") instanceof String;
     }
 
-    static PrimitiveTile createTile(String type, Point pos, HashMap<String, Object> properties) {
+    static PrimitiveTile createTile(String type, Point pos, Map<String, Object> properties) {
         String style = (String) properties.get("style");
         return switch (type) {
             case "solid", "wall" -> new Solid(pos, style);

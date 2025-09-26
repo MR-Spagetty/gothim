@@ -5,7 +5,6 @@ import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,10 +16,17 @@ import java.util.Map;
 public class Single extends Shape {
 
     @SerializedField
-    final Point pos;
+    public final Point pos;
 
+    /**
+     * Creates a new single-tile shape at the given position.
+     *
+     * @param type the type of tile to use
+     * @param properties the properties of the tile
+     * @param pos the position of the tile
+     */
     @DeserializationMethod(serialFieldNames = { "type", "properties", "pos" })
-    Single(String type, HashMap<String, Object> properties, Point pos) {
+    public Single(String type, Map<String, Object> properties, Point pos) {
         super(type, properties);
         this.pos = pos;
     }
@@ -31,7 +37,7 @@ public class Single extends Shape {
     }
 
     @Override
-    protected boolean placeTile(Point at) {
+    public boolean placeTile(Point at) {
         return this.pos.equals(at);
     }
 

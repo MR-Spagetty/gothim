@@ -17,13 +17,22 @@ import java.util.stream.IntStream;
 @SerializationExtends(Shape.class)
 public class Rectangle extends Shape {
     @SerializedField
-    final Point topLeft;
+    public final Point topLeft;
     @SerializedField
-    final Point bottomRight;
+    public final Point bottomRight;
 
+    /**
+     * Creates a new rectangle shape with the given corners.
+     *
+     * @param type the type of tile to use
+     * @param properties the properties of the tile(s)
+     * @param topLeft the top-left corner of the rectangle
+     * @param bottomRight the bottom-right corner of the rectangle
+     */
     @DeserializationMethod(serialFieldNames = { "type", "properties", "topLeft",
             "bottomRight" })
-    Rectangle(String type, HashMap<String, Object> properties, Point topLeft, Point bottomRight) {
+    public Rectangle(String type, Map<String, Object> properties,
+            Point topLeft, Point bottomRight) {
         super(type, properties);
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
@@ -45,7 +54,7 @@ public class Rectangle extends Shape {
     }
 
     @Override
-    protected boolean placeTile(Point at) {
+    public boolean placeTile(Point at) {
         return at.x() == topLeft.x() || at.x() == bottomRight.x()
                 || at.y() == topLeft.y() || at.y() == bottomRight.y();
     }

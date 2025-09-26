@@ -7,7 +7,6 @@ import ecs.engr302.team14.gothim.tiles.Passable;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.tiles.Solid;
 import ecs.engr302.team14.gothim.util.Point;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

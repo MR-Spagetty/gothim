@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.map.shapes;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import java.util.Map;
  *
  * @author MR-Spagetty
  */
+@SerializationExtends(Rectangle.class)
 public class FilledRect extends Rectangle {
 
     /**

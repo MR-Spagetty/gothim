@@ -6,8 +6,10 @@ import ecs.engr302.team14.gothim.map.shapes.Shape;
 import ecs.engr302.team14.gothim.map.shapes.Single;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -109,8 +111,14 @@ public class MapBuilder {
         return this;
     }
 
+    /**
+     * Build the map into a board.
+     *
+     * @return the built board
+     */
     public Board build() {
-        // TODO
-        throw new UnsupportedOperationException();
+        Map<Point, PrimitiveTile> board = new HashMap<>();
+        shapes.stream().forEach(s -> s.build(board));
+        return new Board(board);
     }
 }

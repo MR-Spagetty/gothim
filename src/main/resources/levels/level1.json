@@ -139,6 +139,15 @@
                     ]
                 }
             }
+        },
+        "entities" : [],
+        "players": [],
+        "spawnPoint": {
+          "class": "ecs.engr302.team14.gothim.util.Point",
+          "fields": {
+            "x": 5.0,
+            "y": -5.0
+          }
         }
     }
 }

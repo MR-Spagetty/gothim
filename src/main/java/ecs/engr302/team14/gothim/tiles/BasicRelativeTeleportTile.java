@@ -1,9 +1,11 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * basic tile that teleports the entity that enters it to a point relative to
@@ -31,10 +33,18 @@ public class BasicRelativeTeleportTile extends PrimitiveEffectTile {
     }
 
     @Override
-    public boolean canEnter() {
-        return true;
+    public boolean canEnter(Entity e) {
+        return mapRef.getTile(pos().add(destOffset)).canEnter(e);
     }
 
-    // TODO the teleportation
+    @Override
+    public void enter(Entity e) {
+        mapRef.getTile(pos().add(destOffset)).enter(e);
+    }
+
+    @Override
+    public Optional<Entity> getOcupant() {
+        return mapRef.getTile(pos().add(destOffset)).getOcupant();
+    }
 
 }

@@ -10,6 +10,7 @@ import ecs.engr302.team14.gothim.util.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,6 +28,9 @@ public record LevelHolder(@SerializedField String levelID,
         @SerializedField ArrayList<Entity> entities,
         @SerializedField ArrayList<Player> players,
         @SerializedField Point spawnPoint) {
+    
+    static Random rand = new Random();
+    static final int MAX_PLAYERS = 2;
 
     /**
      * Creates a new LevelHolder. DO NOT USE DIRECTLY,
@@ -81,5 +85,26 @@ public record LevelHolder(@SerializedField String levelID,
             List<Entity> entities, List<Player> players, Point spawnPoint) {
         this(levelID, mapBuilder, mapBuilder.build(), clues, new ArrayList<>(entities),
                 new ArrayList<>(players), spawnPoint);
+    }
+
+    /**
+     * Get the player with the specified ID, creating them if they do not already exist.
+     *
+     * @param id the id of the player to get
+     * @return the player corresponding to that id
+     */
+    public Player getPlayer(int id) {
+        if (id < 0 || id > players.size()) {
+            throw new IndexOutOfBoundsException("No player with ID: %d".formatted(id));
+        }
+        if (id < players.size()) {
+            return players.get(id);
+        } else if (players.size() >= MAX_PLAYERS) {
+            throw new IllegalArgumentException(
+                "Max players reached cannot create a new player with ID: " + id);
+        }
+        Player p = new Player("player" + id, spawnPoint);
+        players.add(p);
+        return p;
     }
 }

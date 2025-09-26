@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.logic;
 
 import ecs.engr302.team14.gothim.map.Board;
+import ecs.engr302.team14.gothim.map.MapBuilder;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 
@@ -13,9 +14,12 @@ import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
  */
 public record LevelHolder(
         @SerializedField String levelID,
-        @SerializedField Board map,
+        @SerializedField(deserialParamName = "map") MapBuilder mapBuilder,
+        Board map,
         @SerializedField ClueHolder clues) {
 
     @DeserializationMethod(serialFieldNames = {"levelID", "map", "clues"})
-    public LevelHolder {}
+    public LevelHolder(String levelID, MapBuilder mapBuilder, ClueHolder clues) {
+        this(levelID, mapBuilder, mapBuilder.build(), clues);
+    }
 }

@@ -50,11 +50,11 @@ public abstract class Shape {
 
         return switch (type) {
             case "solid", "wall" -> true;
+            case "open", "passable", "floor", "walkable" -> true;
             case "relTeleport" -> properties.containsKey("relativeDestination")
                     && properties.get("relativeDestination") instanceof Point;
             case "teleport" -> properties.containsKey("destination")
                     && properties.get("destination") instanceof Point;
-            case "open", "passable", "floor", "walkable" -> true;
 
             default -> throw new IllegalArgumentException("Unknown shape type: " + type);
         } && properties.containsKey("style") && properties.get("style") instanceof String;
@@ -64,7 +64,7 @@ public abstract class Shape {
         String style = (String) properties.get("style");
         return switch (type) {
             case "solid", "wall" -> new Solid(pos, style);
-            case "open", "passable", "floor" -> new Passable(pos, style);
+            case "open", "passable", "floor", "walkable" -> new Passable(pos, style);
             case "relTeleport" -> new BasicRelativeTeleportTile(
                     pos, style,
                     (Point) properties.get("relativeDestination"));

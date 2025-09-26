@@ -128,14 +128,74 @@
                     "kind": "collection",
                     "class": "java.util.HashSet",
                     "values": [
-
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.Clue",
+                            "fields": {
+                                "modifier":{
+                                  "kind": "constant",
+                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                  "name": "Public"
+                                },
+                                "id": "tutFestival",
+                                "description": "The festival is in 3 days"
+                            }
+                        },
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.Clue",
+                            "fields": {
+                                "modifier":{
+                                  "kind": "constant",
+                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                  "name": "Public"
+                                },
+                                "id": "tutCowGon",
+                                "description": "The town mascot cow has been stolen"
+                            }
+                        },
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.Clue",
+                            "fields": {
+                                "modifier":{
+                                  "kind": "constant",
+                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                  "name": "Public"
+                                },
+                                "id": "lastCaring",
+                                "description": "The Theiftons were the ones taking care of the cow last night"
+                            }
+                        },
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.Clue",
+                            "fields": {
+                                "modifier":{
+                                  "kind": "constant",
+                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                  "name": "Static"
+                                },
+                                "id": "newspaper",
+                                "description": "The Robbersons are no longer the town providers of wheat\nafter a big fall out with the mayor"
+                            }
+                        },
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.Clue",
+                            "fields": {
+                                "modifier":{
+                                  "kind": "constant",
+                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                  "name": "Static"
+                                },
+                                "id": "noticeboard",
+                                "description": "Purple Cabbage is ILLEGAL"
+                            }
+                        }
                     ]
                 },
                 "foundClues": {
                     "kind": "collection",
                     "class": "java.util.HashSet",
                     "values": [
-
+                      "tutFestival",
+                      "tutCowGon"
                     ]
                 }
             }

@@ -12,11 +12,14 @@ import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.util.Point;
 
-
+/**
+ * Class for initialising the game and running it.
+ */
 public class Main {
     private static Main instance;
     public static JFrame frame;
-    public static JPanel rendererPanel, buttonPanel;
+    public static JPanel rendererPanel;
+    public static JPanel buttonPanel;
     public static GameState currentState;
     private KeybindManager keyBinds;
     private static Renderer renderer = Renderer.getInstance();
@@ -24,12 +27,11 @@ public class Main {
     private Set<Integer> pressedKeys = new HashSet<>();
     private java.util.List<NPC> npcs;
 
-    private Main(){
+    private Main() {
         currentState = GameState.Menu;
         frame = new JFrame();
         rendererPanel = Renderer.getInstance();
         buttonPanel = new JPanel();
-        keyBinds = new KeybindManager();
         new ButtonManager();
 
         // Initialize player and NPCs
@@ -47,7 +49,7 @@ public class Main {
         frame.setSize(900, 900);
         buttonPanel.setPreferredSize(new Dimension(174, 800));
 
-        buttonPanel.setBackground(new Color(73,157,208));
+        buttonPanel.setBackground(new Color(73, 157, 208));
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
 
@@ -79,9 +81,14 @@ public class Main {
         gameLoop.start();
     }
 
-    public static Main getMainInstance(){
+    /**
+     * Initialises the game if it hasn't been already and returns the instance.
+     *
+     * @return the instance
+     */
+    public static Main getMainInstance() {
         if (instance == null) {
-            if(frame != null) {
+            if (frame != null) {
                 frame.dispose();
             }
             instance = new Main();
@@ -89,14 +96,14 @@ public class Main {
         return instance;
     }
 
-    private void updateGUI(){
+    private void updateGUI() {
         buttonPanel.removeAll();
 
         List<JButton> buttons = getStateButtons();
-        for(JButton button : buttons){
+        for (JButton button : buttons) {
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
             button.setMargin(new Insets(5, 15, 5, 15));
-            button.setMinimumSize(new Dimension(250,30));
+            button.setMinimumSize(new Dimension(250, 30));
             button.setMaximumSize(new Dimension(250, 30));
             button.setBackground(new Color(124, 196, 241));
             button.setForeground(Color.white);
@@ -106,7 +113,7 @@ public class Main {
     }
 
     public void setGameState(GameState newState) {
-        this.currentState = newState;
+        Main.currentState = newState;
         updateGUI();
 
         // Request focus when switching to playing state
@@ -115,7 +122,7 @@ public class Main {
         }
     }
 
-    private List<JButton> getStateButtons(){
+    private List<JButton> getStateButtons() {
         return switch (currentState) {
             case Menu -> ButtonManager.getMenuButtons();
             case Playing -> ButtonManager.getPlayingButtons();

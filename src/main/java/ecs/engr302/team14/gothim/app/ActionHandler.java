@@ -2,9 +2,15 @@ package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.renderer.Renderer;
 
+/**
+ * Class for handling actions.
+ */
 public class ActionHandler {
     public ActionHandler() {}
 
+    /**
+     * handles moving the player in the given direction.
+     */
     public static void handleMove(/*Direction direction*/) {
         //GameManager.movePlayer(direction);
         System.out.println("Moving...");
@@ -14,30 +20,48 @@ public class ActionHandler {
         }
     }
 
-    public static void handleNewGame(){
+    /**
+     * handle the the starting of a new game.
+     */
+    public static void handleNewGame() {
         System.out.println("Starting a new game. . .");
         Main main = Main.getMainInstance();
         main.setGameState(GameState.Playing);
     }
 
-    public static void handleLoadGame(){
+    /**
+     * handle the loading of a saved game.
+     */
+    public static void handleLoadGame() {
         System.out.println("Loading a previous game. . .");
     }
 
-    public static void handleOpenInstructions(){
+    /**
+     * handle the opening of the instructions.
+     */
+    public static void handleOpenInstructions() {
         System.out.println("Opening instructions. . .");
     }
 
-    public static void handleOpenTaskbook(){
+    /**
+     * handle the opening of the taskbook.
+     */
+    public static void handleOpenTaskbook() {
         System.out.println("Opening taskbook. . .");
         Renderer.getInstance().toggleTaskbook();
     }
 
-    public static void handleSaveGame(){
+    /**
+     * handle the saving of the current game state.
+     */
+    public static void handleSaveGame() {
         System.out.println("Saving current game. . .");
     }
 
-    public static void handleQuit(){
+    /**
+     * handle quitting the game.
+     */
+    public static void handleQuit() {
         System.exit(0);
     }
 

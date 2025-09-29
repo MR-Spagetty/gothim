@@ -4,6 +4,7 @@ import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -12,7 +13,7 @@ import java.util.concurrent.ExecutionException;
  * @author MR-Spagetty
  */
 @SerializationExtends(BinaryOperationPrerequisite.class)
-public class Or extends BinaryOperationPrerequisite {
+public final class Or extends BinaryOperationPrerequisite {
     /**
      * Gets a minimal Dialogue prerequisite equivalent to the OR of the two provided Prerequisites.
      *
@@ -47,5 +48,10 @@ public class Or extends BinaryOperationPrerequisite {
     @Override
     public boolean met(Player interacting) {
         return opA.met(interacting) || opB.met(interacting);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Or other && Set.of(opA, opB).equals(Set.of(other.opA, other.opB));
     }
 }

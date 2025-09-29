@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutionException;
  *
  * @author MR-Spagetty
  */
-public class Not implements DialoguePrerequisite {
+public final class Not implements DialoguePrerequisite {
 
     /**
      * Gets a minimal Dialogue prerequisite equivilent to the NOT of the provided Prerequisite.
@@ -45,6 +45,11 @@ public class Not implements DialoguePrerequisite {
     @Override
     public boolean met(Player interacting) {
         return !this.value.met(interacting);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Not other && other.value.equals(this.value);
     }
 
 }

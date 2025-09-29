@@ -3,6 +3,7 @@ package ecs.engr302.team14.gothim.logic.dialogue.prerequisites;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -11,7 +12,7 @@ import java.util.concurrent.ExecutionException;
  * @author MR-Spagetty
  */
 @SerializationExtends(BinaryOperationPrerequisite.class)
-public class And extends BinaryOperationPrerequisite {
+public final class And extends BinaryOperationPrerequisite {
     /**
      * Gets a minimal Dialogue prerequisite equivalent to the AND of the two provided Prerequisites.
      *
@@ -45,5 +46,10 @@ public class And extends BinaryOperationPrerequisite {
     @Override
     public boolean met(Player interacting) {
         return opA.met(interacting) && opB.met(interacting);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof And other && Set.of(opA, opB).equals(Set.of(other.opA, other.opB));
     }
 }

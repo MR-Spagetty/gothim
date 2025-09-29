@@ -44,11 +44,11 @@ public class Main {
         new ButtonManager();
 
         // Initialize player and NPCs
-        player = new Player("Player", new Point(450, 450));
-        npcs = java.util.List.of(
-                new NPC("Guard", "Stay out of restricted areas!", new Point(300, 300)),
-                new NPC("Scientist", "The research is progressing well.", new Point(600, 200))
-        );
+        // player = new Player("Player", new Point(450, 450));
+        // npcs = java.util.List.of(
+        //         new NPC("Guard", "Stay out of restricted areas!", new Point(300, 300)),
+        //         new NPC("Scientist", "The research is progressing well.", new Point(600, 200))
+        // );
 
         //Pass to renderer (should ideally be passing the level object)
         renderer.setPlayer(player);
@@ -82,7 +82,7 @@ public class Main {
         Timer gameLoop = new Timer(16, _ -> {
             if (currentState == GameState.Playing) {
                 // Update player position
-                player.update(pressedKeys, rendererPanel.getWidth(), rendererPanel.getHeight());
+                // player.update(pressedKeys, rendererPanel.getWidth(), rendererPanel.getHeight());
                 // Repaint the game
                 rendererPanel.repaint();
             }

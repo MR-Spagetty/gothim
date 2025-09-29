@@ -27,7 +27,7 @@ public class Player extends Entity {
         this.family = fam;
     }
 
-    boolean isSeenAs(DisguiseableAs identity) {
+    public boolean isSeenAs(DisguiseableAs identity) {
         return identity == null || identity == Family.None || family == identity
                 || Optional.ofNullable(this.disguise).map(Disguise::disguise)
                         .map(d -> d == identity).orElse(false);

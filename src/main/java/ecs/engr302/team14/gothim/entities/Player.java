@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.logic.DisguiseableAs;
 import ecs.engr302.team14.gothim.logic.Family;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
@@ -7,6 +8,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -17,10 +19,18 @@ public class Player extends Entity {
 
     @SerializedField
     private final Family family;
+    @SerializedField
+    private Disguise<?> disguise = null;
 
     public Player(String name, Point position, Family fam) {
         super(name, position);
         this.family = fam;
+    }
+
+    boolean isSeenAs(DisguiseableAs identity) {
+        return identity == null || identity == Family.None || family == identity
+                || Optional.ofNullable(this.disguise).map(Disguise::disguise)
+                        .map(d -> d == identity).orElse(false);
     }
 
     /**

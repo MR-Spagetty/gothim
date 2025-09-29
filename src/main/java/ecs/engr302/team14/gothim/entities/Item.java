@@ -22,7 +22,7 @@ public class Item extends InteractableEntity {
 
 
     // Complete interaction
-    public void interact() {
+    public void interact(Player p) {
         //TODO
     }
 

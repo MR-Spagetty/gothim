@@ -1,16 +1,26 @@
 package ecs.engr302.team14.gothim.app;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyListener;
-import java.util.List;
-import java.util.HashSet;
-import java.util.Set;
-import java.awt.event.KeyEvent;
-import ecs.engr302.team14.gothim.renderer.Renderer;
-import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.NPC;
+import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.renderer.Renderer;
 import ecs.engr302.team14.gothim.util.Point;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
 
 /**
  * Class for initialising the game and running it.
@@ -21,7 +31,6 @@ public class Main {
     public static JPanel rendererPanel;
     public static JPanel buttonPanel;
     public static GameState currentState;
-    private KeybindManager keyBinds;
     private static Renderer renderer = Renderer.getInstance();
     private Player player;
     private Set<Integer> pressedKeys = new HashSet<>();
@@ -53,7 +62,7 @@ public class Main {
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
 
-        keyBinds.applyBindings(rendererPanel);
+        KeybindManager.applyBindings(rendererPanel);
         // temp so <Developer 1> can change to her keybinds later
         setupKeyListeners();
 
@@ -70,7 +79,7 @@ public class Main {
     //Added game loop for things happening
     private void startGameLoop() {
         // Simple game loop using Swing Timer
-        Timer gameLoop = new Timer(16, e -> {
+        Timer gameLoop = new Timer(16, _ -> {
             if (currentState == GameState.Playing) {
                 // Update player position
                 player.update(pressedKeys, rendererPanel.getWidth(), rendererPanel.getHeight());
@@ -112,6 +121,11 @@ public class Main {
         }
     }
 
+    /**
+     * set the current state of the game.
+     *
+     * @param newState the new gamestate
+     */
     public void setGameState(GameState newState) {
         Main.currentState = newState;
         updateGUI();

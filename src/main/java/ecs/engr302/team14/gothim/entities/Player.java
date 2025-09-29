@@ -1,15 +1,15 @@
 package ecs.engr302.team14.gothim.entities;
 
 import ecs.engr302.team14.gothim.util.Point;
-
-import javax.imageio.ImageIO;
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
-import java.util.Set;
 import java.awt.image.BufferedImage;
+import java.util.Set;
 
+/**
+ * Basic player class.
+ */
 public class Player extends Entity {
     private int accessLevel = 0; // default to "public" (change to an ENUM)
     private Area currentArea;
@@ -19,15 +19,13 @@ public class Player extends Entity {
 
     public Player(String name, Point position) {
         super(name, position);
-
-//        try {
-//
-//            sprite = ImageIO.read(getClass().getResource("/assets/player1.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
     }
 
+    /**
+     * moves this palyer to a new area.
+     *
+     * @param newArea the new area
+     */
     public void moveTo(Area newArea) {
         if (this.canEnter(newArea)) {
             this.currentArea = newArea;
@@ -57,18 +55,29 @@ public class Player extends Entity {
         this.accessLevel = level;
     }
 
+    /**
+     * Update the player.
+     *
+     * @param pressedKeys the keys that hev been pressed
+     * @param screenWidth the width of the screen
+     * @param screenHeight the height of the screen
+     */
     public void update(Set<Integer> pressedKeys, int screenWidth, int screenHeight) {
         double newX = position.x();
         double newY = position.y();
 
-        if (pressedKeys.contains(KeyEvent.VK_W))
+        if (pressedKeys.contains(KeyEvent.VK_W)) {
             newY -= speed;
-        if (pressedKeys.contains(KeyEvent.VK_S))
+        }
+        if (pressedKeys.contains(KeyEvent.VK_S)) {
             newY += speed;
-        if (pressedKeys.contains(KeyEvent.VK_A))
+        }
+        if (pressedKeys.contains(KeyEvent.VK_A)) {
             newX -= speed;
-        if (pressedKeys.contains(KeyEvent.VK_D))
+        }
+        if (pressedKeys.contains(KeyEvent.VK_D)) {
             newX += speed;
+        }
 
         // Clamp inside bounds
         newX = Math.max(0, Math.min(newX, screenWidth - size));
@@ -79,6 +88,11 @@ public class Player extends Entity {
         position = new Point(newX, newY);
     }
 
+    /**
+     * Render this player.
+     *
+     * @param g the graphics to render it on.
+     */
     public void render(Graphics g) {
         if (sprite != null) {
             g.drawImage(sprite, (int) position.x(), (int) position.y(), 60, 96, null);

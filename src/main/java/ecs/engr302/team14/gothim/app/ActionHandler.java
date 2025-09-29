@@ -1,5 +1,7 @@
 package ecs.engr302.team14.gothim.app;
 
+import ecs.engr302.team14.gothim.renderer.Renderer;
+
 /**
  * Class for handling actions.
  */
@@ -46,6 +48,7 @@ public class ActionHandler {
      */
     public static void handleOpenTaskbook() {
         System.out.println("Opening taskbook. . .");
+        Renderer.getInstance().toggleTaskbook();
     }
 
     /**

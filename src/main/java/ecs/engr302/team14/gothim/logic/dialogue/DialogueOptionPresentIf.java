@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.logic.dialogue;
 
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.logic.dialogue.prerequisites.And;
 import ecs.engr302.team14.gothim.logic.dialogue.prerequisites.DialoguePrerequisite;
 import java.util.Objects;
 import java.util.Optional;
@@ -10,26 +11,32 @@ import java.util.Optional;
  *
  * @author MR-Spagetty
  */
-public class DialogueOptionPresentIf extends AbstractDialogueOption {
-    protected final DialoguePrerequisite prereq;
+public final class DialogueOptionPresentIf implements DialogueOption {
+
+    private final DialogueOption inner;
+    private final DialoguePrerequisite prereq;
 
     /**
      * Creates a new dialogue option that is available to the player when the
      * prereq is met.
      *
-     * @param text the text for the option (what the player will say)
-     * @param result the result of progressing the dialogue down this option
+     * @param inner the underlying DialogueOption
      * @param prereq the prereq that must be met for this option to be available
      *      to the player
      */
-    public DialogueOptionPresentIf(String text, Dialogue result, DialoguePrerequisite prereq) {
-        super(text, result);
+    public DialogueOptionPresentIf(DialogueOption inner, DialoguePrerequisite prereq) {
+        Objects.requireNonNull(inner);
+        while (inner instanceof DialogueOptionPresentIf presIf) {
+            prereq = And.of(prereq, presIf.prereq);
+            inner = presIf.inner;
+        }
         this.prereq = Objects.requireNonNull(prereq);
+        this.inner = inner;
     }
 
     @Override
     public boolean isAvailableTo(Player interacting) {
-        return prereq.met(interacting);
+        return this.prereq.met(interacting);
     }
 
     @Override
@@ -39,6 +46,11 @@ public class DialogueOptionPresentIf extends AbstractDialogueOption {
                     + "this option if the following is met:\n%s").formatted(interacting.getName(),
                             prereq.toString()));
         }
-        return super.result(interacting);
+        return this.inner.result(interacting);
+    }
+
+    @Override
+    public String text() {
+        return this.inner.text();
     }
 }

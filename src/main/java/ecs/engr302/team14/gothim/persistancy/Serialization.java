@@ -15,8 +15,10 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -294,6 +296,11 @@ public final class Serialization {
                 return to.cast(num.byteValue());
             }
         }
+        if (obj instanceof ArrayList<?> list) {
+            if (to.isAssignableFrom(HashSet.class)) {
+                return to.cast(new HashSet<Object>(list));
+            }
+        }
         return to.cast(obj);
     }
 
@@ -481,7 +488,9 @@ public final class Serialization {
                 .forEach(v -> fields.put(v, JSONValue.NULL));
         if (args.length != fields.size()) {
             throw new AnnotationFormatError("Expected same number of args and stored fields,"
-                    + " got %d, expcted %d".formatted(args.length, fields.size()));
+                    + " got %d, expcted %d for class %s".formatted(
+                        args.length, fields.size(), thingClass.getName()
+                    ));
         }
         String[] paramNames = deserialMeth.getAnnotation(DeserializationMethod.class)
                 .serialFieldNames();
@@ -517,7 +526,11 @@ public final class Serialization {
         Class<?> thingClass = getClassFromJson(o);
         Field field;
         try {
-            field = thingClass.getDeclaredField(((JSONString) o.get("name").get()).value());
+            field = thingClass.getDeclaredField(((JSONString) o.get("name").orElseThrow(
+                () -> new NoSuchElementException(
+                    "No field specified in jsonObject: " + o.prettyPrint()
+                    ))).value()
+            );
         } catch (NoSuchFieldException e) {
             throw new AnnotationFormatError("The specified constant does not exist", e);
         }

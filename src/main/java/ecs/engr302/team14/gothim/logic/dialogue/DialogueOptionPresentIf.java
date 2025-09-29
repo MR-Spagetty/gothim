@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.logic.dialogue;
 
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.logic.dialogue.prerequisites.DialoguePrerequisite;
 import java.util.Objects;
 import java.util.Optional;
 

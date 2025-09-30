@@ -73,7 +73,7 @@ public interface Packet {
      */
     record Update(
             @SerializedField int playerId,
-            @SerializedField UpdateData update) implements Packet{
+            @SerializedField UpdateData update) implements Packet {
         @DeserializationMethod(serialFieldNames = { "playerId", "update" })
         public Update {
         }

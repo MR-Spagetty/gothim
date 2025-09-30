@@ -27,7 +27,7 @@ import javax.lang.model.type.TypeMirror;
  */
 @SupportedAnnotationTypes({ "ecs.engr302.team14.gothim.persistancy.annotations.SerializedField",
         "ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod" })
-@SupportedSourceVersion(SourceVersion.RELEASE_23)
+@SupportedSourceVersion(SourceVersion.RELEASE_22) //FOR PERSONAL USE
 public class SerializationAnnotationEnforcer extends AbstractProcessor {
 
     @Override

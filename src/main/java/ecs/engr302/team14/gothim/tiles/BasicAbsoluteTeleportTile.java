@@ -1,9 +1,11 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * basic tile that teleports the entity that enters it to an absolute point on
@@ -31,10 +33,19 @@ public class BasicAbsoluteTeleportTile extends PrimitiveEffectTile {
                 && ((BasicAbsoluteTeleportTile) obj).dest.equals(this.dest);
     }
 
+
     @Override
-    public boolean canEnter() {
-        return true;
+    public boolean canEnter(Entity e) {
+        return mapRef.getTile(dest).canEnter(e);
     }
 
-    // TODO the teleportation
+    @Override
+    public void enter(Entity e) {
+        mapRef.getTile(dest).enter(e);
+    }
+
+    @Override
+    public Optional<Entity> getOcupant() {
+        return mapRef.getTile(dest).getOcupant();
+    }
 }

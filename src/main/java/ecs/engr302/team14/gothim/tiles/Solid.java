@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.util.Point;
 
@@ -16,7 +17,7 @@ public class Solid extends PrimitiveTile {
     }
 
     @Override
-    public boolean canEnter() {
+    public boolean canEnter(Entity e) {
         return false;
     }
 

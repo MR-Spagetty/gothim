@@ -1,54 +1,76 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.logic.DisguiseableAs;
+import ecs.engr302.team14.gothim.logic.Family;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.util.Optional;
+import java.util.Set;
 
 /**
- * Player class, contains all the implementation needed for a functional player.
+ * Basic player class.
  */
 public class Player extends Entity {
-    private int accessLevel = 0; // default to "public" (change to an ENUM)
-    private Area currentArea;
+    private BufferedImage sprite;
 
-    public Player(String name, Point position) {
+    @SerializedField
+    private final Family family;
+    @SerializedField
+    private Disguise<?> disguise = null;
+
+    public Player(String name, Point position, Family fam) {
         super(name, position);
+        this.family = fam;
+    }
+
+    boolean isSeenAs(DisguiseableAs identity) {
+        return identity == null || identity == Family.None || family == identity
+                || Optional.ofNullable(this.disguise).map(Disguise::disguise)
+                        .map(d -> d == identity).orElse(false);
     }
 
     /**
-     * Moves this player into a new area.
+     * Update the player.
      *
-     * @param newArea the new area to move the player into
+     * @param pressedKeys the keys that hev been pressed
+     * @param screenWidth the width of the screen
+     * @param screenHeight the height of the screen
      */
-    public void moveTo(Area newArea) {
-        if (this.canEnter(newArea)) {
-            this.currentArea = newArea;
-            System.out.println(name + " moved to " + newArea.getName());
+    public void update(Set<Integer> pressedKeys, int screenWidth, int screenHeight) {
+        double newX = position.x();
+        double newY = position.y();
+
+        if (pressedKeys.contains(KeyEvent.VK_W)) {
+            newY--;
+        }
+        if (pressedKeys.contains(KeyEvent.VK_S)) {
+            newY++;
+        }
+        if (pressedKeys.contains(KeyEvent.VK_A)) {
+            newX--;
+        }
+        if (pressedKeys.contains(KeyEvent.VK_D)) {
+            newX++;
+        }
+        position = new Point(newX, newY);
+    }
+
+    /**
+     * Render this player.
+     *
+     * @param g the graphics to render it on.
+     */
+    public void render(Graphics g) {
+        if (sprite != null) {
+            g.drawImage(sprite, (int) position.x(), (int) position.y(), 60, 96, null);
         } else {
-            System.out.println("Access denied! Need higher clearance");
+            // fallback: draw a placeholder rectangle
+            g.setColor(Color.WHITE);
+            g.fillRect((int) position.x(), (int) position.y(), 40, 40);
         }
     }
-
-    protected boolean canEnter(Area area) {
-        return this.accessLevel >= area.getRequiredAccess();
-    }
-
-    public Area getCurrentArea() {
-        return currentArea;
-    }
-
-    public void setCurrentArea(Area area) {
-        this.currentArea = area;
-    }
-
-    public int getAccessLevel() {
-        return this.accessLevel;
-    }
-
-    public void setAccessLevel(int level) {
-        this.accessLevel = level;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
 }

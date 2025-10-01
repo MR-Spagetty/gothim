@@ -68,7 +68,11 @@ public abstract class PrimitiveTile {
         if (!canEnter(e)) {
             throw new IllegalArgumentException("Entity: %s may not enter this tile".formatted(e));
         }
+        if (mapRef != null && mapRef.getTile(e.getPosition()).getOcupant().equals(Optional.of(e))) {
+            mapRef.getTile(e.getPosition()).ocupant = Optional.empty();
+        }
         this.ocupant = Optional.of(e);
+        e.setPosition(pos);
     }
 
     public Point pos() {

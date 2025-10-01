@@ -3,11 +3,6 @@ package ecs.engr302.team14.gothim.app;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Insets;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,12 +11,6 @@ import ecs.engr302.team14.gothim.renderer.Renderer;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.util.Point;
-
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 /**
  * Class for initialising the game and running it.
@@ -64,10 +53,10 @@ public class Main {
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
 
-        keyBinds = new KeybindManager();
+        keyBinds.applyBindings(rendererPanel);
+        // temp so <Developer 1> can change to her keybinds later
         setupKeyListeners();
 
-        KeybindManager.applyBindings(rendererPanel);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

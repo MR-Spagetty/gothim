@@ -1,6 +1,9 @@
 package ecs.engr302.team14.gothim.logic.dialogue;
 
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +17,9 @@ import java.util.Optional;
  * @author MR-Spagetty
  */
 public class Dialogue {
+    @SerializedField
     protected final String text;
+    @SerializedField
     protected final ArrayList<DialogueOption> options;
 
     /**
@@ -24,6 +29,7 @@ public class Dialogue {
      * @param options the non goodbye options to progress through from this
      *      dialogue statement
      */
+    @DeserializationMethod(serialFieldNames = { "text", "options" })
     public Dialogue(String text, List<DialogueOption> options) {
         this.text = Objects.requireNonNull(text);
         this.options = new ArrayList<>(Optional.ofNullable(options).orElse(List.of()));
@@ -32,10 +38,12 @@ public class Dialogue {
     }
 
     /**
-     * The display text of this dialogue option.
+     * Call this statement to be spoken.
+     *
+     * @return the display text
      */
-    public String text() {
-        return this.text();
+    public String say() {
+        return this.text;
     }
 
     /**

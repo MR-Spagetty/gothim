@@ -133,12 +133,33 @@ public class Renderer extends JPanel {
 
     // --- Draw tiles as default grass ---
     private void drawTiles(Graphics g) {
-        if (board == null || grassTile == null) return;
+        if (board == null) return;
 
         for (PrimitiveTile tile : board.getAllTiles()) {
             int x = (int) (tile.pos().x() * tileSize);
-            int y = (int) (tile.pos().y() * tileSize);
-            g.drawImage(grassTile, x, y, tileSize, tileSize, this);
+            int y = (int) (tile.pos().y() * tileSize); // flip Y if negative
+
+            // Choose tile image based on style
+            BufferedImage tileImg = switch (tile.style) {
+                case "grass" -> grassTile;      // default
+                case "fence" -> loadTileImage("/assets/Fence_Tile.png");
+                case "townhouse" -> loadTileImage("/assets/Townhouse_Tile.png");
+                default -> grassTile;
+            };
+
+            if (tileImg != null) {
+                g.drawImage(tileImg, x, y, tileSize, tileSize, this);
+            }
+        }
+    }
+
+    // Utility method to lazily load tile images
+    private BufferedImage loadTileImage(String path) {
+        try {
+            return ImageIO.read(getClass().getResource(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

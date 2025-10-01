@@ -64,8 +64,7 @@ public class Main {
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
 
-        keyBinds.applyBindings(rendererPanel);
-        // temp so <Developer 1> can change to her keybinds later
+        keyBinds = new KeybindManager();
         setupKeyListeners();
 
         KeybindManager.applyBindings(rendererPanel);

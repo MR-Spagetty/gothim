@@ -2,9 +2,12 @@ package ecs.engr302.team14.gothim.entities;
 
 import ecs.engr302.team14.gothim.logic.AccessModifier;
 import ecs.engr302.team14.gothim.logic.Clue;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Day;
 import ecs.engr302.team14.gothim.util.Task;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,20 +18,22 @@ import java.util.Map;
  */
 public class Taskbook {
 
-    private Map<Day, List<Task>> tasks = new HashMap<>();
-    private List<Clue> discoveredInformation = new ArrayList<>();
+    @SerializedField
+    private HashMap<Day, ArrayList<Task>> tasks = new HashMap<>();
+    @SerializedField
+    private ArrayList<Clue> discoveredInformation = new ArrayList<>();
 
     /**
      * Creates a new taskbook.
      */
     public Taskbook() {
         // Use ArrayList so we can modify later
-        List<Task> dayOneTasks = new ArrayList<>();
+        ArrayList<Task> dayOneTasks = new ArrayList<>();
         dayOneTasks.add(new Task(AccessModifier.Static, "Find something about purple cabbage"));
         dayOneTasks.add(new Task(AccessModifier.Public, "Talk to someone about the cow"));
         tasks.put(Day.ONE, dayOneTasks);
 
-        List<Task> dayTwoTasks = new ArrayList<>();
+        ArrayList<Task> dayTwoTasks = new ArrayList<>();
         dayTwoTasks.add(new Task(AccessModifier.Private, "Talk to a Robberson"));
         tasks.put(Day.TWO, dayTwoTasks);
 
@@ -36,8 +41,14 @@ public class Taskbook {
                 "Purple cabbage make purple cow pats"));
     }
 
+    @DeserializationMethod(serialFieldNames = { "tasks", "discoveredInformation" })
+    public Taskbook(HashMap<Day, ArrayList<Task>> tasks, ArrayList<Clue> foundInformation) {
+        this.tasks = tasks;
+        this.discoveredInformation = foundInformation;
+    }
+
     public Map<Day, List<Task>> getTasks() {
-        return tasks;
+        return Collections.unmodifiableMap(tasks);
     }
 
     public List<Clue> getDiscoveredInformation() {

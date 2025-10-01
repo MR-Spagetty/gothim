@@ -8,7 +8,7 @@ import ecs.engr302.team14.gothim.util.Point;
 /**
  * Represents an item in the game world that can be interacted with.
  *
- * Items could be clues, quest objects, or usable things.
+ * <p>Items could be clues, quest objects, or usable things.
  * On interaction, items can automatically add discovered information to the Taskbook.
  */
 public class InteractableItem extends InteractableEntity {
@@ -48,7 +48,7 @@ public class InteractableItem extends InteractableEntity {
      * Called when the player interacts with the item.
      * Marks as collected and adds a Clue to the Taskbook.
      */
-    public void interact() {
+    public void interact(Player p) {
         if (!collected) {
             collected = true;
 

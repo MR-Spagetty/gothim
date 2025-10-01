@@ -103,7 +103,7 @@ public record LevelHolder(@SerializedField String levelID,
             throw new IllegalArgumentException(
                 "Max players reached cannot create a new player with ID: " + id);
         }
-        Player p = new Player("player" + id, spawnPoint);
+        Player p = new Player("player" + id, spawnPoint, Family.None);
         players.add(p);
         return p;
     }

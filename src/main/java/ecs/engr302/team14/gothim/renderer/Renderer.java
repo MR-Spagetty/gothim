@@ -1,20 +1,26 @@
 package ecs.engr302.team14.gothim.renderer;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import ecs.engr302.team14.gothim.entities.NPC;
+import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.entities.Taskbook;
+import ecs.engr302.team14.gothim.util.Day;
+import ecs.engr302.team14.gothim.util.Task;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
-import ecs.engr302.team14.gothim.entities.Player;
-import ecs.engr302.team14.gothim.entities.NPC;
-import ecs.engr302.team14.gothim.entities.Taskbook;
-import ecs.engr302.team14.gothim.util.Day;
-import ecs.engr302.team14.gothim.util.Task;
-
+/**
+ * The render for rendering the game.
+ */
 public class Renderer extends JPanel {
     private static Renderer instance;
     private boolean showTaskbook = false;
@@ -27,7 +33,9 @@ public class Renderer extends JPanel {
     private List<NPC> npcs;
     private Day currentDay = Day.ONE;
 
-    /** Constructs a Renderer instance */
+    /**
+     * Constructs a Renderer instance.
+     */
     private Renderer() {
         try {
             var url = getClass().getResource("/assets/Openbook.png");
@@ -45,7 +53,9 @@ public class Renderer extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (!showTaskbook) return;
+                if (!showTaskbook) {
+                    return;
+                }
                 if (nextButtonBounds != null && nextButtonBounds.contains(e.getPoint())) {
                     goToNextDay();
                 } else if (prevButtonBounds != null && prevButtonBounds.contains(e.getPoint())) {
@@ -55,14 +65,21 @@ public class Renderer extends JPanel {
         });
     }
 
-    /** Singleton accessor */
+    /** Singleton accessor. */
     public static synchronized Renderer getInstance() {
-        if (instance == null) instance = new Renderer();
+        if (instance == null) {
+            instance = new Renderer();
+        }
         return instance;
     }
 
-    public void setPlayer(Player player) { this.player = player; }
-    public void setNPCs(List<NPC> npcs) { this.npcs = npcs; }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setNPCs(List<NPC> npcs) {
+        this.npcs = npcs;
+    }
 
     public void toggleTaskbook() {
         showTaskbook = !showTaskbook;
@@ -79,15 +96,21 @@ public class Renderer extends JPanel {
     }
 
     // --- Drawing helpers ---
-    private void drawTiles(Graphics g) { /* currently unused */ }
+    private void drawTiles(Graphics g) {
+        //TODO impliment
+    }
 
     private void drawPlayer(Graphics g) {
-        if (player != null) player.render(g);
+        if (player != null) {
+            player.render(g);
+        }
     }
 
     private void drawEntities(Graphics g) {
         if (npcs != null) {
-            for (NPC npc : npcs) npc.render(g);
+            for (NPC npc : npcs) {
+                npc.render(g);
+            }
         }
     }
 
@@ -112,7 +135,9 @@ public class Renderer extends JPanel {
 
     // --- Book rendering ---
     private void drawTaskbook(Graphics g) {
-        if (!showTaskbook || openbook == null) return;
+        if (!showTaskbook || openbook == null) {
+            return;
+        }
 
         // Scale book image
         int targetWidth = 700;
@@ -140,7 +165,8 @@ public class Renderer extends JPanel {
     private void drawPageButtons(Graphics g, int x, int y, int width, int height) {
         int btnSize = 40;
         prevButtonBounds = new Rectangle(x + 30, y + height / 2 - btnSize / 2, btnSize, btnSize);
-        nextButtonBounds = new Rectangle(x + width - 70, y + height / 2 - btnSize / 2, btnSize, btnSize);
+        nextButtonBounds = new Rectangle(x + width - 70, y + height / 2 - btnSize / 2, btnSize,
+                btnSize);
 
         g.setColor(new Color(200, 200, 200, 180));
         g.fillRect(prevButtonBounds.x, prevButtonBounds.y, btnSize, btnSize);
@@ -163,7 +189,8 @@ public class Renderer extends JPanel {
         List<Task> tasks = taskbook.getTasks().get(currentDay);
         if (tasks != null && !tasks.isEmpty()) {
             for (Task task : tasks) {
-                textY = drawWrappedText(g, "- " + task.taskDescription(), leftX, textY, columnWidth);
+                textY = drawWrappedText(g, "- " + task.taskDescription(), leftX, textY,
+                        columnWidth);
             }
         } else {
             g.drawString("No tasks for this day.", leftX, textY);
@@ -184,13 +211,8 @@ public class Renderer extends JPanel {
         for (var clue : clues) {
             if (clue.id().startsWith("Day" + currentDay.ordinal() + "_")) {
                 found = true;
-                rightY = drawWrappedText(
-                        g,
-                        "- (" + clue.modifier() + ") " + clue.description(),
-                        rightX,
-                        rightY,
-                        columnWidth
-                );
+                rightY = drawWrappedText(g, "- (" + clue.modifier() + ") " + clue.description(),
+                        rightX, rightY, columnWidth);
             }
         }
 
@@ -199,7 +221,9 @@ public class Renderer extends JPanel {
         }
     }
 
-    /** Draws wrapped text and returns next y position */
+    /**
+     * Draws wrapped text and returns next y position.
+     */
     private int drawWrappedText(Graphics g, String text, int x, int y, int width) {
         FontMetrics metrics = g.getFontMetrics();
         String[] words = text.split(" ");
@@ -218,27 +242,28 @@ public class Renderer extends JPanel {
         return y + metrics.getHeight();
     }
 
-    /**
-     * @param g - the graphics object used to draw the message box
-     * @param tileSize - the size of the game board tiles
-     */
-//    private void drawInfoMessage(Graphics g, int tileSize) {
-//        int boxWidth = tileSize * 8;
-//        int boxHeight = tileSize * 2;
-//
-//        g.setColor(new Color(0, 0, 0, 200));
-//        g.fillRect(50, 50, boxWidth, boxHeight);
-//        g.setColor(Color.WHITE);
-//
-//        try {
-//            Path fontPath = Paths.get(System.getProperty(""), "", "");
-//            try (InputStream fontStream = Files.newInputStream(fontPath)) {
-//                customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(28f);
-//            }
-//        } catch (FontFormatException | IOException e) {
-//            e.printStackTrace();
-//        }
-//        g.setFont(customFont);
-//        drawWrappedText(g, infoMessage, 60, 80, boxWidth - 20);
-//    }
+    // /**
+    // * @param g - the graphics object used to draw the message box
+    // * @param tileSize - the size of the game board tiles
+    // */
+    // private void drawInfoMessage(Graphics g, int tileSize) {
+    // int boxWidth = tileSize * 8;
+    // int boxHeight = tileSize * 2;
+    //
+    // g.setColor(new Color(0, 0, 0, 200));
+    // g.fillRect(50, 50, boxWidth, boxHeight);
+    // g.setColor(Color.WHITE);
+    //
+    // try {
+    // Path fontPath = Paths.get(System.getProperty(""), "", "");
+    // try (InputStream fontStream = Files.newInputStream(fontPath)) {
+    // customFont = Font.createFont(Font.TRUETYPE_FONT,
+    // fontStream).deriveFont(28f);
+    // }
+    // } catch (FontFormatException | IOException e) {
+    // e.printStackTrace();
+    // }
+    // g.setFont(customFont);
+    // drawWrappedText(g, infoMessage, 60, 80, boxWidth - 20);
+    // }
 }

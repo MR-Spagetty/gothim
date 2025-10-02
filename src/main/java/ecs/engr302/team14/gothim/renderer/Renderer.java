@@ -1,45 +1,35 @@
 package ecs.engr302.team14.gothim.renderer;
 
+import ecs.engr302.team14.gothim.app.LevelManager;
+import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.Taskbook;
 import ecs.engr302.team14.gothim.map.Board;
-import ecs.engr302.team14.gothim.map.MapBuilder;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Day;
 import ecs.engr302.team14.gothim.util.Task;
-import ecs.engr302.team14.gothim.util.Point;
 
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Central Renderer for rendering the game world, entities, and taskbook.
- * All tiles default to grass.
  */
 public class Renderer extends JPanel {
+
     private static Renderer instance;
 
     // Game state
     private Player player;
     private List<NPC> npcs;
-    private Board board = new MapBuilder()
-            .withFilledRect(
-                    "floor",
-                    Map.of("style", "grass"),
-                    new Point(0, 49),   // topLeft.y >= bottomRight.y
-                    new Point(49, 0)
-            )
-            .build();
-
-
+    private Board board;
     private Day currentDay = Day.ONE;
 
     // Taskbook
@@ -50,9 +40,14 @@ public class Renderer extends JPanel {
     private Rectangle nextButtonBounds;
     private Rectangle prevButtonBounds;
 
-    // Tile
+    // Tile images
     private BufferedImage grassTile;
+    private BufferedImage fenceTile;
+    private BufferedImage houseTile;
+
     private int tileSize = 32; // pixels per tile
+    private int offsetX = 0;   // offsets to render tiles at 0,0
+    private int offsetY = 0;
 
     private Renderer() {
         // Load book UI asset
@@ -66,17 +61,10 @@ public class Renderer extends JPanel {
             e.printStackTrace();
         }
 
-        // Load default grass tile
-        try {
-            var url = getClass().getResource("/assets/Grass_Tile.png");
-            if (url != null) {
-                grassTile = ImageIO.read(url);
-            } else {
-                System.err.println("Could not find Grass_Tile.png");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Load tiles
+        grassTile = loadTileImage("/assets/Grass_Tile.png");
+        fenceTile = loadTileImage("/assets/Fence_Tile.png");
+        houseTile = loadTileImage("/assets/Townhouse_Tile.png");
 
         setBackground(new Color(30, 30, 30));
 
@@ -85,7 +73,6 @@ public class Renderer extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (!showTaskbook) return;
-
                 if (nextButtonBounds != null && nextButtonBounds.contains(e.getPoint())) {
                     goToNextDay();
                 } else if (prevButtonBounds != null && prevButtonBounds.contains(e.getPoint())) {
@@ -103,17 +90,27 @@ public class Renderer extends JPanel {
         return instance;
     }
 
-    // --- Setters ---
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
+    /** Load board, player, and entities from the current LevelHolder */
+    public void loadFromLevel() {
+        LevelHolder level = LevelManager.getCurBoard();
+        this.board = level.map();
+        this.player = level.players().isEmpty() ? null : level.players().get(0);
+        this.npcs = level.entities().stream()
+                .filter(e -> e instanceof NPC)
+                .map(e -> (NPC) e)
+                .toList();
 
-    public void setNPCs(List<NPC> npcs) {
-        this.npcs = npcs;
-    }
-
-    public void setBoard(Board board) {
-        this.board = board;
+        // compute offsets so tiles start visible at 0,0
+        if (board != null && !board.getAllTiles().isEmpty()) {
+            int minX = board.getAllTiles().stream()
+                    .mapToInt(t -> (int) t.pos().x())
+                    .min().orElse(0);
+            int minY = board.getAllTiles().stream()
+                    .mapToInt(t -> (int) t.pos().y())
+                    .min().orElse(0);
+            offsetX = -minX * tileSize;
+            offsetY = -minY * tileSize;
+        }
     }
 
     public void toggleTaskbook() {
@@ -131,53 +128,69 @@ public class Renderer extends JPanel {
         drawTaskbook(g);
     }
 
-    // --- Draw tiles as default grass ---
+    // --- Draw tiles ---
     private void drawTiles(Graphics g) {
         if (board == null) return;
 
+        // First pass: draw grass on every tile
         for (PrimitiveTile tile : board.getAllTiles()) {
-            int x = (int) (tile.pos().x() * tileSize);
-            int y = (int) (tile.pos().y() * tileSize); // flip Y if negative
+            int tileX = (int) (tile.pos().x() * tileSize) + offsetX;
+            int tileY = (int) (tile.pos().y() * tileSize) + offsetY;
+            g.drawImage(grassTile, tileX, tileY, tileSize, tileSize, this);
+        }
 
-            // Choose tile image based on style
-            BufferedImage tileImg = switch (tile.style) {
-                case "grass" -> grassTile;      // default
-                case "fence" -> loadTileImage("/assets/Fence_Tile.png");
-                case "townhouse" -> loadTileImage("/assets/Townhouse_Tile.png");
-                default -> grassTile;
-            };
+        // Second pass: draw non-grass tiles on top
+        for (PrimitiveTile tile : board.getAllTiles()) {
+            int tileX = (int) (tile.pos().x() * tileSize) + offsetX;
+            int tileY = (int) (tile.pos().y() * tileSize) + offsetY;
 
-            if (tileImg != null) {
-                g.drawImage(tileImg, x, y, tileSize, tileSize, this);
+            switch (tile.style) {
+                case "fence" -> g.drawImage(fenceTile, tileX, tileY, tileSize, tileSize, this);
+                case "townhouse" -> {
+                    if (houseTile != null) {
+                        // Map coordinates from your JSON
+                        double topLeftX = 24;
+                        double topLeftY = -10;
+                        double bottomRightX = 36;
+                        double bottomRightY = -25;
+
+                        // Compute width and height in pixels
+                        int width = (int) ((bottomRightX - topLeftX) * tileSize);
+                        int height = (int) ((topLeftY - bottomRightY) * tileSize);
+
+                        // Convert map coords to pixel position
+                        int pixelX = (int) (topLeftX * tileSize) + offsetX;
+                        int pixelY = (int) (bottomRightY * tileSize) + offsetY;
+
+                        g.drawImage(houseTile, pixelX, pixelY, width, height, this);
+                    }
+                }
             }
         }
     }
 
-    // Utility method to lazily load tile images
+
     private BufferedImage loadTileImage(String path) {
         try {
-            return ImageIO.read(getClass().getResource(path));
+            var url = getClass().getResource(path);
+            if (url != null) return ImageIO.read(url);
+            else System.err.println("Missing asset: " + path);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     private void drawPlayer(Graphics g) {
-        if (player != null) {
-            player.render(g);
-        }
+        if (player != null) player.render(g);
     }
 
     private void drawEntities(Graphics g) {
         if (npcs != null) {
-            for (NPC npc : npcs) {
-                npc.render(g);
-            }
+            for (NPC npc : npcs) npc.render(g);
         }
     }
 
-    // --- Page flipping ---
     private void goToNextDay() {
         Day[] days = Day.values();
         int idx = currentDay.ordinal();
@@ -196,7 +209,6 @@ public class Renderer extends JPanel {
         }
     }
 
-    // --- Book rendering ---
     private void drawTaskbook(Graphics g) {
         if (!showTaskbook || openbook == null) return;
 
@@ -214,7 +226,6 @@ public class Renderer extends JPanel {
 
         g.setFont(new Font("Serif", Font.PLAIN, 20));
         g.setColor(Color.BLACK);
-
         drawTasksPage(g, x, y, targetWidth);
         drawDiscoveriesPage(g, x, y, targetWidth);
     }
@@ -244,9 +255,7 @@ public class Renderer extends JPanel {
 
         List<Task> tasks = taskbook.getTasks().get(currentDay);
         if (tasks != null && !tasks.isEmpty()) {
-            for (Task task : tasks) {
-                textY = drawWrappedText(g, "- " + task.taskDescription(), leftX, textY, columnWidth);
-            }
+            for (Task task : tasks) textY = drawWrappedText(g, "- " + task.taskDescription(), leftX, textY, columnWidth);
         } else {
             g.drawString("No tasks for this day.", leftX, textY);
         }
@@ -262,7 +271,6 @@ public class Renderer extends JPanel {
 
         var clues = taskbook.getDiscoveredInformation();
         boolean found = false;
-
         for (var clue : clues) {
             if (clue.id().startsWith("Day" + currentDay.ordinal() + "_")) {
                 found = true;
@@ -270,9 +278,7 @@ public class Renderer extends JPanel {
             }
         }
 
-        if (!found) {
-            g.drawString("No discoveries yet.", rightX, rightY);
-        }
+        if (!found) g.drawString("No discoveries yet.", rightX, rightY);
     }
 
     private int drawWrappedText(Graphics g, String text, int x, int y, int width) {
@@ -281,9 +287,8 @@ public class Renderer extends JPanel {
         StringBuilder line = new StringBuilder();
 
         for (String word : words) {
-            if (metrics.stringWidth(line + word) <= width) {
-                line.append(word).append(" ");
-            } else {
+            if (metrics.stringWidth(line + word) <= width) line.append(word).append(" ");
+            else {
                 g.drawString(line.toString(), x, y);
                 line = new StringBuilder(word + " ");
                 y += metrics.getHeight();

@@ -4,9 +4,11 @@ import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.Serialization;
 
+import java.util.logging.Level;
+
 public class LevelManager {
 
-    private static Board curBoard;
+    static LevelHolder currentLevelData;
 
     /**
      * Load and set the current level.
@@ -20,8 +22,7 @@ public class LevelManager {
 
         try {
             System.out.println("Loading level: " + level.name());
-            LevelHolder currentLevelData = Serialization.loadLevel(level.filename());
-            curBoard = currentLevelData.map();  // record accessor
+            currentLevelData = Serialization.loadLevel(level.filename());
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to load the level: " + level, e);
         }
@@ -32,10 +33,10 @@ public class LevelManager {
      *
      * @return the current board
      */
-    public static Board getCurBoard() {
-        if (curBoard == null) {
+    public static LevelHolder getCurBoard() {
+        if (currentLevelData == null) {
             throw new IllegalStateException("No level has been loaded yet.");
         }
-        return curBoard;
+        return currentLevelData;
     }
 }

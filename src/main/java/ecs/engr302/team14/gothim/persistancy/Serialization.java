@@ -1,9 +1,11 @@
 package ecs.engr302.team14.gothim.persistancy;
 
+import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.HasSerializedConstants;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import java.io.IOException;
 import java.lang.annotation.AnnotationFormatError;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Executable;
@@ -32,6 +34,23 @@ import java.util.stream.Stream;
  */
 public final class Serialization {
     private Serialization() {
+    }
+
+    /**
+     * Loads the specified level file resource and deserializes the level from it.
+     *
+     * @param levelID the ID of the level (e.g. {@code level1})
+     * @return the deserialized level corresponding to the given id
+     */
+    public static LevelHolder loadLevel(String levelID) {
+        try (var resource = Serialization.class.getClassLoader()
+                .getResourceAsStream("levels/" + levelID + ".json")) {
+            String cont = new String(resource.readAllBytes());
+            JSONObject jo = JSONObject.parse(cont).getKey();
+            return (LevelHolder) fromJSON(jo);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -488,9 +507,8 @@ public final class Serialization {
                 .forEach(v -> fields.put(v, JSONValue.NULL));
         if (args.length != fields.size()) {
             throw new AnnotationFormatError("Expected same number of args and stored fields,"
-                    + " got %d, expcted %d for class %s".formatted(
-                        args.length, fields.size(), thingClass.getName()
-                    ));
+                    + " got %d, expcted %d for class %s".formatted(args.length, fields.size(),
+                            thingClass.getName()));
         }
         String[] paramNames = deserialMeth.getAnnotation(DeserializationMethod.class)
                 .serialFieldNames();
@@ -508,6 +526,7 @@ public final class Serialization {
             } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
                     | InvocationTargetException e) {
                 e.printStackTrace();
+                throw new RuntimeException(thingClass.getName(), e);
             }
         } else if (deserialMeth instanceof Method meth) {
             try {
@@ -526,11 +545,11 @@ public final class Serialization {
         Class<?> thingClass = getClassFromJson(o);
         Field field;
         try {
-            field = thingClass.getDeclaredField(((JSONString) o.get("name").orElseThrow(
-                () -> new NoSuchElementException(
-                    "No field specified in jsonObject: " + o.prettyPrint()
-                    ))).value()
-            );
+            field = thingClass
+                    .getDeclaredField(((JSONString) o.get("name")
+                            .orElseThrow(() -> new NoSuchElementException(
+                                    "No field specified in jsonObject: " + o.prettyPrint())))
+                                            .value());
         } catch (NoSuchFieldException e) {
             throw new AnnotationFormatError("The specified constant does not exist", e);
         }

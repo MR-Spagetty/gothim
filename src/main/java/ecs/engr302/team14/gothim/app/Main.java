@@ -2,6 +2,7 @@ package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.renderer.Renderer;
 import ecs.engr302.team14.gothim.util.Point;
 import java.awt.BorderLayout;

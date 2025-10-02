@@ -21,12 +21,12 @@ public class ActionHandler {
     }
 
     /**
-     * handle the the starting of a new game.
+     * handle the starting of a new game.
      */
     public static void handleNewGame() {
-        System.out.println("Starting a new game. . .");
         Main main = Main.getMainInstance();
         main.setGameState(GameState.Playing);
+        LevelManager.setLevel(LevelEnum.ONE);
     }
 
     /**

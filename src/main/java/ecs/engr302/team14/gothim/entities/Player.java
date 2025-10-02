@@ -27,6 +27,12 @@ public class Player extends Entity {
         this.family = fam;
     }
 
+    /**
+     * Checks whether or not the player would currently be seen as the given entity.
+     *
+     * @param identity the identity to check against
+     * @return whether the player is seen as that identity
+     */
     public boolean isSeenAs(DisguiseableAs identity) {
         return identity == null || identity == Family.None || family == identity
                 || Optional.ofNullable(this.disguise).map(Disguise::disguise)

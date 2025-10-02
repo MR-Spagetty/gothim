@@ -1,10 +1,11 @@
 package ecs.engr302.team14.gothim.entities;
 
-import ecs.engr302.team14.gothim.logic.AccessModifier;
 import ecs.engr302.team14.gothim.logic.DisguiseableAs;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
-import ecs.engr302.team14.gothim.util.Day;
 import ecs.engr302.team14.gothim.util.Point;
+import java.util.Optional;
 
 /**
  * Disguise item allows the player to disguise themselves for example as a
@@ -12,18 +13,33 @@ import ecs.engr302.team14.gothim.util.Point;
  *
  * @author MR-Spagetty
  */
-public class Disguise<T extends DisguiseableAs> extends InteractableItem {
+@SerializationExtends(Item.class)
+public class Disguise<T extends DisguiseableAs> extends Item {
 
     @SerializedField
     private final T disguisesAs;
 
-    public Disguise(String name, Point position, String description, AccessModifier modifier,
-            Day discoveredDay, Taskbook taskbook, T disguisesAs) {
-        super(name, position, description, modifier, discoveredDay, taskbook);
+    @DeserializationMethod(serialFieldNames = { "name", "position", "description", "collected",
+            "disguisesAs" })
+    public Disguise(String name, Point position, String description, boolean collected,
+            T disguisesAs) {
+        super(name, position, description, collected);
         this.disguisesAs = disguisesAs;
     }
 
     public T disguise() {
         return this.disguisesAs;
+    }
+
+    @Override
+    public void interact(Player p) {
+        if (this.isCollected()) {
+            return;
+        }
+        Optional.ofNullable(p.disguise).ifPresent(d -> {
+            d.position = this.position;
+            //TODO place old disguise in world
+        });
+        p.disguise = this;
     }
 }

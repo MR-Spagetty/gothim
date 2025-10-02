@@ -20,7 +20,7 @@ public class Player extends Entity {
     @SerializedField
     private final Family family;
     @SerializedField
-    private Disguise<?> disguise = null;
+    Disguise<?> disguise = null;
 
     public Player(String name, Point position, Family fam) {
         super(name, position);

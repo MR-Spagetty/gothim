@@ -51,7 +51,7 @@ public class ClueHolder {
         }
         this.clues.addAll(clues);
         List<String> invalidFound = foundClues.stream()
-                .filter(id -> clues.parallelStream().anyMatch(c -> !id.equals(c.id()))).toList();
+                .filter(id -> clues.parallelStream().noneMatch(c -> id.equals(c.id()))).toList();
         if (!invalidFound.isEmpty()) {
             throw new IllegalArgumentException(
                     "Some clues stated ot be found do not exist:\n" + invalidFound.toString());

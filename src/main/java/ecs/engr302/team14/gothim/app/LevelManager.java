@@ -1,11 +1,11 @@
 package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.logic.LevelHolder;
-import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.Serialization;
 
-import java.util.logging.Level;
-
+/**
+ * Static data class for managing the current level.
+ */
 public class LevelManager {
 
     static LevelHolder currentLevelData;
@@ -29,11 +29,11 @@ public class LevelManager {
     }
 
     /**
-     * Get the currently loaded board.
+     * Get the currently loaded level.
      *
-     * @return the current board
+     * @return the current level
      */
-    public static LevelHolder getCurBoard() {
+    public static LevelHolder getLevelData() {
         if (currentLevelData == null) {
             throw new IllegalStateException("No level has been loaded yet.");
         }

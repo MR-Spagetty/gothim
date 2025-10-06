@@ -245,6 +245,7 @@
                 "fields": {
                   "x": 0,
                   "y": 0
+                }
                 },
                 "dialogue": {
                   "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",

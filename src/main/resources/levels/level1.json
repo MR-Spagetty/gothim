@@ -235,6 +235,39 @@
                 }
               }
             }
+          },
+          {
+            "class": "ecs.engr302.team14.gothim.entities.NPC",
+            "fields": {
+              "name": "townsperson",
+              "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                  "x": 0,
+                  "y": 0
+                },
+                "dialogue": {
+                  "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                  "fields": {
+                    "text": "tp dialogue root",
+                    "options": [
+                      {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                        "fields": {
+                          "text": "who was caring for the cow the night of the disappearance",
+                          "result": {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                            "text": "the Theiftons were",
+                            "clueID": "lastCaring",
+                            "options": []
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
           }
         ],
         "players": [],

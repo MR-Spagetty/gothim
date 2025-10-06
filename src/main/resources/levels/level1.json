@@ -200,7 +200,43 @@
                 }
             }
         },
-        "entities" : [],
+        "entities" : [
+          {
+            "class": "ecs.engr302.team14.gothim.entities.NPC",
+            "fields": {
+              "name": "Notice Board",
+              "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                "fields": {
+                  "text": "NB dialogue root",
+                  "options": [
+                    {
+                      "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                      "fields": {
+                        "text": "getClue",
+                        "result": {
+                          "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                          "fields": {
+                            "text": "static clue got",
+                            "options": [],
+                            "clueID": "noticeboard"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ],
         "players": [],
         "spawnPoint": {
           "class": "ecs.engr302.team14.gothim.util.Point",

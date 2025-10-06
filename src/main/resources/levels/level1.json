@@ -246,7 +246,7 @@
                   "x": 0,
                   "y": 0
                 }
-                },
+              },
                 "dialogue": {
                   "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
                   "fields": {
@@ -267,6 +267,24 @@
                     ]
                   }
                 }
+            }
+          },
+          {
+            "class": "ecs.engr302.team14.gothim.entities.NPC",
+            "fields": {
+              "name": "newspaper",
+              "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                  "x": 0,
+                  "y": 0
+                }
+              },
+              "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                "text": "The Robbersons lost the wheat deal",
+                "clueID": "newspaper",
+                "options": []
               }
             }
           }

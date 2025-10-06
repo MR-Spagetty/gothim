@@ -2,12 +2,8 @@ package ecs.engr302.team14.gothim.map;
 
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+
+import java.util.*;
 
 /**
  * Class for holding the map data for the game.
@@ -48,4 +44,9 @@ public class Board {
         }
         return ls;
     }
+
+    public Collection<PrimitiveTile> getAllTiles() {
+        return board.values();
+    }
+
 }

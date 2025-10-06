@@ -1,6 +1,8 @@
 package ecs.engr302.team14.gothim.logic.dialogue;
 
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.util.Optional;
 
 /**
@@ -8,11 +10,14 @@ import java.util.Optional;
  *
  * @author MR-Spagetty
  */
-public class AbstractDialogueOption implements DialogueOption {
+public class GenericDialogueOption implements DialogueOption {
+    @SerializedField
     protected final String text;
+    @SerializedField
     protected final Dialogue result;
 
-    public AbstractDialogueOption(String text, Dialogue result) {
+    @DeserializationMethod(serialFieldNames = { "text", "result" })
+    public GenericDialogueOption(String text, Dialogue result) {
         this.text = text;
         this.result = result;
     }

@@ -1,5 +1,9 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.logic.dialogue.Dialogue;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,13 +12,16 @@ import java.awt.image.BufferedImage;
 /**
  * Basic NPC class.
  */
+@SerializationExtends(Entity.class)
 public class NPC extends InteractableEntity {
 
-    private String dialogue;
+    @SerializedField
+    private Dialogue dialogue;
     private BufferedImage sprite;
     private int size = 40;
 
-    public NPC(String name, String dialogue, Point position) {
+    @DeserializationMethod(serialFieldNames = { "name", "dialogue", "pos" })
+    public NPC(String name, Dialogue dialogue, Point position) {
         super(name, position);
         this.dialogue = dialogue;
     }

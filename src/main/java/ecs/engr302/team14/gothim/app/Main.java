@@ -2,6 +2,7 @@ package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.renderer.Renderer;
 import ecs.engr302.team14.gothim.util.Point;
 import java.awt.BorderLayout;
@@ -38,10 +39,15 @@ public class Main {
 
     private Main() {
         currentState = GameState.Menu;
+        LevelManager.setLevel(LevelEnum.ONE);
+        Renderer renderer = Renderer.getInstance();
+        renderer.loadFromLevel();
         frame = new JFrame();
         rendererPanel = Renderer.getInstance();
         buttonPanel = new JPanel();
         new ButtonManager();
+
+
 
         // Initialize player and NPCs
         // player = new Player("Player", new Point(450, 450));
@@ -51,8 +57,8 @@ public class Main {
         // );
 
         //Pass to renderer (should ideally be passing the level object)
-        renderer.setPlayer(player);
-        renderer.setNPCs(npcs);
+        //renderer.setPlayer(player);
+        //renderer.setNPCs(npcs);
 
         //Set frame size
         frame.setSize(900, 900);
@@ -62,6 +68,7 @@ public class Main {
         frame.add(buttonPanel, BorderLayout.WEST);
         frame.add(rendererPanel, BorderLayout.CENTER);
 
+        new KeybindManager();
         KeybindManager.applyBindings(rendererPanel);
         // temp so <Developer 1> can change to her keybinds later
         setupKeyListeners();

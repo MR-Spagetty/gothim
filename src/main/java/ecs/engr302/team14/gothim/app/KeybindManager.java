@@ -77,11 +77,10 @@ public class KeybindManager {
     public static void applyBindings(JComponent component) {
         ComponentInputMap componentInputMap = new ComponentInputMap(component);
         KeyStroke[] var2 = inputMap.keys();
-        int var3 = var2.length;
-
-        for (int var4 = 0; var4 < var3; ++var4) {
-            KeyStroke keyStroke = var2[var4];
-            componentInputMap.put(keyStroke, inputMap.get(keyStroke));
+        if (var2 != null) {
+            for (KeyStroke keyStroke : var2) {
+                componentInputMap.put(keyStroke, inputMap.get(keyStroke));
+            }
         }
 
         component.setInputMap(2, componentInputMap);

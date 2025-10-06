@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.logic.dialogue.Dialogue;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
@@ -15,12 +16,12 @@ import java.awt.image.BufferedImage;
 public class NPC extends InteractableEntity {
 
     @SerializedField
-    private String dialogue; // TODO change to new dialogue system
+    private Dialogue dialogue;
     private BufferedImage sprite;
     private int size = 40;
 
-    @DeserializationMethod(serialFieldNames = { "name", "dialogue", "position" })
-    public NPC(String name, String dialogue, Point position) {
+    @DeserializationMethod(serialFieldNames = { "name", "dialogue", "pos" })
+    public NPC(String name, Dialogue dialogue, Point position) {
         super(name, position);
         this.dialogue = dialogue;
     }

@@ -9,7 +9,7 @@ import ecs.engr302.team14.gothim.util.Point;
 public abstract class Entity {
     @SerializedField
     protected String name;
-    @SerializedField
+    @SerializedField(deserialParamName = "pos")
     protected Point position;
 
     public Entity(String name, Point pos) {

@@ -3,6 +3,8 @@ package ecs.engr302.team14.gothim.logic.dialogue;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.logic.dialogue.prerequisites.And;
 import ecs.engr302.team14.gothim.logic.dialogue.prerequisites.DialoguePrerequisite;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
+import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -13,7 +15,9 @@ import java.util.Optional;
  */
 public final class DialogueOptionPresentIf implements DialogueOption {
 
+    @SerializedField
     private final DialogueOption inner;
+    @SerializedField
     private final DialoguePrerequisite prereq;
 
     /**
@@ -24,6 +28,7 @@ public final class DialogueOptionPresentIf implements DialogueOption {
      * @param prereq the prereq that must be met for this option to be available
      *      to the player
      */
+    @DeserializationMethod(serialFieldNames = { "inner", "prereq" })
     public DialogueOptionPresentIf(DialogueOption inner, DialoguePrerequisite prereq) {
         Objects.requireNonNull(inner);
         while (inner instanceof DialogueOptionPresentIf presIf) {

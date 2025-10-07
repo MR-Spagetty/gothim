@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.logic.dialogue.prerequisites;
 
+import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.logic.ClueHolder;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
@@ -43,7 +44,7 @@ public class ClueFound implements DialoguePrerequisite {
 
     @Override
     public boolean met(Player interacting) {
-        ClueHolder clues = null; // TODO get clue holder for current level
+        ClueHolder clues = LevelManager.getLevelData().clues();
         return clues.isFound(clueID);
     }
 

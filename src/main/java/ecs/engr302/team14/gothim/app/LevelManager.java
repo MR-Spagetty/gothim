@@ -4,7 +4,7 @@ import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.persistancy.Serialization;
 
 /**
- * basic class for managing the level.
+ * Static data class for managing the current level.
  */
 public class LevelManager {
 
@@ -29,11 +29,11 @@ public class LevelManager {
     }
 
     /**
-     * Get the currently loaded board.
+     * Get the currently loaded level.
      *
-     * @return the current board
+     * @return the current level
      */
-    public static LevelHolder getCurBoard() {
+    public static LevelHolder getLevelData() {
         if (currentLevelData == null) {
             throw new IllegalStateException("No level has been loaded yet.");
         }

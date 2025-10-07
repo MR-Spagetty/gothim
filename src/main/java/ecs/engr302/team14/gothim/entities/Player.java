@@ -6,10 +6,8 @@ import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Basic player class.
@@ -37,32 +35,6 @@ public class Player extends Entity {
         return identity == null || identity == Family.None || family == identity
                 || Optional.ofNullable(this.disguise).map(Disguise::disguise)
                         .map(d -> d == identity).orElse(false);
-    }
-
-    /**
-     * Update the player.
-     *
-     * @param pressedKeys the keys that hev been pressed
-     * @param screenWidth the width of the screen
-     * @param screenHeight the height of the screen
-     */
-    public void update(Set<Integer> pressedKeys, int screenWidth, int screenHeight) {
-        double newX = position.x();
-        double newY = position.y();
-
-        if (pressedKeys.contains(KeyEvent.VK_W)) {
-            newY--;
-        }
-        if (pressedKeys.contains(KeyEvent.VK_S)) {
-            newY++;
-        }
-        if (pressedKeys.contains(KeyEvent.VK_A)) {
-            newX--;
-        }
-        if (pressedKeys.contains(KeyEvent.VK_D)) {
-            newX++;
-        }
-        position = new Point(newX, newY);
     }
 
     /**

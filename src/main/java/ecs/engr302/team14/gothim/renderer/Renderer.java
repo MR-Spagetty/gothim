@@ -92,7 +92,7 @@ public class Renderer extends JPanel {
 
     /** Load board, player, and entities from the current LevelHolder */
     public void loadFromLevel() {
-        LevelHolder level = LevelManager.getCurBoard();
+        LevelHolder level = LevelManager.getLevelData();
         this.board = level.map();
         this.player = level.players().isEmpty() ? null : level.players().get(0);
         this.npcs = level.entities().stream()

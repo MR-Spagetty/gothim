@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.app;
 
+import ecs.engr302.team14.gothim.util.Direction;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -8,6 +9,7 @@ import javax.swing.ComponentInputMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+
 
 /**
  * Class for managing the game keybinds.
@@ -24,22 +26,22 @@ public class KeybindManager {
     private void setActions() {
         actionMap.put("moveUp", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Up*/);
+                ActionHandler.handleMove(Direction.Up);
             }
         });
         actionMap.put("moveDown", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Down*/);
+                ActionHandler.handleMove(Direction.Down);
             }
         });
         actionMap.put("moveLeft", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Left*/);
+                ActionHandler.handleMove(Direction.Left);
             }
         });
         actionMap.put("moveRight", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Right*/);
+                ActionHandler.handleMove(Direction.Right);
             }
         });
         actionMap.put("exit", new AbstractAction() {
@@ -64,6 +66,10 @@ public class KeybindManager {
         inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
         inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
         inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke("w"), "moveUp");
+        inputMap.put(KeyStroke.getKeyStroke("s"), "moveDown");
+        inputMap.put(KeyStroke.getKeyStroke("a"), "moveLeft");
+        inputMap.put(KeyStroke.getKeyStroke("d"), "moveRight");
         inputMap.put(KeyStroke.getKeyStroke("control X"), "exit");
         inputMap.put(KeyStroke.getKeyStroke("control S"), "save");
         inputMap.put(KeyStroke.getKeyStroke("control R"), "load");

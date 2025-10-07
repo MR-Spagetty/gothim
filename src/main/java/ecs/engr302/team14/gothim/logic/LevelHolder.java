@@ -6,6 +6,8 @@ import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.map.MapBuilder;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
+import ecs.engr302.team14.gothim.util.Direction;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public record LevelHolder(@SerializedField String levelID,
         @SerializedField ArrayList<Entity> entities,
         @SerializedField ArrayList<Player> players,
         @SerializedField Point spawnPoint) {
-    
+
     static Random rand = new Random();
     static final int MAX_PLAYERS = 2;
 
@@ -85,6 +87,40 @@ public record LevelHolder(@SerializedField String levelID,
             List<Entity> entities, List<Player> players, Point spawnPoint) {
         this(levelID, mapBuilder, mapBuilder.build(), clues, new ArrayList<>(entities),
                 new ArrayList<>(players), spawnPoint);
+    }
+
+    /**
+     * Moves the specified entity in the given direction.
+     *
+     * @param toMove the entity to move
+     * @param by the direction to move in
+     * @return whether the move was successful or not
+     */
+    public boolean move(Entity toMove, Direction by) {
+        if (!entities.contains(toMove) || !players().contains(toMove)) {
+            throw new IllegalArgumentException("The specified entity is not present in this level");
+        }
+        PrimitiveTile newLoc = map.getTile(toMove.getPosition().add(by.offset));
+        if (!newLoc.canEnter(toMove)) {
+            return false;
+        }
+        newLoc.enter(toMove);
+        return true;
+    }
+
+    /**
+     * Move the specified (pre-existing) player in the given direction.
+     *
+     * @param id the player id
+     * @param by the direction to move in
+     * @return whether the move was successful
+     * @see #move(Entity, Direction)
+     */
+    public boolean movePlayer(int id, Direction by) {
+        if (id < 0 || id >= players.size()) {
+            throw new IndexOutOfBoundsException("No player with ID: %d".formatted(id));
+        }
+        return move(getPlayer(id), by);
     }
 
     /**

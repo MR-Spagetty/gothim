@@ -13,7 +13,7 @@ public class ActionHandler {
      * handles moving the player in the given direction.
      */
     public static void handleMove(Direction direction) {
-        LevelManager.getCurBoard().movePlayer(Main.playerID, direction);
+        LevelManager.getLevelData().movePlayer(Main.playerID, direction);
         System.out.println("Moving...");
         if (Main.rendererPanel != null) {
             Main.rendererPanel.revalidate();

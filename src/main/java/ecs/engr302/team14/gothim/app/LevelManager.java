@@ -1,11 +1,11 @@
 package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.logic.LevelHolder;
-import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.Serialization;
 
-import java.util.logging.Level;
-
+/**
+ * basic class for managing the level.
+ */
 public class LevelManager {
 
     static LevelHolder currentLevelData;

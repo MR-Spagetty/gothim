@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.logic.dialogue;
 
+import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.logic.ClueHolder;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
@@ -32,7 +33,7 @@ public class DialogueClue extends Dialogue {
 
     @Override
     public String say() {
-        ClueHolder clues = null; // TODO get clue holder
+        ClueHolder clues = LevelManager.getLevelData().clues();
         clues.findClue(this.clueID);
         return super.say();
     }

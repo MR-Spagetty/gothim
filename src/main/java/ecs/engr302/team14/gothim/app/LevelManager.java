@@ -23,6 +23,7 @@ public class LevelManager {
         try {
             System.out.println("Loading level: " + level.name());
             currentLevelData = Serialization.loadLevel(level.filename());
+            currentLevelData.getPlayer(0);
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to load the level: " + level, e);
         }

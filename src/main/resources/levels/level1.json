@@ -208,8 +208,8 @@
                     "pos": {
                         "class": "ecs.engr302.team14.gothim.util.Point",
                         "fields": {
-                            "x": 0,
-                            "y": 0
+                            "x": 2,
+                            "y": -2
                         }
                     },
                     "dialogue": {
@@ -243,8 +243,8 @@
                     "pos": {
                         "class": "ecs.engr302.team14.gothim.util.Point",
                         "fields": {
-                            "x": 0,
-                            "y": 0
+                            "x": 4,
+                            "y": -4
                         }
                     },
                     "dialogue": {
@@ -278,8 +278,8 @@
                     "pos": {
                         "class": "ecs.engr302.team14.gothim.util.Point",
                         "fields": {
-                            "x": 0,
-                            "y": 0
+                            "x": 4,
+                            "y": -2
                         }
                     },
                     "dialogue": {

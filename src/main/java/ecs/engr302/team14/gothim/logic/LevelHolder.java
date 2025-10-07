@@ -97,7 +97,7 @@ public record LevelHolder(@SerializedField String levelID,
      * @return whether the move was successful or not
      */
     public boolean move(Entity toMove, Direction by) {
-        if (!entities.contains(toMove) || !players().contains(toMove)) {
+        if (!(entities.contains(toMove) || players().contains(toMove))) {
             throw new IllegalArgumentException("The specified entity is not present in this level");
         }
         PrimitiveTile newLoc = map.getTile(toMove.getPosition().add(by.offset));

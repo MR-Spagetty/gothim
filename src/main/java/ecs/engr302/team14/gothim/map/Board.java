@@ -3,6 +3,7 @@ package ecs.engr302.team14.gothim.map;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,4 +49,9 @@ public class Board {
         }
         return ls;
     }
+
+    public Collection<PrimitiveTile> getAllTiles() {
+        return board.values();
+    }
+
 }

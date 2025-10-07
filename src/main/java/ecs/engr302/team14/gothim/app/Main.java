@@ -1,9 +1,6 @@
 package ecs.engr302.team14.gothim.app;
 
-import ecs.engr302.team14.gothim.entities.NPC;
-import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.renderer.Renderer;
-import ecs.engr302.team14.gothim.util.Point;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -31,28 +28,18 @@ public class Main {
     public static JPanel rendererPanel;
     public static JPanel buttonPanel;
     public static GameState currentState;
-    private static Renderer renderer = Renderer.getInstance();
-    private Player player;
+    public static int playerID = 0;
     private Set<Integer> pressedKeys = new HashSet<>();
-    private java.util.List<NPC> npcs;
 
     private Main() {
         currentState = GameState.Menu;
+        LevelManager.setLevel(LevelEnum.ONE);
+        Renderer renderer = Renderer.getInstance();
+        renderer.loadFromLevel();
         frame = new JFrame();
         rendererPanel = Renderer.getInstance();
         buttonPanel = new JPanel();
         new ButtonManager();
-
-        // Initialize player and NPCs
-        // player = new Player("Player", new Point(450, 450));
-        // npcs = java.util.List.of(
-        //         new NPC("Guard", "Stay out of restricted areas!", new Point(300, 300)),
-        //         new NPC("Scientist", "The research is progressing well.", new Point(600, 200))
-        // );
-
-        //Pass to renderer (should ideally be passing the level object)
-        renderer.setPlayer(player);
-        renderer.setNPCs(npcs);
 
         //Set frame size
         frame.setSize(900, 900);
@@ -81,9 +68,6 @@ public class Main {
         // Simple game loop using Swing Timer
         Timer gameLoop = new Timer(16, _ -> {
             if (currentState == GameState.Playing) {
-                // Update player position
-                // player.update(pressedKeys, rendererPanel.getWidth(), rendererPanel.getHeight());
-                // Repaint the game
                 rendererPanel.repaint();
             }
         });

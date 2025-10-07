@@ -284,9 +284,11 @@
                     },
                     "dialogue": {
                         "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
-                        "text": "The Robbersons lost the wheat deal",
-                        "clueID": "newspaper",
-                        "options": []
+                        "fields": {
+                            "text": "The Robbersons lost the wheat deal",
+                            "clueID": "newspaper",
+                            "options": []
+                        }
                     }
                 }
             }

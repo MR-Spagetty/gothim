@@ -66,6 +66,10 @@ public class KeybindManager {
         inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
         inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
         inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke("w"), "moveUp");
+        inputMap.put(KeyStroke.getKeyStroke("s"), "moveDown");
+        inputMap.put(KeyStroke.getKeyStroke("a"), "moveLeft");
+        inputMap.put(KeyStroke.getKeyStroke("d"), "moveRight");
         inputMap.put(KeyStroke.getKeyStroke("control X"), "exit");
         inputMap.put(KeyStroke.getKeyStroke("control S"), "save");
         inputMap.put(KeyStroke.getKeyStroke("control R"), "load");

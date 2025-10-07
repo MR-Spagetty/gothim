@@ -6,6 +6,7 @@ import ecs.engr302.team14.gothim.entities.Taskbook;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Record for storing update data.
@@ -20,7 +21,9 @@ public record UpdateData(
         @SerializedField
         List<Entity> nonPlayersData,
         @SerializedField
-        Taskbook taskbookData) {
+        Taskbook taskbookData,
+        @SerializedField
+        Set<String> foundClues) {
 
     /**
      * Creates a new update data object.
@@ -33,7 +36,8 @@ public record UpdateData(
         "levelID",
         "playerData",
         "nonPlayersData",
-        "taskbookData" })
+        "taskbookData",
+        "found clues" })
     public UpdateData {}
 
 }

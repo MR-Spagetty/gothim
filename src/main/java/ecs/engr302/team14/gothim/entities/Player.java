@@ -40,32 +40,6 @@ public class Player extends Entity {
     }
 
     /**
-     * Update the player.
-     *
-     * @param pressedKeys the keys that hev been pressed
-     * @param screenWidth the width of the screen
-     * @param screenHeight the height of the screen
-     */
-    public void update(Set<Integer> pressedKeys, int screenWidth, int screenHeight) {
-        double newX = position.x();
-        double newY = position.y();
-
-        if (pressedKeys.contains(KeyEvent.VK_W)) {
-            newY--;
-        }
-        if (pressedKeys.contains(KeyEvent.VK_S)) {
-            newY++;
-        }
-        if (pressedKeys.contains(KeyEvent.VK_A)) {
-            newX--;
-        }
-        if (pressedKeys.contains(KeyEvent.VK_D)) {
-            newX++;
-        }
-        position = new Point(newX, newY);
-    }
-
-    /**
      * Render this player.
      *
      * @param g the graphics to render it on.

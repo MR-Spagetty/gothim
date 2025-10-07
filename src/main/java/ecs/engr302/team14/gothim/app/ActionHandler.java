@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.renderer.Renderer;
+import ecs.engr302.team14.gothim.util.Direction;
 
 /**
  * Class for handling actions.
@@ -11,8 +12,8 @@ public class ActionHandler {
     /**
      * handles moving the player in the given direction.
      */
-    public static void handleMove(/*Direction direction*/) {
-        //GameManager.movePlayer(direction);
+    public static void handleMove(Direction direction) {
+        LevelManager.getCurBoard().movePlayer(Main.playerID, direction);
         System.out.println("Moving...");
         if (Main.rendererPanel != null) {
             Main.rendererPanel.revalidate();

@@ -37,18 +37,4 @@ public class Player extends Entity {
                         .map(d -> d == identity).orElse(false);
     }
 
-    /**
-     * Render this player.
-     *
-     * @param g the graphics to render it on.
-     */
-    public void render(Graphics g) {
-        if (sprite != null) {
-            g.drawImage(sprite, (int) position.x(), (int) position.y(), 60, 96, null);
-        } else {
-            // fallback: draw a placeholder rectangle
-            g.setColor(Color.WHITE);
-            g.fillRect((int) position.x(), (int) position.y(), 40, 40);
-        }
-    }
 }

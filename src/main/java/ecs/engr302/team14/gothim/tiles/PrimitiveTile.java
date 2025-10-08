@@ -1,6 +1,8 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.entities.Entity;
+import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
@@ -14,20 +16,6 @@ import java.util.Optional;
  */
 @SerializationExtends(PrimitiveTile.class)
 public abstract class PrimitiveTile {
-
-    protected Board mapRef = null;
-
-    /**
-     * Link this tile to the map so that the map may be used in the logic.
-     *
-     * @param map the map to link
-     */
-    public void linkMap(Board map) {
-        if (this.mapRef != null) {
-            throw new IllegalStateException("Map reference can only be set once");
-        }
-        mapRef = map;
-    }
 
     @SerializedField
     protected final Point pos;
@@ -68,9 +56,8 @@ public abstract class PrimitiveTile {
         if (!canEnter(e)) {
             throw new IllegalArgumentException("Entity: %s may not enter this tile".formatted(e));
         }
-        if (mapRef != null
-                && mapRef.getTile(e.getPosition()).getOccupant().equals(Optional.of(e))) {
-            mapRef.getTile(e.getPosition()).occupant = Optional.empty();
+        if (mapRef().getTile(e.getPosition()).getOccupant().equals(Optional.of(e))) {
+            mapRef().getTile(e.getPosition()).occupant = Optional.empty();
         }
         this.occupant = Optional.of(e);
         e.setPosition(pos);
@@ -78,5 +65,9 @@ public abstract class PrimitiveTile {
 
     public Point pos() {
         return this.pos;
+    }
+
+    static Board mapRef() {
+        return LevelManager.getLevelData().map();
     }
 }

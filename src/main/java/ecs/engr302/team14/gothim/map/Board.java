@@ -21,7 +21,6 @@ public class Board {
 
     Board(Map<Point, PrimitiveTile> board) {
         this.board = new HashMap<>(Objects.requireNonNull(board));
-        this.board.values().parallelStream().forEach(t -> t.linkMap(this));
     }
 
     /**

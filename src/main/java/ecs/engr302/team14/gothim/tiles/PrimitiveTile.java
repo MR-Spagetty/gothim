@@ -55,7 +55,7 @@ public abstract class PrimitiveTile {
     }
 
     public void setOcupant(Entity ocupant) {
-        this.ocupant = Optional.of(ocupant);
+        this.ocupant = Optional.ofNullable(ocupant);
     }
 
     /**

@@ -1,9 +1,11 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.logic.DisguiseableAs;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
 import java.util.Optional;
 
@@ -36,10 +38,11 @@ public class Disguise<T extends DisguiseableAs> extends Item {
         if (this.isCollected()) {
             return;
         }
-        Optional.ofNullable(p.disguise).ifPresent(d -> {
+        PrimitiveTile posTile = LevelManager.getLevelData().map().getTile(this.position);
+        Optional.ofNullable(p.disguise).ifPresentOrElse(d -> {
             d.position = this.position;
-            //TODO place old disguise in world
-        });
+            posTile.setOcupant(d);
+        }, () -> posTile.setOcupant(null));
         p.disguise = this;
     }
 }

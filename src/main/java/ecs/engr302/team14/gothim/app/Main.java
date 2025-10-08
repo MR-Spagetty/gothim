@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.app;
 
+import ecs.engr302.team14.gothim.logic.dialogue.Dialogue;
 import ecs.engr302.team14.gothim.renderer.Renderer;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -151,6 +152,20 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::new);
+    }
+
+    /**
+     * Brings up a dialogue popup for the user.
+     *
+     * @param sourceName the name of the origin of the dialogue
+     * @param dialogue the dialogue source to use
+     */
+    public static void dialogue(String sourceName, Dialogue dialogue) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            SwingUtilities.invokeLater(() -> dialogue(sourceName, dialogue));
+            return;
+        }
+        throw new UnsupportedOperationException("app end of dialogue NYI");
     }
 
 }

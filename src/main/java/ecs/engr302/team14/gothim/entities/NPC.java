@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.app.Main;
 import ecs.engr302.team14.gothim.logic.dialogue.Dialogue;
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
@@ -28,7 +29,7 @@ public class NPC extends InteractableEntity {
 
     //Complete interaction
     public void interact(Player p) {
-        System.out.println(name + ": " + dialogue);
+        Main.dialogue(this.name, this.dialogue);
     }
 
     /**

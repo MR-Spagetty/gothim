@@ -45,7 +45,7 @@ public class BasicAbsoluteTeleportTile extends PrimitiveEffectTile {
     }
 
     @Override
-    public Optional<Entity> getOcupant() {
-        return mapRef.getTile(dest).getOcupant();
+    public Optional<Entity> getOccupant() {
+        return mapRef.getTile(dest).getOccupant();
     }
 }

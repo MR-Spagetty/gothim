@@ -41,8 +41,8 @@ public class Disguise extends Item {
         PrimitiveTile posTile = LevelManager.getLevelData().map().getTile(this.position);
         Optional.ofNullable(p.disguise).ifPresentOrElse(d -> {
             d.position = this.position;
-            posTile.setOcupant(d);
-        }, () -> posTile.setOcupant(null));
+            posTile.setOccupant(d);
+        }, () -> posTile.setOccupant(null));
         p.disguise = this;
     }
 }

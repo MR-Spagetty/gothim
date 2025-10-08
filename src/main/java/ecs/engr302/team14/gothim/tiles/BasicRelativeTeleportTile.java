@@ -43,8 +43,8 @@ public class BasicRelativeTeleportTile extends PrimitiveEffectTile {
     }
 
     @Override
-    public Optional<Entity> getOcupant() {
-        return mapRef.getTile(pos().add(destOffset)).getOcupant();
+    public Optional<Entity> getOccupant() {
+        return mapRef.getTile(pos().add(destOffset)).getOccupant();
     }
 
 }

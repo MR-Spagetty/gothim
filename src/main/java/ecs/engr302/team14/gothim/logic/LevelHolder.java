@@ -56,10 +56,10 @@ public record LevelHolder(@SerializedField String levelID,
         Objects.requireNonNull(spawnPoint);
         Stream.concat(entities.stream(), players.stream())
                 .parallel()
-                .forEach(e -> map.getTile(e.getPosition()).setOcupant(e));
+                .forEach(e -> map.getTile(e.getPosition()).setOccupant(e));
         String mismatchedEntities = Stream.concat(entities.stream(), players.stream())
                 .parallel()
-                .filter(e -> map.getTile(e.getPosition()).getOcupant().orElse(null) != e)
+                .filter(e -> map.getTile(e.getPosition()).getOccupant().orElse(null) != e)
                 .map(Object::toString)
                 .collect(Collectors.joining("\n"));
         if (!mismatchedEntities.isBlank()) {

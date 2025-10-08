@@ -2,7 +2,6 @@ package ecs.engr302.team14.gothim.tiles;
 
 import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.entities.Entity;
-import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;

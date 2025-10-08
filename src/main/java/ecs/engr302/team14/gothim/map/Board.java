@@ -3,7 +3,6 @@ package ecs.engr302.team14.gothim.map;
 import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;

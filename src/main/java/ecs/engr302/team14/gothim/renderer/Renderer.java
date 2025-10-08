@@ -1,5 +1,8 @@
 package ecs.engr302.team14.gothim.renderer;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.app.Main;
 import ecs.engr302.team14.gothim.entities.NPC;
@@ -19,18 +22,11 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 
 /**
  * Central Renderer for rendering the game world, entities, and taskbook.
@@ -39,8 +35,8 @@ public class Renderer extends JPanel {
 
     static LoadingCache<String, BufferedImage> sprites = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofSeconds(10)).softValues().build(new CacheLoader<>() {
-                public BufferedImage load(@SuppressWarnings("null")
-                String key) throws Exception {
+                    @SuppressWarnings("null")
+                public BufferedImage load(String key) throws Exception {
                     System.out.println("Loading + assets/%s.png".formatted(key));
                     return ImageIO.read(Renderer.class.getClassLoader()
                             .getResource("assets/%s.png".formatted(key)));
@@ -56,7 +52,6 @@ public class Renderer extends JPanel {
     // Taskbook
     private boolean showTaskbook = false;
     private final Taskbook taskbook = new Taskbook();
-    private BufferedImage openbook;
     private Rectangle taskbookBounds;
     private Rectangle nextButtonBounds;
     private Rectangle prevButtonBounds;
@@ -67,13 +62,13 @@ public class Renderer extends JPanel {
 
     private Renderer() {
         // Load book UI asset
-            try {
-                openbook = sprites.get("openbook");
-                taskbookBounds = new Rectangle(100, 100, openbook.getWidth(), openbook.getHeight());
-            } catch (ExecutionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+        try {
+            BufferedImage openbook = sprites.get("openbook");
+            taskbookBounds = new Rectangle(100, 100, openbook.getWidth(), openbook.getHeight());
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         setBackground(new Color(30, 30, 30));
 
@@ -129,7 +124,7 @@ public class Renderer extends JPanel {
         drawTiles(g);
         drawEntities(g);
         for (Player p : LevelManager.getLevelData().players()) {
-            drawPlayers(g, p);
+            drawPlayer(g, p);
         }
         drawTaskbook(g);
     }
@@ -140,31 +135,32 @@ public class Renderer extends JPanel {
             return;
         }
 
+        Point cameraPos = LevelManager.getLevelData().getPlayer(Main.playerID).getPosition();
         // Second pass: draw non-grass tiles on top
-        for (PrimitiveTile tile : board.getTiles(LevelManager.getLevelData().getPlayer(Main.playerID).getPosition(), 10)) {
+        for (PrimitiveTile tile : board.getTiles(cameraPos, 10)) {
             String style = tile.style.toLowerCase();
             switch (style) {
                 case "townhouse" -> {
                     drawTile("fog", tile.pos(), g);
-                        try {
-                            BufferedImage houseTile = sprites.get("townhouse");
-                            double topLeftX = 24;
-                            double topLeftY = -10;
-                            double bottomRightX = 36;
-                            double bottomRightY = -25;
+                    try {
+                        BufferedImage houseTile = sprites.get("townhouse");
+                        double topLeftX = 24;
+                        double topLeftY = -10;
+                        double bottomRightX = 36;
+                        double bottomRightY = -25;
 
-                            // Compute width and height in pixels
-                            int width = (int) ((bottomRightX - topLeftX) * TILE_SIZE);
-                            int height = (int) ((topLeftY - bottomRightY) * TILE_SIZE);
+                        // Compute width and height in pixels
+                        int width = (int) ((bottomRightX - topLeftX) * TILE_SIZE);
+                        int height = (int) ((topLeftY - bottomRightY) * TILE_SIZE);
 
-                            // Convert map coords to pixel position
-                            int pixelX = (int) (topLeftX * TILE_SIZE) + offsetX;
-                            int pixelY = (int) (bottomRightY * TILE_SIZE) + offsetY;
+                        // Convert map coords to pixel position
+                        int pixelX = (int) (topLeftX * TILE_SIZE) + offsetX;
+                        int pixelY = (int) (bottomRightY * TILE_SIZE) + offsetY;
 
-                            g.drawImage(houseTile, pixelX, pixelY, width, height, this);
-                        } catch (ExecutionException e) {
-                            e.printStackTrace();
-                        }
+                        g.drawImage(houseTile, pixelX, pixelY, width, height, this);
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 case "fence" -> {
@@ -176,18 +172,18 @@ public class Renderer extends JPanel {
         }
     }
 
-    private void drawTile(String type, Point pos, Graphics g){
-            int tileX = (int) (pos.x() * TILE_SIZE) + offsetX;
-            int tileY = (int) (pos.y() * TILE_SIZE) + offsetY;
-            try {
-                BufferedImage tileImg = sprites.get(type);
-                g.drawImage(tileImg, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+    private void drawTile(String type, Point pos, Graphics g) {
+        int tileX = (int) (pos.x() * TILE_SIZE) + offsetX;
+        int tileY = (int) (pos.y() * TILE_SIZE) + offsetY;
+        try {
+            BufferedImage tileImg = sprites.get(type);
+            g.drawImage(tileImg, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void drawPlayers(Graphics g, Player p) {
+    private void drawPlayer(Graphics g, Player p) {
 
         Point pos = p.getPosition();
 
@@ -199,7 +195,7 @@ public class Renderer extends JPanel {
         int py = (int) (pos.y() * TILE_SIZE) + offsetY;
         BufferedImage playerSprite = null;
         try {
-            playerSprite = sprites.get("player_"+p.getIdentity().name());
+            playerSprite = sprites.get("player_" + p.getIdentity().name());
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
@@ -246,6 +242,12 @@ public class Renderer extends JPanel {
     }
 
     private void drawTaskbook(Graphics g) {
+        BufferedImage openbook = null;
+        try {
+            openbook = sprites.get("openbook");
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         if (!showTaskbook || openbook == null) {
             return;
         }

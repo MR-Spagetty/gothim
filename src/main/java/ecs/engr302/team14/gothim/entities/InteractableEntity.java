@@ -17,10 +17,10 @@ public abstract class InteractableEntity extends Entity {
      * @param player the player to check against
      * @return if the player is within interaction range
      */
-    public boolean isNear(Player player) {
+    public boolean isNear(Player player, int nearDist) {
         int dx = (int) (position.x() - player.getPosition().x());
         int dy = (int) (position.y() - player.getPosition().y());
-        return Math.abs(dx) <= 1 && Math.abs(dy) <= 1;
+        return Math.abs(dx) <= nearDist && Math.abs(dy) <= nearDist;
     }
 
     public abstract void interact(Player p);

@@ -108,8 +108,8 @@ public class Renderer extends JPanel {
                     .orElse(0);
             int minY = board.getAllTiles().stream().mapToInt(t -> (int) t.pos().y()).min()
                     .orElse(0);
-            offsetX = -minX * tileSize;
-            offsetY = -minY * tileSize;
+            offsetX = -minX * TILE_SIZE;
+            offsetY = -minY * TILE_SIZE;
         }
     }
 
@@ -138,18 +138,18 @@ public class Renderer extends JPanel {
 
         // First pass: draw grass on every tile
         for (PrimitiveTile tile : board.getAllTiles()) {
-            int tileX = (int) (tile.pos().x() * tileSize) + offsetX;
-            int tileY = (int) (tile.pos().y() * tileSize) + offsetY;
-            g.drawImage(grassTile, tileX, tileY, tileSize, tileSize, this);
+            int tileX = (int) (tile.pos().x() * TILE_SIZE) + offsetX;
+            int tileY = (int) (tile.pos().y() * TILE_SIZE) + offsetY;
+            g.drawImage(grassTile, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
         }
 
         // Second pass: draw non-grass tiles on top
         for (PrimitiveTile tile : board.getAllTiles()) {
-            int tileX = (int) (tile.pos().x() * tileSize) + offsetX;
-            int tileY = (int) (tile.pos().y() * tileSize) + offsetY;
+            int tileX = (int) (tile.pos().x() * TILE_SIZE) + offsetX;
+            int tileY = (int) (tile.pos().y() * TILE_SIZE) + offsetY;
 
             switch (tile.style) {
-                case "fence" -> g.drawImage(fenceTile, tileX, tileY, tileSize, tileSize, this);
+                case "fence" -> g.drawImage(fenceTile, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
                 case "townhouse" -> {
                     if (houseTile != null) {
                         double topLeftX = 24;
@@ -158,17 +158,18 @@ public class Renderer extends JPanel {
                         double bottomRightY = -25;
 
                         // Compute width and height in pixels
-                        int width = (int) ((bottomRightX - topLeftX) * tileSize);
-                        int height = (int) ((topLeftY - bottomRightY) * tileSize);
+                        int width = (int) ((bottomRightX - topLeftX) * TILE_SIZE);
+                        int height = (int) ((topLeftY - bottomRightY) * TILE_SIZE);
 
                         // Convert map coords to pixel position
-                        int pixelX = (int) (topLeftX * tileSize) + offsetX;
-                        int pixelY = (int) (bottomRightY * tileSize) + offsetY;
+                        int pixelX = (int) (topLeftX * TILE_SIZE) + offsetX;
+                        int pixelY = (int) (bottomRightY * TILE_SIZE) + offsetY;
 
                         g.drawImage(houseTile, pixelX, pixelY, width, height, this);
                     }
                 }
-                default -> {}
+                default -> {
+                }
             }
         }
     }
@@ -192,17 +193,22 @@ public class Renderer extends JPanel {
         Point pos = p.getPosition();
 
         // Center camera on player
-        offsetX = getWidth() / 2 - (int) (pos.x() * tileSize);
-        offsetY = getHeight() / 2 - (int) (pos.y() * tileSize);
+        offsetX = getWidth() / 2 - (int) (pos.x() * TILE_SIZE);
+        offsetY = getHeight() / 2 - (int) (pos.y() * TILE_SIZE);
 
-        int px = (int) (pos.x() * tileSize) + offsetX;
-        int py = (int) (pos.y() * tileSize) + offsetY;
+        int px = (int) (pos.x() * TILE_SIZE) + offsetX;
+        int py = (int) (pos.y() * TILE_SIZE) + offsetY;
 
         if (playerSprite != null) {
-            g.drawImage(playerSprite, px, py, 60, 96, this);
+            int spriteWidth = playerSprite.getWidth();
+            int spriteHeight = playerSprite.getHeight();
+            float ratio = ((float) spriteWidth) / spriteHeight;
+            int trueWidth = (int) (ratio * TILE_SIZE);
+            g.drawImage(playerSprite, px + (TILE_SIZE - trueWidth) / 2, py, trueWidth, TILE_SIZE,
+                    this);
         } else {
-            g.setColor(Color.WHITE);
-            g.fillRect(px, py, 40, 40);
+            g.setColor(Color.RED);
+            g.fillRect(px, py, TILE_SIZE, TILE_SIZE);
         }
     }
 

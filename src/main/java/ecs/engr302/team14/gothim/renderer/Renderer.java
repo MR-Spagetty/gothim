@@ -9,6 +9,7 @@ import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Day;
 import ecs.engr302.team14.gothim.util.Task;
+import ecs.engr302.team14.gothim.util.Point;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -45,6 +46,9 @@ public class Renderer extends JPanel {
     private BufferedImage fenceTile;
     private BufferedImage houseTile;
 
+    //Entities
+    private BufferedImage playerSprite;
+
     private int tileSize = 32; // pixels per tile
     private int offsetX = 0;   // offsets to render tiles at 0,0
     private int offsetY = 0;
@@ -65,6 +69,8 @@ public class Renderer extends JPanel {
         grassTile = loadTileImage("/assets/Grass_Tile.png");
         fenceTile = loadTileImage("/assets/Fence_Tile.png");
         houseTile = loadTileImage("/assets/Townhouse_Tile.png");
+        playerSprite = loadTileImage("/assets/Player.png");
+
 
         setBackground(new Color(30, 30, 30));
 
@@ -148,7 +154,6 @@ public class Renderer extends JPanel {
                 case "fence" -> g.drawImage(fenceTile, tileX, tileY, tileSize, tileSize, this);
                 case "townhouse" -> {
                     if (houseTile != null) {
-                        // Map coordinates from your JSON
                         double topLeftX = 24;
                         double topLeftY = -10;
                         double bottomRightX = 36;
@@ -182,8 +187,26 @@ public class Renderer extends JPanel {
     }
 
     private void drawPlayer(Graphics g) {
-        if (player != null) player.render(g);
+        if (player == null) return;
+
+        Point pos = player.getPosition();
+
+        // Center camera on player
+        offsetX = getWidth() / 2 - (int)(pos.x() * tileSize);
+        offsetY = getHeight() / 2 - (int)(pos.y() * tileSize);
+
+        int px = (int)(pos.x() * tileSize) + offsetX;
+        int py = (int)(pos.y() * tileSize) + offsetY;
+
+        if (playerSprite != null)
+            g.drawImage(playerSprite, px, py, 60, 96, this);
+        else {
+            g.setColor(Color.WHITE);
+            g.fillRect(px, py, 40, 40);
+        }
     }
+
+
 
     private void drawEntities(Graphics g) {
         if (npcs != null) {

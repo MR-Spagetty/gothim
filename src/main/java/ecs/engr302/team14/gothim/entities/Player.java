@@ -4,17 +4,12 @@ import ecs.engr302.team14.gothim.logic.DisguiseableAs;
 import ecs.engr302.team14.gothim.logic.Family;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.util.Optional;
 
 /**
  * Basic player class.
  */
 public class Player extends Entity {
-    private BufferedImage sprite;
-
     @SerializedField
     private final Family family;
     @SerializedField

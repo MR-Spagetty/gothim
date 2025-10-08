@@ -1,6 +1,7 @@
 package ecs.engr302.team14.gothim.renderer;
 
 import ecs.engr302.team14.gothim.app.LevelManager;
+import ecs.engr302.team14.gothim.app.Main;
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.Taskbook;
@@ -140,12 +141,11 @@ public class Renderer extends JPanel {
         }
 
         // Second pass: draw non-grass tiles on top
-        for (PrimitiveTile tile : board.getAllTiles()) {
-            int tileX = (int) (tile.pos().x() * TILE_SIZE) + offsetX;
-            int tileY = (int) (tile.pos().y() * TILE_SIZE) + offsetY;
-
-            switch (tile.style.toLowerCase()) {
+        for (PrimitiveTile tile : board.getTiles(LevelManager.getLevelData().getPlayer(Main.playerID).getPosition(), 10)) {
+            String style = tile.style.toLowerCase();
+            switch (style) {
                 case "townhouse" -> {
+                    drawTile("fog", tile.pos(), g);
                         try {
                             BufferedImage houseTile = sprites.get("townhouse");
                             double topLeftX = 24;
@@ -165,13 +165,13 @@ public class Renderer extends JPanel {
                         } catch (ExecutionException e) {
                             e.printStackTrace();
                         }
-                    
+
                 }
                 case "fence" -> {
                     drawTile("grass", tile.pos(), g);
-                    drawTile(tile.style.toLowerCase(), tile.pos(), g);
+                    drawTile(style, tile.pos(), g);
                 }
-                default -> drawTile(tile.style.toLowerCase(), tile.pos(), g);
+                default -> drawTile(style, tile.pos(), g);
             }
         }
     }

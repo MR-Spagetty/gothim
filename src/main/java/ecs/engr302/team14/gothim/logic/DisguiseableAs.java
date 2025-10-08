@@ -6,5 +6,6 @@ package ecs.engr302.team14.gothim.logic;
  * @author MR-Spagetty
  */
 public interface DisguiseableAs {
+    String name();
 
 }

@@ -16,20 +16,20 @@ import java.util.Optional;
  * @author MR-Spagetty
  */
 @SerializationExtends(Item.class)
-public class Disguise<T extends DisguiseableAs> extends Item {
+public class Disguise extends Item {
 
     @SerializedField
-    private final T disguisesAs;
+    private final DisguiseableAs disguisesAs;
 
     @DeserializationMethod(serialFieldNames = { "name", "position", "description", "collected",
             "disguisesAs" })
     public Disguise(String name, Point position, String description, boolean collected,
-            T disguisesAs) {
+            DisguiseableAs disguisesAs) {
         super(name, position, description, collected);
         this.disguisesAs = disguisesAs;
     }
 
-    public T disguise() {
+    public DisguiseableAs disguise() {
         return this.disguisesAs;
     }
 

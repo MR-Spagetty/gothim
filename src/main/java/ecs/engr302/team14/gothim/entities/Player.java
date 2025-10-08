@@ -17,7 +17,7 @@ public class Player extends Entity {
     @SerializedField
     private final Family family;
     @SerializedField
-    Disguise<?> disguise = null;
+    Disguise disguise = null;
 
     public Player(String name, Point position, Family fam) {
         super(name, position);
@@ -35,6 +35,17 @@ public class Player extends Entity {
         return identity == null || identity == Family.None || family == identity
                 || Optional.ofNullable(this.disguise).map(Disguise::disguise)
                         .map(d -> d == identity).orElse(false);
+    }
+
+
+    /**
+     * Gets the visual identity fo this player.
+     *
+     * @return the visual identity
+     */
+    public DisguiseableAs getIdentity() {
+        return Optional.ofNullable(disguise).map(Disguise::disguise)
+                .orElse((DisguiseableAs) family);
     }
 
     /**

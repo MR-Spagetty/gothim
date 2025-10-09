@@ -12,8 +12,13 @@ import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.Taskbook;
 import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.map.Board;
+import ecs.engr302.team14.gothim.persistancy.JSONArray;
+import ecs.engr302.team14.gothim.persistancy.JSONObject;
+import ecs.engr302.team14.gothim.persistancy.Serialization;
+import ecs.engr302.team14.gothim.renderer.behaviours.Behaviour;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Day;
+import ecs.engr302.team14.gothim.util.Direction;
 import ecs.engr302.team14.gothim.util.Point;
 import ecs.engr302.team14.gothim.util.Task;
 import java.awt.Color;
@@ -24,9 +29,13 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -38,8 +47,10 @@ public class Renderer extends JPanel {
     private static final int TILE_SIZE = 64; // pixels per tile
     private static final int VIEW_DIST = 13;
 
-    static LoadingCache<String, BufferedImage> sprites = CacheBuilder.newBuilder()
-            .expireAfterAccess(Duration.ofMinutes(5)).softValues().build(new CacheLoader<>() {
+    static final Duration CAHCE_EXPIARY = Duration.ofMinutes(5);
+
+    static final LoadingCache<String, BufferedImage> sprites = CacheBuilder.newBuilder()
+            .expireAfterAccess(CAHCE_EXPIARY).softValues().build(new CacheLoader<>() {
                 @SuppressWarnings("null")
                 public BufferedImage load(String key) throws Exception {
                     System.out.println("Loading + assets/%s.png".formatted(key));
@@ -47,6 +58,34 @@ public class Renderer extends JPanel {
                             .getResource("assets/%s.png".formatted(key)));
                 }
             });
+
+    static final LoadingCache<String, List<Behaviour>> behaviours = CacheBuilder.newBuilder()
+            .expireAfterAccess(CAHCE_EXPIARY).softValues().build(new CacheLoader<>() {
+                @SuppressWarnings({ "unchecked", "null" })
+                public List<Behaviour> load(String key) throws Exception {
+                    String cont = new String(Renderer.class.getClassLoader()
+                            .getResourceAsStream("assets/behaviours/%s.json".formatted(key))
+                            .readAllBytes());
+                    if (JSONArray.isNext(cont)) {
+                        return (ArrayList<Behaviour>) Serialization
+                                .fromJSON(JSONArray.parse(cont).getKey());
+                    }
+                    return List.of(
+                            (Behaviour) Serialization.fromJSON(JSONObject.parse(cont).getKey()));
+                }
+            });
+
+    static Set<String> specialStyles;
+
+    static {
+        try {
+            specialStyles = new String(Renderer.class.getClassLoader()
+                    .getResourceAsStream("assets/hasBehaviours").readAllBytes()).lines()
+                            .collect(Collectors.toSet());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static Renderer instance;
 
@@ -142,6 +181,16 @@ public class Renderer extends JPanel {
         // Second pass: draw non-grass tiles on top
         for (PrimitiveTile tile : board.getTiles(cameraPos, VIEW_DIST)) {
             String style = tile.style.toLowerCase();
+            if (specialStyles.contains(style)) {
+                for (Behaviour behaviour : behaviours.getUnchecked(style)) {
+                    if (behaviour.cond().applies(tile,
+                            board.getTiles(tile.pos().add(Direction.UpLeft.offset),
+                                    tile.pos().add(Direction.DownRight.offset)))) {
+                        drawTile(behaviour.assetName(), tile.pos(), g);
+                    }
+                }
+                return;
+            }
             switch (style) {
                 case "townhouse" -> {
                     drawTile("fog", tile.pos(), g);
@@ -228,16 +277,17 @@ public class Renderer extends JPanel {
             default -> drawUnknown(e.getPosition(), g);
         }
     }
-    
-    private void drawNPC(NPC npc, Graphics g){
+
+    private void drawNPC(NPC npc, Graphics g) {
         BufferedImage img = null;
         try {
-        switch (npc.getName()) {
-            case "newspaper" -> img = sprites.get("newspaper");
-            case "Notice Board" -> img = sprites.get("noticeboard");
-        
-            default -> img = sprites.get("NPC");
-        }} catch (UncheckedExecutionException | ExecutionException e) {
+            switch (npc.getName()) {
+                case "newspaper" -> img = sprites.get("newspaper");
+                case "Notice Board" -> img = sprites.get("noticeboard");
+
+                default -> img = sprites.get("NPC");
+            }
+        } catch (UncheckedExecutionException | ExecutionException e) {
             System.err.println("Could not find Texture for npc with name " + npc.getName());
             drawUnknown(npc.getPosition(), g);
             return;
@@ -248,8 +298,7 @@ public class Renderer extends JPanel {
         int spriteHeight = img.getHeight();
         float ratio = ((float) spriteWidth) / spriteHeight;
         int trueWidth = (int) (ratio * TILE_SIZE);
-        g.drawImage(img, x + (TILE_SIZE - trueWidth) / 2, y, trueWidth, TILE_SIZE,
-                this);
+        g.drawImage(img, x + (TILE_SIZE - trueWidth) / 2, y, trueWidth, TILE_SIZE, this);
     }
 
     private void drawUnknown(Point pos, Graphics g) {

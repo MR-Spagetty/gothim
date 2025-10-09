@@ -2,6 +2,17 @@
     {
         "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
         "fields": {
+            "assetName": "grass",
+            "cond": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.BehaviourCondition",
+                "name": "True"
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
             "assetName": "fenceUp",
             "cond": {
                 "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",

@@ -35,8 +35,11 @@ import javax.swing.JPanel;
  */
 public class Renderer extends JPanel {
 
+    private static final int TILE_SIZE = 64; // pixels per tile
+    private static final int VIEW_DIST = 13;
+
     static LoadingCache<String, BufferedImage> sprites = CacheBuilder.newBuilder()
-            .expireAfterAccess(Duration.ofSeconds(10)).softValues().build(new CacheLoader<>() {
+            .expireAfterAccess(Duration.ofMinutes(5)).softValues().build(new CacheLoader<>() {
                 @SuppressWarnings("null")
                 public BufferedImage load(String key) throws Exception {
                     System.out.println("Loading + assets/%s.png".formatted(key));
@@ -58,7 +61,6 @@ public class Renderer extends JPanel {
     private Rectangle nextButtonBounds;
     private Rectangle prevButtonBounds;
 
-    private static final int TILE_SIZE = 33; // pixels per tile
     private int offsetX = 0; // offsets to render tiles at 0,0
     private int offsetY = 0;
 
@@ -138,11 +140,12 @@ public class Renderer extends JPanel {
 
         Point cameraPos = LevelManager.getLevelData().getPlayer(Main.playerID).getPosition();
         // Second pass: draw non-grass tiles on top
-        for (PrimitiveTile tile : board.getTiles(cameraPos, 10)) {
+        for (PrimitiveTile tile : board.getTiles(cameraPos, VIEW_DIST)) {
             String style = tile.style.toLowerCase();
             switch (style) {
                 case "townhouse" -> {
                     drawTile("fog", tile.pos(), g);
+                    // TODO replace this to make it faster
                     try {
                         BufferedImage houseTile = sprites.get("townhouse");
                         double topLeftX = 24;
@@ -221,8 +224,32 @@ public class Renderer extends JPanel {
     private void drawEntity(Entity e, Graphics g) {
         switch (e) {
             case Player p -> drawPlayer(g, p);
+            case NPC npc -> drawNPC(npc, g);
             default -> drawUnknown(e.getPosition(), g);
         }
+    }
+    
+    private void drawNPC(NPC npc, Graphics g){
+        BufferedImage img = null;
+        try {
+        switch (npc.getName()) {
+            case "newspaper" -> img = sprites.get("newspaper");
+            case "Notice Board" -> img = sprites.get("noticeboard");
+        
+            default -> img = sprites.get("NPC");
+        }} catch (UncheckedExecutionException | ExecutionException e) {
+            System.err.println("Could not find Texture for npc with name " + npc.getName());
+            drawUnknown(npc.getPosition(), g);
+            return;
+        }
+        int x = (int) (npc.getPosition().x() * TILE_SIZE) + offsetX;
+        int y = (int) (npc.getPosition().y() * TILE_SIZE) + offsetY;
+        int spriteWidth = img.getWidth();
+        int spriteHeight = img.getHeight();
+        float ratio = ((float) spriteWidth) / spriteHeight;
+        int trueWidth = (int) (ratio * TILE_SIZE);
+        g.drawImage(img, x + (TILE_SIZE - trueWidth) / 2, y, trueWidth, TILE_SIZE,
+                this);
     }
 
     private void drawUnknown(Point pos, Graphics g) {

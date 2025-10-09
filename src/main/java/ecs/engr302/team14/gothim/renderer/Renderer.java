@@ -259,7 +259,11 @@ public class Renderer extends JPanel {
         try {
             openbook = sprites.get("openbook");
         } catch (UncheckedExecutionException | ExecutionException e) {
-            System.err.println("failed to load openbook");
+            try {
+                openbook = sprites.get("unknown");
+            } catch (UncheckedExecutionException | ExecutionException e1) {
+                e1.printStackTrace();
+            }
         }
         if (!showTaskbook || openbook == null) {
             return;

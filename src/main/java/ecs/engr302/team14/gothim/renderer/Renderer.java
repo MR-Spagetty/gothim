@@ -142,16 +142,6 @@ public class Renderer extends JPanel {
     public void loadFromLevel() {
         LevelHolder level = LevelManager.getLevelData();
         this.board = level.map();
-
-        // compute offsets so tiles start visible at 0,0
-        if (board != null && !board.getAllTiles().isEmpty()) {
-            int minX = board.getAllTiles().stream().mapToInt(t -> (int) t.pos().x()).min()
-                    .orElse(0);
-            int minY = board.getAllTiles().stream().mapToInt(t -> (int) t.pos().y()).min()
-                    .orElse(0);
-            offsetX = -minX * TILE_SIZE;
-            offsetY = -minY * TILE_SIZE;
-        }
     }
 
     public void toggleTaskbook() {
@@ -163,6 +153,9 @@ public class Renderer extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Point offset = LevelManager.getLevelData().getPlayer(Main.playerID).getPosition().mul(-1);
+        offsetX = (int) offset.x();
+        offsetY = (int) offset.y();
         drawTiles(g);
         for (Player p : LevelManager.getLevelData().players()) {
             drawPlayer(g, p);
@@ -182,13 +175,12 @@ public class Renderer extends JPanel {
             String style = tile.style.toLowerCase();
             if (specialStyles.contains(style)) {
                 for (Behaviour behaviour : behaviours.getUnchecked(style)) {
-                    if (behaviour.cond().applies(tile,
-                            board.getTiles(tile.pos().add(new Point(-1, 1)),
-                                    tile.pos().add(new Point(1, -1))))) {
+                    if (behaviour.cond().applies(tile, board.getTiles(
+                            tile.pos().add(new Point(-1, 1)), tile.pos().add(new Point(1, -1))))) {
                         drawTile(behaviour.assetName(), tile.pos(), g);
                     }
                 }
-                return;
+                continue;
             }
             switch (style) {
                 case "townhouse" -> {
@@ -226,8 +218,8 @@ public class Renderer extends JPanel {
     }
 
     private void drawTile(String type, Point pos, Graphics g) {
-        int tileX = (int) (pos.x() * TILE_SIZE) + offsetX;
-        int tileY = (int) (pos.y() * TILE_SIZE) + offsetY;
+        int tileX = (int) (pos.x() + offsetX) * TILE_SIZE + getWidth() / 2;
+        int tileY = (int) (pos.y() + offsetY) * TILE_SIZE + getHeight() / 2;
         try {
             BufferedImage tileImg = sprites.get(type);
             g.drawImage(tileImg, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
@@ -242,11 +234,8 @@ public class Renderer extends JPanel {
         Point pos = p.getPosition();
 
         // Center camera on player
-        offsetX = getWidth() / 2 - (int) (pos.x() * TILE_SIZE);
-        offsetY = getHeight() / 2 - (int) (pos.y() * TILE_SIZE);
-
-        int px = (int) (pos.x() * TILE_SIZE) + offsetX;
-        int py = (int) (pos.y() * TILE_SIZE) + offsetY;
+        int px = (int) (pos.x() + offsetX) * TILE_SIZE + getWidth() / 2;
+        int py = (int) (pos.y() + offsetY) * TILE_SIZE + getHeight() / 2;
         BufferedImage playerSprite = null;
         try {
             playerSprite = sprites.get("player_" + p.getIdentity().name());
@@ -291,8 +280,8 @@ public class Renderer extends JPanel {
             drawUnknown(npc.getPosition(), g);
             return;
         }
-        int x = (int) (npc.getPosition().x() * TILE_SIZE) + offsetX;
-        int y = (int) (npc.getPosition().y() * TILE_SIZE) + offsetY;
+        int x = (int) (npc.getPosition().x() + offsetX) * TILE_SIZE + getWidth() / 2;
+        int y = (int) (npc.getPosition().y() + offsetY) * TILE_SIZE + getHeight() / 2;
         int spriteWidth = img.getWidth();
         int spriteHeight = img.getHeight();
         float ratio = ((float) spriteWidth) / spriteHeight;
@@ -303,8 +292,8 @@ public class Renderer extends JPanel {
     private void drawUnknown(Point pos, Graphics g) {
         try {
             BufferedImage img = sprites.get("unknown");
-            int x = (int) (pos.x() * TILE_SIZE) + offsetX;
-            int y = (int) (pos.y() * TILE_SIZE) + offsetY;
+            int x = (int) (pos.x() + offsetX) * TILE_SIZE + getWidth() / 2;
+            int y = (int) (pos.y() + offsetY) * TILE_SIZE + getHeight() / 2;
             g.drawImage(img, x, y, TILE_SIZE, TILE_SIZE, this);
         } catch (Exception e) {
             System.err.println("Could not find unknown texture sprite");

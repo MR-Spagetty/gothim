@@ -14,7 +14,6 @@ public class ActionHandler {
      */
     public static void handleMove(Direction direction) {
         LevelManager.getLevelData().movePlayer(Main.playerID, direction);
-        System.out.println("Moving...");
         if (Main.rendererPanel != null) {
             Main.rendererPanel.revalidate();
             Main.rendererPanel.repaint();

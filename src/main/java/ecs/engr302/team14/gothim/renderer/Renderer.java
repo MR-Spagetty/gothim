@@ -3,8 +3,10 @@ package ecs.engr302.team14.gothim.renderer;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.app.Main;
+import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.Taskbook;
@@ -35,7 +37,7 @@ public class Renderer extends JPanel {
 
     static LoadingCache<String, BufferedImage> sprites = CacheBuilder.newBuilder()
             .expireAfterAccess(Duration.ofSeconds(10)).softValues().build(new CacheLoader<>() {
-                    @SuppressWarnings("null")
+                @SuppressWarnings("null")
                 public BufferedImage load(String key) throws Exception {
                     System.out.println("Loading + assets/%s.png".formatted(key));
                     return ImageIO.read(Renderer.class.getClassLoader()
@@ -65,7 +67,7 @@ public class Renderer extends JPanel {
         try {
             BufferedImage openbook = sprites.get("openbook");
             taskbookBounds = new Rectangle(100, 100, openbook.getWidth(), openbook.getHeight());
-        } catch (ExecutionException e) {
+        } catch (UncheckedExecutionException | ExecutionException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -122,7 +124,6 @@ public class Renderer extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         drawTiles(g);
-        drawEntities(g);
         for (Player p : LevelManager.getLevelData().players()) {
             drawPlayer(g, p);
         }
@@ -158,7 +159,7 @@ public class Renderer extends JPanel {
                         int pixelY = (int) (bottomRightY * TILE_SIZE) + offsetY;
 
                         g.drawImage(houseTile, pixelX, pixelY, width, height, this);
-                    } catch (ExecutionException e) {
+                    } catch (UncheckedExecutionException | ExecutionException e) {
                         e.printStackTrace();
                     }
 
@@ -169,6 +170,7 @@ public class Renderer extends JPanel {
                 }
                 default -> drawTile(style, tile.pos(), g);
             }
+            tile.getOccupant().ifPresent((e) -> drawEntity(e, g));
         }
     }
 
@@ -178,8 +180,9 @@ public class Renderer extends JPanel {
         try {
             BufferedImage tileImg = sprites.get(type);
             g.drawImage(tileImg, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } catch (UncheckedExecutionException | ExecutionException e) {
+            System.err.println("Could not find texture for tile: " + type);
+            drawUnknown(pos, g);
         }
     }
 
@@ -196,8 +199,10 @@ public class Renderer extends JPanel {
         BufferedImage playerSprite = null;
         try {
             playerSprite = sprites.get("player_" + p.getIdentity().name());
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } catch (UncheckedExecutionException | ExecutionException e) {
+            System.err.println("Could not find Texture for player_" + p.getIdentity().name());
+            drawUnknown(pos, g);
+            return;
         }
 
         if (playerSprite != null) {
@@ -213,13 +218,21 @@ public class Renderer extends JPanel {
         }
     }
 
-    private void drawEntities(Graphics g) {
-        for (NPC npc : LevelManager.getLevelData().entities().stream().<NPC>mapMulti((e, cons) -> {
-            if (e instanceof NPC npcE) {
-                cons.accept(npcE);
-            }
-        }).toList()) {
-            npc.render(g);
+    private void drawEntity(Entity e, Graphics g) {
+        switch (e) {
+            case Player p -> drawPlayer(g, p);
+            default -> drawUnknown(e.getPosition(), g);
+        }
+    }
+
+    private void drawUnknown(Point pos, Graphics g) {
+        try {
+            BufferedImage img = sprites.get("unknown");
+            int x = (int) (pos.x() * TILE_SIZE) + offsetX;
+            int y = (int) (pos.y() * TILE_SIZE) + offsetY;
+            g.drawImage(img, x, y, TILE_SIZE, TILE_SIZE, this);
+        } catch (Exception e) {
+            System.err.println("Could not find unknown texture sprite");
         }
     }
 
@@ -245,8 +258,8 @@ public class Renderer extends JPanel {
         BufferedImage openbook = null;
         try {
             openbook = sprites.get("openbook");
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        } catch (UncheckedExecutionException | ExecutionException e) {
+            System.err.println("failed to load openbook");
         }
         if (!showTaskbook || openbook == null) {
             return;

@@ -1,0 +1,8 @@
+[
+  {
+    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Always",
+    "fields": {
+      "assetName": "fencePost"
+    }
+  }
+]

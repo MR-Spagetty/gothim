@@ -1,8 +1,13 @@
 [
   {
-    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Always",
+    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
     "fields": {
-      "assetName": "fencePost"
+      "assetName": "fencePost",
+      "cond": {
+        "kind": "constant",
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.BehaviourCondition",
+        "name": "True"
+      }
     }
   }
 ]

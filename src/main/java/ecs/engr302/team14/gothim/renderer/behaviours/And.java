@@ -7,21 +7,21 @@ import ecs.engr302.team14.gothim.util.Point;
 import java.util.Map;
 
 /**
- * Basic Always active behaviour. Typical to be used for base case.
+ * Simple OR behaviour.
  *
- * @author MR-Spagetty
+ * @authro MR-Spagetty
  */
-public record Always(
+public record And(
         @SerializedField
-        String assetName
-) implements Behaviour {
-
-    @DeserializationMethod(serialFieldNames = { "assetName" })
-    public Always {}
+        BehaviourCondition a,
+        @SerializedField
+        BehaviourCondition b
+) implements BehaviourCondition {
+    @DeserializationMethod(serialFieldNames = { "a", "b" })
+    public And {}
 
     @Override
     public Boolean applies(PrimitiveTile to, Map<Point, PrimitiveTile> neighbours) {
-        return true;
+        return a.applies(to, neighbours) && b.applies(to, neighbours);
     }
-
 }

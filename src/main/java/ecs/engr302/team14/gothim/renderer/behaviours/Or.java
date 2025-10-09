@@ -7,21 +7,21 @@ import ecs.engr302.team14.gothim.util.Point;
 import java.util.Map;
 
 /**
- * Proxy behaviour that inverts the inner Behaviour.
+ * Simple OR behaviour.
  *
- * @author MR-Spagetty
+ * @authro MR-Spagetty
  */
-public record Not(
+public record Or(
         @SerializedField
-        BehaviourCondition inner
+        BehaviourCondition a,
+        @SerializedField
+        BehaviourCondition b
 ) implements BehaviourCondition {
-
-    @DeserializationMethod(serialFieldNames = { "inner" })
-    public Not {}
+    @DeserializationMethod(serialFieldNames = { "a", "b" })
+    public Or {}
 
     @Override
     public Boolean applies(PrimitiveTile to, Map<Point, PrimitiveTile> neighbours) {
-        return !inner.applies(to, neighbours);
+        return a.applies(to, neighbours) || b.applies(to, neighbours);
     }
-
 }

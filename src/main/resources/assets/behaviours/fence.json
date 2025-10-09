@@ -68,6 +68,39 @@
     {
         "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
         "fields": {
+            "assetName": "fenceRight",
+            "cond": {
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",
+                "fields": {
+                    "a": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "style": "fence",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Right"
+                            }
+                        }
+                    },
+                    "b": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "type": "solid",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Right"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
             "assetName": "fencePost",
             "cond": {
                 "kind": "constant",

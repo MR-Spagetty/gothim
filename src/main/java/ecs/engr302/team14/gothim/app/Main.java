@@ -65,6 +65,7 @@ public class Main {
         updateGUI();
         frame.setVisible(true);
 
+        rendererPanel.repaint();
         //Another change (just for reference)
         startGameLoop();
     }
@@ -72,7 +73,7 @@ public class Main {
     //Added game loop for things happening
     private void startGameLoop() {
         // Simple game loop using Swing Timer
-        Timer gameLoop = new Timer(16, _ -> {
+        Timer gameLoop = new Timer(200, _ -> {
             if (currentState == GameState.Playing) {
                 rendererPanel.repaint();
             }

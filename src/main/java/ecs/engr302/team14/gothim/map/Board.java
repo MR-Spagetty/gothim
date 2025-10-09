@@ -41,7 +41,7 @@ public class Board {
      */
     public List<PrimitiveTile> getTiles(Point topleft, Point bottomRight) {
         return IntStream.range((int) topleft.x(), (int) bottomRight.x() + 1).boxed().parallel()
-                .flatMap(x -> IntStream.range((int) bottomRight.y(), (int) topleft.y()).boxed()
+                .flatMap(x -> IntStream.range((int) bottomRight.y(), (int) topleft.y() + 1).boxed()
                         .parallel().map(y -> {
                             Point pos = new Point(x, y);
                             return Optional.ofNullable(getTile(pos)).orElse(new FogTile(pos));

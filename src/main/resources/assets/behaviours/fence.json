@@ -29,7 +29,7 @@
                         }
                     },
                     "b": {
-                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
                         "fields": {
                             "type": "solid",
                             "side": {
@@ -62,7 +62,7 @@
                         }
                     },
                     "b": {
-                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
                         "fields": {
                             "type": "solid",
                             "side": {
@@ -95,7 +95,7 @@
                         }
                     },
                     "b": {
-                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
                         "fields": {
                             "type": "solid",
                             "side": {
@@ -139,7 +139,7 @@
                         }
                     },
                     "b": {
-                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
                         "fields": {
                             "type": "solid",
                             "side": {

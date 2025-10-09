@@ -18,7 +18,6 @@ import ecs.engr302.team14.gothim.persistancy.Serialization;
 import ecs.engr302.team14.gothim.renderer.behaviours.Behaviour;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Day;
-import ecs.engr302.team14.gothim.util.Direction;
 import ecs.engr302.team14.gothim.util.Point;
 import ecs.engr302.team14.gothim.util.Task;
 import java.awt.Color;
@@ -184,8 +183,8 @@ public class Renderer extends JPanel {
             if (specialStyles.contains(style)) {
                 for (Behaviour behaviour : behaviours.getUnchecked(style)) {
                     if (behaviour.cond().applies(tile,
-                            board.getTiles(tile.pos().add(Direction.UpLeft.offset),
-                                    tile.pos().add(Direction.DownRight.offset)))) {
+                            board.getTiles(tile.pos().add(new Point(-1, 1)),
+                                    tile.pos().add(new Point(1, -1))))) {
                         drawTile(behaviour.assetName(), tile.pos(), g);
                     }
                 }

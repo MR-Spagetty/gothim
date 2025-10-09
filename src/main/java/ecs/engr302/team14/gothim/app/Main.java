@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -22,7 +23,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import com.google.common.base.Optional;
 
 
 /**
@@ -172,11 +172,15 @@ public class Main {
         }
         Optional<Dialogue> curr = Optional.of(dialogue);
         do {
-            JOptionPane.showOptionDialog(frame, curr.get().say(), sourceName,
+            int chosen = JOptionPane.showOptionDialog(frame, curr.get().say(), sourceName,
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                     curr.get().getOptions(p).stream().map(DialogueOption::text).toArray(),
                     DialogueOption.GoodBye.text()
             );
+            if (chosen == JOptionPane.CLOSED_OPTION) {
+                return;
+            }
+            curr = curr.get().progress(p, chosen);
         } while (curr.isPresent());
     }
 

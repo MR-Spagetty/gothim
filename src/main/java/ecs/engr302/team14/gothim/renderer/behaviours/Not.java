@@ -7,21 +7,26 @@ import ecs.engr302.team14.gothim.util.Point;
 import java.util.Map;
 
 /**
- * Basic Always active behaviour. Typical to be used for base case.
+ * Proxy behaviour that inverts the inner Behaviour.
  *
  * @author MR-Spagetty
  */
-public record Always(
+public record Not(
         @SerializedField
-        String assetName
+        Behaviour inner
 ) implements Behaviour {
 
-    @DeserializationMethod(serialFieldNames = { "assetName" })
-    public Always {}
+    @DeserializationMethod(serialFieldNames = { "inner" })
+    public Not {}
 
     @Override
     public Boolean applies(PrimitiveTile to, Map<Point, PrimitiveTile> neighbours) {
-        return true;
+        return !inner.applies(to, neighbours);
+    }
+
+    @Override
+    public String assetName() {
+        return inner.assetName();
     }
 
 }

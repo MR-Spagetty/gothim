@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
 /**
  * Simple class for representing all dialogue statements.
  *
@@ -48,22 +47,26 @@ public class Dialogue {
     /**
      * get the available options for this dialogue statement.
      *
-     * @param interacting the player interacting with the source of this dialogue
+     * @param interacting the player interacting with the source of this
+     *      dialogue
      * @return the available options
      */
     public List<DialogueOption> getOptions(Player interacting) {
-        return Collections.unmodifiableList(options);
+        return options.stream().filter(opt -> opt.isAvailableTo(interacting)).toList();
     }
 
     /**
      * Progresses this stream of dialogue using the specified option.
      *
-     * @param interacting the player interacting with the source of this dialogue
+     * @param interacting the player interacting with the source of this
+     *      dialogue
      * @param option the option to progress down.
-     * @return the result of the dialogue progression (Empty optional if dialogue ends)
+     * @return the result of the dialogue progression (Empty optional if
+     *      dialogue ends)
      */
     public Optional<Dialogue> progress(Player interacting, int option) {
-        return options.get(option).result(interacting);
+        return options.stream().filter(opt -> opt.isAvailableTo(interacting)).toList().get(option)
+                .result(interacting);
     }
 
 }

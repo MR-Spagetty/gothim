@@ -1,6 +1,8 @@
 package ecs.engr302.team14.gothim.app;
 
+import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.logic.dialogue.Dialogue;
+import ecs.engr302.team14.gothim.logic.dialogue.DialogueOption;
 import ecs.engr302.team14.gothim.renderer.Renderer;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -15,9 +17,12 @@ import java.util.Set;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+
+import com.google.common.base.Optional;
 
 
 /**
@@ -160,12 +165,19 @@ public class Main {
      * @param sourceName the name of the origin of the dialogue
      * @param dialogue the dialogue source to use
      */
-    public static void dialogue(String sourceName, Dialogue dialogue) {
+    public static void dialogue(String sourceName, Dialogue dialogue, Player p) {
         if (!SwingUtilities.isEventDispatchThread()) {
-            SwingUtilities.invokeLater(() -> dialogue(sourceName, dialogue));
+            SwingUtilities.invokeLater(() -> dialogue(sourceName, dialogue, p));
             return;
         }
-        throw new UnsupportedOperationException("app end of dialogue NYI");
+        Optional<Dialogue> curr = Optional.of(dialogue);
+        do {
+            JOptionPane.showOptionDialog(frame, curr.get().say(), sourceName,
+                    JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
+                    curr.get().getOptions(p).stream().map(DialogueOption::text).toArray(),
+                    DialogueOption.GoodBye.text()
+            );
+        } while (curr.isPresent());
     }
 
 }

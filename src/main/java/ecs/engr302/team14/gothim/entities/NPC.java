@@ -24,6 +24,6 @@ public class NPC extends InteractableEntity {
 
     //Complete interaction
     public void interact(Player p) {
-        Main.dialogue(this.name, this.dialogue);
+        Main.dialogue(this.name, this.dialogue, p);
     }
 }

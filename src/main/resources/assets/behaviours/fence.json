@@ -108,5 +108,38 @@
                 "name": "True"
             }
         }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "fenceDown",
+            "cond": {
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",
+                "fields": {
+                    "a": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "style": "fence",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Down"
+                            }
+                        }
+                    },
+                    "b": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "type": "solid",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Down"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 ]

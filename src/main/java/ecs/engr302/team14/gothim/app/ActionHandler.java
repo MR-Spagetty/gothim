@@ -20,6 +20,10 @@ public class ActionHandler {
         }
     }
 
+    public static void handleInteract() {
+        LevelManager.getLevelData().getPlayer(Main.playerID).interact();
+    }
+
     /**
      * handle the starting of a new game.
      */

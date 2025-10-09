@@ -50,6 +50,11 @@ public class KeybindManager {
                 ActionHandler.handleMove(Direction.Right);
             }
         });
+        actionMap.put("interact", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                ActionHandler.handleInteract();
+            }
+        });
         actionMap.put("exit", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 ActionHandler.handleQuit();
@@ -76,6 +81,8 @@ public class KeybindManager {
         inputMap.put(KeyStroke.getKeyStroke("S"), "moveDown");
         inputMap.put(KeyStroke.getKeyStroke("A"), "moveLeft");
         inputMap.put(KeyStroke.getKeyStroke("D"), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke("E"), "interact");
+        inputMap.put(KeyStroke.getKeyStroke("space"), "interact");
         inputMap.put(KeyStroke.getKeyStroke("control X"), "exit");
         inputMap.put(KeyStroke.getKeyStroke("control S"), "save");
         inputMap.put(KeyStroke.getKeyStroke("control R"), "load");

@@ -180,38 +180,38 @@ public class Renderer extends JPanel {
                         drawTile(behaviour.assetName(), tile.pos(), g);
                     }
                 }
-                continue;
-            }
-            switch (style) {
-                case "townhouse" -> {
-                    drawTile("fog", tile.pos(), g);
-                    // TODO replace this to make it faster
-                    try {
-                        BufferedImage houseTile = sprites.get("townhouse");
-                        double topLeftX = 24;
-                        double topLeftY = -10;
-                        double bottomRightX = 36;
-                        double bottomRightY = -25;
+            } else {
+                switch (style) {
+                    case "townhouse" -> {
+                        drawTile("fog", tile.pos(), g);
+                        // TODO replace this to make it faster
+                        try {
+                            BufferedImage houseTile = sprites.get("townhouse");
+                            double topLeftX = 24;
+                            double topLeftY = -10;
+                            double bottomRightX = 36;
+                            double bottomRightY = -25;
 
-                        // Compute width and height in pixels
-                        int width = (int) ((bottomRightX - topLeftX) * TILE_SIZE);
-                        int height = (int) ((topLeftY - bottomRightY) * TILE_SIZE);
+                            // Compute width and height in pixels
+                            int width = (int) ((bottomRightX - topLeftX) * TILE_SIZE);
+                            int height = (int) ((topLeftY - bottomRightY) * TILE_SIZE);
 
-                        // Convert map coords to pixel position
-                        int pixelX = (int) (topLeftX * TILE_SIZE) + offsetX;
-                        int pixelY = (int) (bottomRightY * TILE_SIZE) + offsetY;
+                            // Convert map coords to pixel position
+                            int pixelX = (int) (topLeftX * TILE_SIZE) + offsetX;
+                            int pixelY = (int) (bottomRightY * TILE_SIZE) + offsetY;
 
-                        g.drawImage(houseTile, pixelX, pixelY, width, height, this);
-                    } catch (UncheckedExecutionException | ExecutionException e) {
-                        e.printStackTrace();
+                            g.drawImage(houseTile, pixelX, pixelY, width, height, this);
+                        } catch (UncheckedExecutionException | ExecutionException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-
+                    case "fence" -> {
+                        drawTile("grass", tile.pos(), g);
+                        drawTile(style, tile.pos(), g);
+                    }
+                    default -> drawTile(style, tile.pos(), g);
                 }
-                case "fence" -> {
-                    drawTile("grass", tile.pos(), g);
-                    drawTile(style, tile.pos(), g);
-                }
-                default -> drawTile(style, tile.pos(), g);
             }
             tile.getOccupant().ifPresent((e) -> drawEntity(e, g));
         }

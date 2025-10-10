@@ -40,8 +40,6 @@ public class Main {
     private Main() {
         currentState = GameState.Menu;
         LevelManager.setLevel(LevelEnum.ONE);
-        Renderer renderer = Renderer.getInstance();
-        renderer.loadFromLevel();
         frame = new JFrame();
         rendererPanel = Renderer.getInstance();
         buttonPanel = new JPanel();

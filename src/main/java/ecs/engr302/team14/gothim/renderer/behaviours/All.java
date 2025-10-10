@@ -23,7 +23,7 @@ public record All(
 
     @Override
     public Boolean applies(PrimitiveTile to, Map<Point, PrimitiveTile> neighbours) {
-        return conds.parallelStream().anyMatch(cond -> cond.applies(to, neighbours));
+        return conds.parallelStream().allMatch(cond -> cond.applies(to, neighbours));
     }
 
 }

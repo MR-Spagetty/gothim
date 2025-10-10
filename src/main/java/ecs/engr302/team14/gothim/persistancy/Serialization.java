@@ -495,7 +495,7 @@ public final class Serialization {
                             "Expected only one DeserializationMethod found at least: %s and %s"
                                     .formatted(a, b));
                 })
-                .orElseThrow(() -> new AnnotationFormatError("Expected one DeserializationMethod"));
+                .orElseThrow(() -> new AnnotationFormatError("Expected one DeserializationMethod in " + thingClass.getName()));
         deserialMeth.setAccessible(true);
         Object[] args = new Object[deserialMeth.getParameterCount()];
         JSONObject fields = o.get("fields").map(v -> v instanceof JSONObject jo ? jo : null)

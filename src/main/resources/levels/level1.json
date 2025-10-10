@@ -117,6 +117,27 @@
                                 }
                             }
                         }
+                    },
+                    {
+                      "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                      "fields": {
+                        "type": "passable",
+                        "properties": {
+                          "kind": "map",
+                          "class": "java.util.HashMap",
+                          "valueType": "String",
+                          "entries": {
+                            "style": "door"
+                          }
+                        },
+                        "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                      }
                     }
                 ]
             }

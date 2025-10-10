@@ -1,0 +1,178 @@
+[
+  {
+    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+    "fields": {
+      "assetName": "void",
+      "cond": {
+        "kind": "constant",
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.BehaviourCondition",
+        "name": "True"
+      }
+    }
+  },
+  {
+    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+    "fields": {
+      "assetName": "doorVOpen",
+      "cond": {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.And",
+        "fields": {
+          "a": {
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "fields": {
+              "type": "solid",
+              "side": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.util.Direction",
+                "name": "Left"
+              }
+            }
+          },
+          "b": {
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "fields": {
+              "type": "solid",
+              "side": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.util.Direction",
+                "name": "Right"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+    "fields": {
+      "assetName": "doorHOpen",
+      "cond": {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.And",
+        "fields": {
+          "a": {
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "fields": {
+              "type": "solid",
+              "side": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.util.Direction",
+                "name": "Up"
+              }
+            }
+          },
+          "b": {
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "fields": {
+              "type": "solid",
+              "side": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.util.Direction",
+                "name": "Down"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+    "fields": {
+      "assetName": "doorVClosed",
+      "cond": {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.All",
+        "fields": {
+          "conds": [
+            {
+              "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+              "fields": {
+                "type": "solid",
+                "side": {
+                  "kind": "constant",
+                  "class": "ecs.engr302.team14.gothim.util.Direction",
+                  "name": "Left"
+                }
+              }
+            },
+            {
+              "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+              "fields": {
+                "type": "solid",
+                "side": {
+                  "kind": "constant",
+                  "class": "ecs.engr302.team14.gothim.util.Direction",
+                  "name": "Right"
+                }
+              }
+            },
+            {
+              "class": "ecs.engr302.team14.gothim.renderer.behaviours.Not",
+              "fields": {
+                "inner": {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.Any",
+                  "fields": {
+                    "conds": [
+                      {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.EntityCanEnterFrom",
+                        "fields": {
+                          "side": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.util.Direction",
+                            "name": "Up"
+                          },
+                          "categories": [
+                            "npc"
+                          ]
+                        }
+                      },
+                      {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.EntityCanEnterFrom",
+                        "fields": {
+                          "side": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.util.Direction",
+                            "name": "Down"
+                          },
+                          "categories": [
+                            "npc"
+                          ]
+                        }
+                      },
+                      {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.EntityCanEnterFrom",
+                        "fields": {
+                          "side": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.util.Direction",
+                            "name": "Up"
+                          },
+                          "categories": [
+                            "player"
+                          ]
+                        }
+                      },
+                      {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.EntityCanEnterFrom",
+                        "fields": {
+                          "side": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.util.Direction",
+                            "name": "Down"
+                          },
+                          "categories": [
+                            "player"
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+]

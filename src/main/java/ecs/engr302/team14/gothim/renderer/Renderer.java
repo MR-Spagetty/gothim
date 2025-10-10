@@ -89,7 +89,6 @@ public class Renderer extends JPanel {
     private static Renderer instance;
 
     // Game state
-    private Board board;
     private Day currentDay = Day.ONE;
 
     // Taskbook
@@ -137,12 +136,6 @@ public class Renderer extends JPanel {
         return instance;
     }
 
-    /** Load board, player, and entities from the current LevelHolder. */
-    public void loadFromLevel() {
-        LevelHolder level = LevelManager.getLevelData();
-        this.board = level.map();
-    }
-
     public void toggleTaskbook() {
         showTaskbook = !showTaskbook;
         repaint();
@@ -164,12 +157,10 @@ public class Renderer extends JPanel {
 
     // --- Draw tiles ---
     private void drawTiles(Graphics g) {
-        if (board == null) {
-            return;
-        }
 
         Point cameraPos = LevelManager.getLevelData().getPlayer(Main.playerID).getPosition();
         // Second pass: draw non-grass tiles on top
+        Board board = LevelManager.getLevelData().map();
         for (PrimitiveTile tile : board.getTiles(cameraPos, VIEW_DIST)) {
             String style = tile.style.toLowerCase();
             if (specialStyles.contains(style)) {

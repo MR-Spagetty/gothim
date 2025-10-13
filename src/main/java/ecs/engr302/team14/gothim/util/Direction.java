@@ -23,7 +23,9 @@ public enum Direction {
     @SerializedConstant
     DownLeft(new Point(-1, 1)),
     @SerializedConstant
-    DownRight(new Point(1, 1));
+    DownRight(new Point(1, 1)),
+    @SerializedConstant
+    None(new Point(0, 0));
 
     public final Point offset;
 

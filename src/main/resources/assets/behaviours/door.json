@@ -164,6 +164,32 @@
                             "player"
                           ]
                         }
+                      },
+                      {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.EntityPresentAt",
+                        "fields": {
+                          "side": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.util.Direction",
+                            "name": "None"
+                          },
+                          "categories": [
+                            "npc"
+                          ]
+                        }
+                      },
+                      {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.EntityPresentAt",
+                        "fields": {
+                          "side": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.util.Direction",
+                            "name": "None"
+                          },
+                          "categories": [
+                            "player"
+                          ]
+                        }
                       }
                     ]
                   }

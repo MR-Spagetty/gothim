@@ -26,7 +26,8 @@ public interface EntityRelated extends BehaviourCondition {
 
     @Override
     default Boolean applies(PrimitiveTile to, Map<Point, PrimitiveTile> neighbours) {
-        return neighbours.get(to.pos().add(side().offset)).getOccupant()
+        return (side() == Direction.None ? to : neighbours.get(to.pos().add(side().offset)))
+                .getOccupant()
                 .filter(e -> ofCategory(categories(), e)).map(e -> entityCond(e, to)).orElse(false);
     }
 

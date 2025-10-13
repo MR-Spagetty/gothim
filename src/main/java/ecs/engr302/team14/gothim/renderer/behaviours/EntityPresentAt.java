@@ -24,7 +24,7 @@ public record EntityPresentAt(
 
     @Override
     public boolean entityCond(Entity e, PrimitiveTile to) {
-        return to.canEnter(e);
+        return true;
     }
 
 }

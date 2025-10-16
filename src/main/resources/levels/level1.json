@@ -201,8 +201,8 @@
                     "pos": {
                         "class": "ecs.engr302.team14.gothim.util.Point",
                         "fields": {
-                            "x": 2,
-                            "y": -2
+                            "x": 28,
+                            "y": -7
                         }
                     },
                     "dialogue": {
@@ -236,8 +236,8 @@
                     "pos": {
                         "class": "ecs.engr302.team14.gothim.util.Point",
                         "fields": {
-                            "x": 4,
-                            "y": -4
+                            "x": 23,
+                            "y": -31
                         }
                     },
                     "dialogue": {
@@ -290,8 +290,8 @@
         "spawnPoint": {
             "class": "ecs.engr302.team14.gothim.util.Point",
             "fields": {
-                "x": 5,
-                "y": -5
+                "x": 30,
+                "y": -10
             }
         }
     }

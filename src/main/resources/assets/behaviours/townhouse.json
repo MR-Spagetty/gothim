@@ -18,14 +18,32 @@
         "class": "ecs.engr302.team14.gothim.renderer.behaviours.Not",
         "fields": {
           "inner": {
-            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.Any",
             "fields": {
-              "type": "solid",
-              "side": {
-                "kind": "constant",
-                "class": "ecs.engr302.team14.gothim.util.Direction",
-                "name": "Down"
-              }
+              "conds": [
+                {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                  "fields": {
+                    "type": "solid",
+                    "side": {
+                      "kind": "constant",
+                      "class": "ecs.engr302.team14.gothim.util.Direction",
+                      "name": "Down"
+                    }
+                  }
+                },
+                {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                  "fields": {
+                    "style": "door",
+                    "side": {
+                      "kind": "constant",
+                      "class": "ecs.engr302.team14.gothim.util.Direction",
+                      "name": "Down"
+                    }
+                  }
+                }
+              ]
             }
           }
         }
@@ -40,14 +58,32 @@
         "class": "ecs.engr302.team14.gothim.renderer.behaviours.Not",
         "fields": {
           "inner": {
-            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.Any",
             "fields": {
-              "type": "solid",
-              "side": {
-                "kind": "constant",
-                "class": "ecs.engr302.team14.gothim.util.Direction",
-                "name": "Left"
-              }
+              "conds": [
+                {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                  "fields": {
+                    "type": "solid",
+                    "side": {
+                      "kind": "constant",
+                      "class": "ecs.engr302.team14.gothim.util.Direction",
+                      "name": "Left"
+                    }
+                  }
+                },
+                {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                  "fields": {
+                    "style": "door",
+                    "side": {
+                      "kind": "constant",
+                      "class": "ecs.engr302.team14.gothim.util.Direction",
+                      "name": "Left"
+                    }
+                  }
+                }
+              ]
             }
           }
         }
@@ -62,14 +98,32 @@
         "class": "ecs.engr302.team14.gothim.renderer.behaviours.Not",
         "fields": {
           "inner": {
-            "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+            "class": "ecs.engr302.team14.gothim.renderer.behaviours.Any",
             "fields": {
-              "type": "solid",
-              "side": {
-                "kind": "constant",
-                "class": "ecs.engr302.team14.gothim.util.Direction",
-                "name": "Right"
-              }
+              "conds": [
+                {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                  "fields": {
+                    "type": "solid",
+                    "side": {
+                      "kind": "constant",
+                      "class": "ecs.engr302.team14.gothim.util.Direction",
+                      "name": "Right"
+                    }
+                  }
+                },
+                {
+                  "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                  "fields": {
+                    "style": "door",
+                    "side": {
+                      "kind": "constant",
+                      "class": "ecs.engr302.team14.gothim.util.Direction",
+                      "name": "Right"
+                    }
+                  }
+                }
+              ]
             }
           }
         }

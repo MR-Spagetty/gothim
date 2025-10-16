@@ -108,6 +108,7 @@ public class Main {
             buttonPanel.add(Box.createVerticalStrut(10));
             buttonPanel.add(button);
         }
+        frame.paintComponents(frame.getGraphics());
     }
 
     /**
@@ -155,7 +156,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(Main::new);
+        SwingUtilities.invokeLater(Main::getMainInstance);
     }
 
     /**

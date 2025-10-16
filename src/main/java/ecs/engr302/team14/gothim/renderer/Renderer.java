@@ -10,7 +10,6 @@ import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.entities.NPC;
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.entities.Taskbook;
-import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.JSONArray;
 import ecs.engr302.team14.gothim.persistancy.JSONObject;
@@ -46,10 +45,10 @@ public class Renderer extends JPanel {
     private static final int TILE_SIZE = 64; // pixels per tile
     private static final int VIEW_DIST = 13;
 
-    static final Duration CAHCE_EXPIARY = Duration.ofMinutes(5);
+    static final Duration CACHE_EXPIRY = Duration.ofMinutes(5);
 
     static final LoadingCache<String, BufferedImage> sprites = CacheBuilder.newBuilder()
-            .expireAfterAccess(CAHCE_EXPIARY).softValues().build(new CacheLoader<>() {
+            .expireAfterAccess(CACHE_EXPIRY).softValues().build(new CacheLoader<>() {
                 @SuppressWarnings("null")
                 public BufferedImage load(String key) throws Exception {
                     System.out.println("Loading + assets/%s.png".formatted(key));
@@ -59,7 +58,7 @@ public class Renderer extends JPanel {
             });
 
     static final LoadingCache<String, List<Behaviour>> behaviours = CacheBuilder.newBuilder()
-            .expireAfterAccess(CAHCE_EXPIARY).softValues().build(new CacheLoader<>() {
+            .expireAfterAccess(CACHE_EXPIRY).softValues().build(new CacheLoader<>() {
                 @SuppressWarnings({ "unchecked", "null" })
                 public List<Behaviour> load(String key) throws Exception {
                     String cont = new String(Renderer.class.getClassLoader()

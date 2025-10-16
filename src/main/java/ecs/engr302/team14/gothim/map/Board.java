@@ -44,7 +44,7 @@ public class Board {
                 .flatMap(x -> IntStream.range((int) bottomRight.y(), (int) topleft.y() + 1).boxed()
                         .parallel().map(y -> {
                             Point pos = new Point(x, y);
-                            return Optional.ofNullable(getTile(pos)).orElse(new FogTile(pos));
+                            return Optional.ofNullable(getTile(pos)).orElse(new VoidTile(pos));
                         }))
                 .sorted((a, b) -> a.pos().compareTo(b.pos())).toList();
     }
@@ -65,10 +65,10 @@ public class Board {
         return board.values();
     }
 
-    private class FogTile extends PrimitiveTile {
+    private class VoidTile extends PrimitiveTile {
 
-        public FogTile(Point pos) {
-            super(pos, "fog");
+        public VoidTile(Point pos) {
+            super(pos, "void");
         }
 
         @Override

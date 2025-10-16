@@ -101,7 +101,7 @@ public record LevelHolder(@SerializedField String levelID,
             throw new IllegalArgumentException("The specified entity is not present in this level");
         }
         PrimitiveTile newLoc = map.getTile(toMove.getPosition().add(by.offset));
-        if (!newLoc.canEnter(toMove)) {
+        if (newLoc == null || !newLoc.canEnter(toMove)) {
             return false;
         }
         newLoc.enter(toMove);

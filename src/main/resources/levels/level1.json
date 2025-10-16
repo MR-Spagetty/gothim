@@ -12,34 +12,6 @@
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 1,
-                                    "y": -1
-                                }
-                            },
-                            "bottomRight": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 49,
-                                    "y": -39
-                                }
-                            },
-                            "type": "walkable",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "grass"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Rectangle",
-                        "fields": {
-                            "topLeft": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
                                     "x": 0,
                                     "y": 0
                                 }
@@ -51,7 +23,7 @@
                                     "y": -40
                                 }
                             },
-                            "type": "solid",
+                            "type": "walkable",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",

@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.tiles;
 
+import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.map.Board;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
@@ -15,30 +16,16 @@ import java.util.Optional;
 @SerializationExtends(PrimitiveTile.class)
 public abstract class PrimitiveTile {
 
-    protected Board mapRef = null;
-
-    /**
-     * Link this tile to the map so that the map may be used in the logic.
-     *
-     * @param map the map to link
-     */
-    public void linkMap(Board map) {
-        if (this.mapRef != null) {
-            throw new IllegalStateException("Map reference can only be set once");
-        }
-        mapRef = map;
-    }
-
     @SerializedField
     protected final Point pos;
     @SerializedField
     public final String style;
-    private Optional<Entity> ocupant = Optional.empty();
+    private Optional<Entity> occupant = Optional.empty();
 
     /**
      * creates a new Tile with the given position and style.
      *
-     * @param pos   the position of the tile
+     * @param pos the position of the tile
      * @param style the style of the tile
      */
     public PrimitiveTile(Point pos, String style) {
@@ -47,15 +34,15 @@ public abstract class PrimitiveTile {
     }
 
     public boolean canEnter(Entity e) {
-        return ocupant.isEmpty();
+        return occupant.isEmpty();
     }
 
-    public Optional<Entity> getOcupant() {
-        return ocupant;
+    public Optional<Entity> getOccupant() {
+        return occupant;
     }
 
-    public void setOcupant(Entity ocupant) {
-        this.ocupant = Optional.of(ocupant);
+    public void setOccupant(Entity occupant) {
+        this.occupant = Optional.ofNullable(occupant);
     }
 
     /**
@@ -68,14 +55,18 @@ public abstract class PrimitiveTile {
         if (!canEnter(e)) {
             throw new IllegalArgumentException("Entity: %s may not enter this tile".formatted(e));
         }
-        if (mapRef != null && mapRef.getTile(e.getPosition()).getOcupant().equals(Optional.of(e))) {
-            mapRef.getTile(e.getPosition()).ocupant = Optional.empty();
+        if (mapRef().getTile(e.getPosition()).getOccupant().equals(Optional.of(e))) {
+            mapRef().getTile(e.getPosition()).occupant = Optional.empty();
         }
-        this.ocupant = Optional.of(e);
+        this.occupant = Optional.of(e);
         e.setPosition(pos);
     }
 
     public Point pos() {
         return this.pos;
+    }
+
+    static Board mapRef() {
+        return LevelManager.getLevelData().map();
     }
 }

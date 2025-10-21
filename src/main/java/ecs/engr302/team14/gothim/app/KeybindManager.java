@@ -1,5 +1,6 @@
 package ecs.engr302.team14.gothim.app;
 
+import ecs.engr302.team14.gothim.util.Direction;
 import java.awt.event.ActionEvent;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -8,6 +9,7 @@ import javax.swing.ComponentInputMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+
 
 /**
  * Class for managing the game keybinds.
@@ -21,25 +23,36 @@ public class KeybindManager {
         this.setBindings();
     }
 
+    // Ensure actions and bindings are created when the class is loaded so callers
+    // don't need to instantiate KeybindManager manually.
+    static {
+        new KeybindManager();
+    }
+
     private void setActions() {
         actionMap.put("moveUp", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Up*/);
+                ActionHandler.handleMove(Direction.Up);
             }
         });
         actionMap.put("moveDown", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Down*/);
+                ActionHandler.handleMove(Direction.Down);
             }
         });
         actionMap.put("moveLeft", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Left*/);
+                ActionHandler.handleMove(Direction.Left);
             }
         });
         actionMap.put("moveRight", new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                ActionHandler.handleMove(/*Direction.Right*/);
+                ActionHandler.handleMove(Direction.Right);
+            }
+        });
+        actionMap.put("interact", new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                ActionHandler.handleInteract();
             }
         });
         actionMap.put("exit", new AbstractAction() {
@@ -64,6 +77,12 @@ public class KeybindManager {
         inputMap.put(KeyStroke.getKeyStroke("DOWN"), "moveDown");
         inputMap.put(KeyStroke.getKeyStroke("LEFT"), "moveLeft");
         inputMap.put(KeyStroke.getKeyStroke("RIGHT"), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke("W"), "moveUp");
+        inputMap.put(KeyStroke.getKeyStroke("S"), "moveDown");
+        inputMap.put(KeyStroke.getKeyStroke("A"), "moveLeft");
+        inputMap.put(KeyStroke.getKeyStroke("D"), "moveRight");
+        inputMap.put(KeyStroke.getKeyStroke("E"), "interact");
+        inputMap.put(KeyStroke.getKeyStroke("space"), "interact");
         inputMap.put(KeyStroke.getKeyStroke("control X"), "exit");
         inputMap.put(KeyStroke.getKeyStroke("control S"), "save");
         inputMap.put(KeyStroke.getKeyStroke("control R"), "load");
@@ -77,11 +96,10 @@ public class KeybindManager {
     public static void applyBindings(JComponent component) {
         ComponentInputMap componentInputMap = new ComponentInputMap(component);
         KeyStroke[] var2 = inputMap.keys();
-        int var3 = var2.length;
-
-        for (int var4 = 0; var4 < var3; ++var4) {
-            KeyStroke keyStroke = var2[var4];
-            componentInputMap.put(keyStroke, inputMap.get(keyStroke));
+        if (var2 != null) {
+            for (KeyStroke keyStroke : var2) {
+                componentInputMap.put(keyStroke, inputMap.get(keyStroke));
+            }
         }
 
         component.setInputMap(2, componentInputMap);

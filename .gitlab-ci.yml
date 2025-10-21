@@ -1,5 +1,4 @@
 image: ahmedmorad101/openjdk23-maven
-
 stages:
 - test
 - checkstyle
@@ -12,6 +11,7 @@ junit_tests:
   tags:
     - docker
   artifacts:
+    expire_in: 2 days
     reports:
       junit:
         - target/surefire-reports/*.xml
@@ -23,6 +23,7 @@ checkstyle:
   tags:
     - docker
   artifacts:
+    expire_in: 1 hr
     paths:
       - target/checkstyle-result.xml
 
@@ -62,6 +63,7 @@ convert_checkstyle_to_codequality:
   tags:
     - docker
   artifacts:
+    expire_in: 2 days
     reports:
       codequality: gl-code-quality-report.json
     paths:

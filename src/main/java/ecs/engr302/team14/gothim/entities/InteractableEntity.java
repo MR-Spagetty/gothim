@@ -3,8 +3,7 @@ package ecs.engr302.team14.gothim.entities;
 import ecs.engr302.team14.gothim.util.Point;
 
 /**
- * Abstract class that adds the additional features an intractable entity
- * should have over a normal entity.
+ * Abstract class that covers all intractable entities.
  */
 public abstract class InteractableEntity extends Entity {
 
@@ -12,6 +11,17 @@ public abstract class InteractableEntity extends Entity {
         super(name, position);
     }
 
-    // Needs to filled out
-    public abstract void interact();
+    /**
+     * Checks if the player is within 1 tile of this NPC.
+     *
+     * @param player the player to check against
+     * @return if the player is within interaction range
+     */
+    public boolean isNear(Player player, int nearDist) {
+        int dx = (int) (position.x() - player.getPosition().x());
+        int dy = (int) (position.y() - player.getPosition().y());
+        return Math.abs(dx) <= nearDist && Math.abs(dy) <= nearDist;
+    }
+
+    public abstract void interact(Player p);
 }

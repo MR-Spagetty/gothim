@@ -36,16 +36,16 @@ public class BasicAbsoluteTeleportTile extends PrimitiveEffectTile {
 
     @Override
     public boolean canEnter(Entity e) {
-        return mapRef.getTile(dest).canEnter(e);
+        return mapRef().getTile(dest).canEnter(e);
     }
 
     @Override
     public void enter(Entity e) {
-        mapRef.getTile(dest).enter(e);
+        mapRef().getTile(dest).enter(e);
     }
 
     @Override
-    public Optional<Entity> getOcupant() {
-        return mapRef.getTile(dest).getOcupant();
+    public Optional<Entity> getOccupant() {
+        return mapRef().getTile(dest).getOccupant();
     }
 }

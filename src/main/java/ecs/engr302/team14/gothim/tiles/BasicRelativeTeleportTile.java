@@ -34,17 +34,17 @@ public class BasicRelativeTeleportTile extends PrimitiveEffectTile {
 
     @Override
     public boolean canEnter(Entity e) {
-        return mapRef.getTile(pos().add(destOffset)).canEnter(e);
+        return mapRef().getTile(pos().add(destOffset)).canEnter(e);
     }
 
     @Override
     public void enter(Entity e) {
-        mapRef.getTile(pos().add(destOffset)).enter(e);
+        mapRef().getTile(pos().add(destOffset)).enter(e);
     }
 
     @Override
-    public Optional<Entity> getOcupant() {
-        return mapRef.getTile(pos().add(destOffset)).getOcupant();
+    public Optional<Entity> getOccupant() {
+        return mapRef().getTile(pos().add(destOffset)).getOccupant();
     }
 
 }

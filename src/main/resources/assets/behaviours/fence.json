@@ -1,0 +1,156 @@
+[
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "grass",
+            "cond": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.BehaviourCondition",
+                "name": "True"
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "fencePost",
+            "cond": {
+                "kind": "constant",
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.BehaviourCondition",
+                "name": "True"
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "fenceUp",
+            "cond": {
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",
+                "fields": {
+                    "a": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "style": "fence",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Up"
+                            }
+                        }
+                    },
+                    "b": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                        "fields": {
+                            "type": "solid",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Up"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "fenceLeft",
+            "cond": {
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",
+                "fields": {
+                    "a": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "style": "fence",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Left"
+                            }
+                        }
+                    },
+                    "b": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                        "fields": {
+                            "type": "solid",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Left"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "fenceRight",
+            "cond": {
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",
+                "fields": {
+                    "a": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "style": "fence",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Right"
+                            }
+                        }
+                    },
+                    "b": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                        "fields": {
+                            "type": "solid",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Right"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.renderer.behaviours.Behaviour",
+        "fields": {
+            "assetName": "fenceDown",
+            "cond": {
+                "class": "ecs.engr302.team14.gothim.renderer.behaviours.Or",
+                "fields": {
+                    "a": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.StylePresent",
+                        "fields": {
+                            "style": "fence",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Down"
+                            }
+                        }
+                    },
+                    "b": {
+                        "class": "ecs.engr302.team14.gothim.renderer.behaviours.TypePresent",
+                        "fields": {
+                            "type": "solid",
+                            "side": {
+                                "kind": "constant",
+                                "class": "ecs.engr302.team14.gothim.util.Direction",
+                                "name": "Down"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+]

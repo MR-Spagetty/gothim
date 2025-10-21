@@ -1,13 +1,15 @@
 package ecs.engr302.team14.gothim.map;
 
+import ecs.engr302.team14.gothim.entities.Entity;
 import ecs.engr302.team14.gothim.tiles.PrimitiveTile;
 import ecs.engr302.team14.gothim.util.Point;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 /**
  * Class for holding the map data for the game.
@@ -18,7 +20,6 @@ public class Board {
 
     Board(Map<Point, PrimitiveTile> board) {
         this.board = new HashMap<>(Objects.requireNonNull(board));
-        this.board.values().parallelStream().forEach(t -> t.linkMap(this));
     }
 
     /**
@@ -39,13 +40,47 @@ public class Board {
      * @return a list of the tiles within that rectangle
      */
     public List<PrimitiveTile> getTiles(Point topleft, Point bottomRight) {
-        List<PrimitiveTile> ls = new ArrayList<>();
-        for (double x = topleft.x(); x <= bottomRight.x(); x++) {
-            for (double y = topleft.y(); y <= bottomRight.y(); y++) {
-                //get an option from the board and add to list, otherwise do nothing
-                Optional.ofNullable(board.get(new Point(x, y))).ifPresent(ls::add);
-            }
-        }
-        return ls;
+        return IntStream.range((int) topleft.x(), (int) bottomRight.x() + 1).boxed().parallel()
+                .flatMap(x -> IntStream.range((int) bottomRight.y(), (int) topleft.y() + 1).boxed()
+                        .parallel().map(y -> {
+                            Point pos = new Point(x, y);
+                            return Optional.ofNullable(getTile(pos)).orElse(new VoidTile(pos));
+                        }))
+                .sorted((a, b) -> a.pos().compareTo(b.pos())).toList();
     }
+
+    /**
+     * Gets all the tiles within the square of 2*range + 1 centred on center.
+     *
+     * @param center the center point of the square
+     * @param range the "radius" of the square
+     * @return the tiles within the square
+     */
+    public List<PrimitiveTile> getTiles(Point center, int range) {
+        Point p = new Point(-range, range);
+        return getTiles(center.add(p), center.sub(p));
+    }
+
+    public Collection<PrimitiveTile> getAllTiles() {
+        return board.values();
+    }
+
+    private class VoidTile extends PrimitiveTile {
+
+        public VoidTile(Point pos) {
+            super(pos, "void");
+        }
+
+        @Override
+        public void enter(Entity e) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public void setOccupant(Entity ocupant) {
+            throw new UnsupportedOperationException();
+        }
+
+    }
+
 }

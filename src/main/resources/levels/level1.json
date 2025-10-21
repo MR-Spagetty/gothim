@@ -12,15 +12,15 @@
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 1.0,
-                                    "y": -1.0
+                                    "x": 0,
+                                    "y": 0
                                 }
                             },
                             "bottomRight": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 49.0,
-                                    "y": -39.0
+                                    "x": 50,
+                                    "y": -40
                                 }
                             },
                             "type": "walkable",
@@ -40,43 +40,15 @@
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 0.0,
-                                    "y": 0.0
+                                    "x": 25,
+                                    "y": -25
                                 }
                             },
                             "bottomRight": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 50.0,
-                                    "y": -40.0
-                                }
-                            },
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "grass"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Rectangle",
-                        "fields": {
-                            "topLeft": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 25.0,
-                                    "y": -25.0
-                                }
-                            },
-                            "bottomRight": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 35.0,
-                                    "y": -30.0
+                                    "x": 35,
+                                    "y": -30
                                 }
                             },
                             "type": "solid",
@@ -96,15 +68,15 @@
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 24.0,
-                                    "y": -10.0
+                                    "x": 24,
+                                    "y": -10
                                 }
                             },
                             "bottomRight": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 36.0,
-                                    "y": -25.0
+                                    "x": 36,
+                                    "y": -25
                                 }
                             },
                             "type": "solid",
@@ -117,6 +89,27 @@
                                 }
                             }
                         }
+                    },
+                    {
+                      "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                      "fields": {
+                        "type": "solid",
+                        "properties": {
+                          "kind": "map",
+                          "class": "java.util.HashMap",
+                          "valueType": "String",
+                          "entries": {
+                            "style": "door"
+                          }
+                        },
+                        "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                      }
                     }
                 ]
             }
@@ -131,10 +124,10 @@
                         {
                             "class": "ecs.engr302.team14.gothim.logic.Clue",
                             "fields": {
-                                "modifier":{
-                                  "kind": "constant",
-                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                  "name": "Public"
+                                "modifier": {
+                                    "kind": "constant",
+                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                    "name": "Public"
                                 },
                                 "id": "tutFestival",
                                 "description": "The festival is in 3 days"
@@ -143,10 +136,10 @@
                         {
                             "class": "ecs.engr302.team14.gothim.logic.Clue",
                             "fields": {
-                                "modifier":{
-                                  "kind": "constant",
-                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                  "name": "Public"
+                                "modifier": {
+                                    "kind": "constant",
+                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                    "name": "Public"
                                 },
                                 "id": "tutCowGon",
                                 "description": "The town mascot cow has been stolen"
@@ -155,10 +148,10 @@
                         {
                             "class": "ecs.engr302.team14.gothim.logic.Clue",
                             "fields": {
-                                "modifier":{
-                                  "kind": "constant",
-                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                  "name": "Public"
+                                "modifier": {
+                                    "kind": "constant",
+                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                    "name": "Public"
                                 },
                                 "id": "lastCaring",
                                 "description": "The Theiftons were the ones taking care of the cow last night"
@@ -167,10 +160,10 @@
                         {
                             "class": "ecs.engr302.team14.gothim.logic.Clue",
                             "fields": {
-                                "modifier":{
-                                  "kind": "constant",
-                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                  "name": "Static"
+                                "modifier": {
+                                    "kind": "constant",
+                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                    "name": "Static"
                                 },
                                 "id": "newspaper",
                                 "description": "The Robbersons are no longer the town providers of wheat\nafter a big fall out with the mayor"
@@ -179,10 +172,10 @@
                         {
                             "class": "ecs.engr302.team14.gothim.logic.Clue",
                             "fields": {
-                                "modifier":{
-                                  "kind": "constant",
-                                  "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                  "name": "Static"
+                                "modifier": {
+                                    "kind": "constant",
+                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                                    "name": "Static"
                                 },
                                 "id": "noticeboard",
                                 "description": "Purple Cabbage is ILLEGAL"
@@ -194,20 +187,112 @@
                     "kind": "collection",
                     "class": "java.util.HashSet",
                     "values": [
-                      "tutFestival",
-                      "tutCowGon"
+                        "tutFestival",
+                        "tutCowGon"
                     ]
                 }
             }
         },
-        "entities" : [],
+        "entities": [
+            {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "Notice Board",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 28,
+                            "y": -7
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                        "fields": {
+                            "text": "NB dialogue root",
+                            "options": [
+                                {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                                    "fields": {
+                                        "text": "getClue",
+                                        "result": {
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "fields": {
+                                                "text": "static clue got",
+                                                "options": [],
+                                                "clueID": "noticeboard"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "townsperson",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 23,
+                            "y": -31
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                        "fields": {
+                            "text": "tp dialogue root",
+                            "options": [
+                                {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                                    "fields": {
+                                        "text": "who was caring for the cow the night of the disappearance",
+                                        "result": {
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "fields": {
+                                                "text": "the Theiftons were",
+                                                "clueID": "lastCaring",
+                                                "options": []
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "newspaper",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 4,
+                            "y": -2
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                        "fields": {
+                            "text": "The Robbersons lost the wheat deal",
+                            "clueID": "newspaper",
+                            "options": []
+                        }
+                    }
+                }
+            }
+        ],
         "players": [],
         "spawnPoint": {
-          "class": "ecs.engr302.team14.gothim.util.Point",
-          "fields": {
-            "x": 5.0,
-            "y": -5.0
-          }
+            "class": "ecs.engr302.team14.gothim.util.Point",
+            "fields": {
+                "x": 30,
+                "y": -10
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
             "class": "ecs.engr302.team14.gothim.map.MapBuilder",
             "fields": {
                 "shapes": [
-                    { # THIS IS FoOR LEVEL 2 SECOND LAYER BOUNDARY
+                    {
                         "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
                         "fields": {
                             "topLeft": {
@@ -139,6 +139,34 @@
                             }
                         }
                     },
+                     {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                        "fields": {
+                            "topLeft": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": -15,
+                                    "y": 35
+                                }
+                            },
+                            "bottomRight": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 0,
+                                    "y": 25
+                                }
+                            },
+                            "type": "solid",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "thieftonInt"
+                                }
+                            }
+                        }
+                    },
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
@@ -184,6 +212,34 @@
                                 "valueType": "String",
                                 "entries": {
                                     "style": "robbersonExt"
+                                }
+                            }
+                        }
+                    },
+                    {
+                       "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                        "fields": {
+                            "topLeft": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": -15,
+                                    "y": 50
+                                }
+                            },
+                            "bottomRight": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 65,
+                                    "y": 25
+                                }
+                            },
+                            "type": "solid",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "robbersonInt"
                                 }
                             }
                         }
@@ -237,6 +293,34 @@
                             }
                         }
                     },
+                     {
+                       "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                        "fields": {
+                            "topLeft": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": -15,
+                                    "y": -65
+                                }
+                            },
+                            "bottomRight": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 0,
+                                    "y": -75
+                                }
+                            },
+                            "type": "solid",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "cookInt"
+                                }
+                            }
+                        }
+                    },
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
@@ -286,6 +370,34 @@
                             }
                         }
                     },
+                     {
+                       "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                        "fields": {
+                            "topLeft": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 50,
+                                    "y": -65
+                                }
+                            },
+                            "bottomRight": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 65,
+                                    "y": -75
+                                }
+                            },
+                            "type": "solid",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "stealalotInt"
+                                }
+                            }
+                        }
+                    },
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
@@ -302,7 +414,7 @@
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
                                     "x": 65,
-                                    "y": -45
+                                    "y": -43
                                 }
                             }
                         }
@@ -450,6 +562,146 @@
                                             "fields": {
                                                 "text": "the Theiftons were",
                                                 "clueID": "lastCaring",
+                                                "options": []
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "thiefton",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": -5,
+                            "y": 30
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                        "fields": {
+                            "text": "tp dialogue root",
+                            "options": [
+                                {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                                    "fields": {
+                                        "text": "Hi im Joe Thiefton",
+                                        "result": {
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "fields": {
+                                                "text": "",
+                                                "clueID": "",
+                                                "options": []
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+             {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "robberson",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 60,
+                            "y": 30
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                        "fields": {
+                            "text": "tp dialogue root",
+                            "options": [
+                                {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                                    "fields": {
+                                        "text": "Hi I'm Ben Robberson",
+                                        "result": {
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "fields": {
+                                                "text": "",
+                                                "clueID": "",
+                                                "options": []
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "crook",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": -5,
+                            "y": -70
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                        "fields": {
+                            "text": "tp dialogue root",
+                            "options": [
+                                {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                                    "fields": {
+                                        "text": "Hi I'm Sally Crook",
+                                        "result": {
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "fields": {
+                                                "text": "",
+                                                "clueID": "",
+                                                "options": []
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+             {
+                "class": "ecs.engr302.team14.gothim.entities.NPC",
+                "fields": {
+                    "name": "stealalot",
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": -60,
+                            "y": -70
+                        }
+                    },
+                    "dialogue": {
+                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                        "fields": {
+                            "text": "tp dialogue root",
+                            "options": [
+                                {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                                    "fields": {
+                                        "text": "Hi I'm Jerry Stealalot",
+                                        "result": {
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "fields": {
+                                                "text": "",
+                                                "clueID": "",
                                                 "options": []
                                             }
                                         }

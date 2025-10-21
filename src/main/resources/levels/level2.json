@@ -12,15 +12,15 @@
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": -20,
-                                    "y": 20
+                                    "x": -40,
+                                    "y": 40
                                 }
                             },
                             "bottomRight": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 70,
-                                    "y": -60
+                                    "x": 90,
+                                    "y": -80
                                 }
                             },
                             "type": "walkable",

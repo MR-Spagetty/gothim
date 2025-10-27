@@ -93,7 +93,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "solid",
+                            "type": "AbsoluteTeleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -163,6 +163,48 @@
                                 "valueType": "String",
                                 "entries": {
                                     "style": "houseInt"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "extDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "intDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
                                 }
                             }
                         }
@@ -240,6 +282,47 @@
                                 "valueType": "String",
                                 "entries": {
                                     "style": "houseInt"
+                                }
+                            }
+                        }
+                    },{
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "extDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "intDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
                                 }
                             }
                         }
@@ -324,6 +407,48 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "extDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "intDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
                             "type": "solid",
                             "properties": {
                                 "kind": "map",
@@ -394,6 +519,48 @@
                                 "valueType": "String",
                                 "entries": {
                                     "style": "houseInt"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "extDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                        "fields": {
+                            "type": "AbsoluteTeleport",
+                            "properties": {
+                                "kind": "map",
+                                "class": "java.util.HashMap",
+                                "valueType": "String",
+                                "entries": {
+                                    "style": "intDoor"
+                                }
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 30,
+                                    "y": -10
                                 }
                             }
                         }

@@ -134,7 +134,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "thieftonExt"
+                                    "style": "houseExt"
                                 }
                             }
                         }
@@ -162,7 +162,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "thieftonInt"
+                                    "style": "houseInt"
                                 }
                             }
                         }
@@ -176,7 +176,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "thiefsBin"
+                                    "style": "bin"
                                 }
                             },
                             "pos": {
@@ -211,7 +211,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "robbersonExt"
+                                    "style": "houseExt"
                                 }
                             }
                         }
@@ -239,7 +239,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "robbersonInt"
+                                    "style": "houseInt"
                                 }
                             }
                         }
@@ -253,7 +253,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "robbersBin"
+                                    "style": "bin"
                                 }
                             },
                             "pos": {
@@ -288,7 +288,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "crookExt"
+                                    "style": "houseExt"
                                 }
                             }
                         }
@@ -316,7 +316,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "cookInt"
+                                    "style": "houseInt"
                                 }
                             }
                         }
@@ -330,7 +330,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "crooksBin"
+                                    "style": "bin"
                                 }
                             },
                             "pos": {
@@ -365,7 +365,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "stealalotExt"
+                                    "style": "houseExt"
                                 }
                             }
                         }
@@ -393,7 +393,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "stealalotInt"
+                                    "style": "houseInt"
                                 }
                             }
                         }
@@ -407,7 +407,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "stealsBin"
+                                    "style": "bin"
                                 }
                             },
                             "pos": {

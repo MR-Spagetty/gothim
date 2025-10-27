@@ -182,7 +182,7 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
+                                    "x": -8,
                                     "y": -10
                                 }
                             }
@@ -203,8 +203,8 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
-                                    "y": -10
+                                    "x": -8,
+                                    "y": 25
                                 }
                             }
                         }
@@ -264,8 +264,8 @@
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": -15,
-                                    "y": 50
+                                    "x": 50,
+                                    "y": 35
                                 }
                             },
                             "bottomRight": {
@@ -300,8 +300,8 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
-                                    "y": -10
+                                    "x": 58,
+                                    "y": 5
                                 }
                             }
                         }
@@ -321,8 +321,8 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
-                                    "y": -10
+                                    "x": 58,
+                                    "y": 25
                                 }
                             }
                         }
@@ -419,7 +419,7 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
+                                    "x": -8,
                                     "y": -10
                                 }
                             }
@@ -440,8 +440,8 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
-                                    "y": -10
+                                    "x": -8,
+                                    "y": -45
                                 }
                             }
                         }
@@ -538,8 +538,8 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
-                                    "y": -10
+                                    "x": 58,
+                                    "y": -45
                                 }
                             }
                         }
@@ -559,8 +559,8 @@
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
-                                    "x": 30,
-                                    "y": -10
+                                    "x": 58,
+                                    "y": -65
                                 }
                             }
                         }

@@ -1,6 +1,8 @@
 package ecs.engr302.team14.gothim.map.shapes;
 
+import ecs.engr302.team14.gothim.logic.dialogue.prerequisites.DialoguePrerequisite;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import ecs.engr302.team14.gothim.tiles.AccessTile;
 import ecs.engr302.team14.gothim.tiles.BasicAbsoluteTeleportTile;
 import ecs.engr302.team14.gothim.tiles.BasicRelativeTeleportTile;
 import ecs.engr302.team14.gothim.tiles.Passable;
@@ -55,6 +57,8 @@ public abstract class Shape {
                     && properties.get("relativeDestination") instanceof Point;
             case "teleport" -> properties.containsKey("destination")
                     && properties.get("destination") instanceof Point;
+            case "access" -> properties.containsKey("cond")
+                    && properties.get("cond") instanceof DialoguePrerequisite;
 
             default -> throw new IllegalArgumentException("Unknown shape type: " + type);
         } && properties.containsKey("style") && properties.get("style") instanceof String;
@@ -71,8 +75,9 @@ public abstract class Shape {
             case "teleport" -> new BasicAbsoluteTeleportTile(
                     pos, style,
                     (Point) properties.get("destination"));
-
-
+            case "access" -> new AccessTile(pos, style,
+                    (DialoguePrerequisite) properties.get("cond"));
+            
             default -> throw new IllegalArgumentException("Unknown tile type: " + type);
         };
     }

@@ -93,7 +93,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -170,7 +170,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -191,7 +191,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -288,7 +288,7 @@
                     },{
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -309,7 +309,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -407,7 +407,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -428,7 +428,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -526,7 +526,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
@@ -547,7 +547,7 @@
                     {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
-                            "type": "AbsoluteTeleport",
+                            "type": "teleport",
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",

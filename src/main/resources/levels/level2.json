@@ -99,7 +99,16 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "door"
+                                    "style": "door",
+                                    "destination": {
+                                        "pos": {
+                                            "class": "ecs.engr302.team14.gothim.util.Point",
+                                            "fields": {
+                                                "x": 30,
+                                                "y": -9
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "pos": {
@@ -208,13 +217,12 @@
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.SeenAs",
                                         "fields": {
                                             "identity": {
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
-                                                "fields": {
-                                                    "Family": "ROBBERSONS"
-                                                }
+                                                "kind": "constant",
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                                "family": "Robbersons"
                                             }
                                         }
                                     }
@@ -238,7 +246,16 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "intDoor"
+                                    "style": "intDoor",
+                                    "destination": {
+                                        "pos": {
+                                            "class": "ecs.engr302.team14.gothim.util.Point",
+                                            "fields": {
+                                                "x": -8,
+                                                "y": -9
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "pos": {
@@ -368,13 +385,12 @@
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.SeenAs",
                                         "fields": {
                                             "identity": {
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
-                                                "fields": {
-                                                    "Family": "THIEFTONS"
-                                                }
+                                                "kind": "constant",
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                                "family": "Theiftons"
                                             }
                                         }
                                     }
@@ -398,681 +414,706 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "intDoor"
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 58,
-                                    "y": 25
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "bin"
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 65,
-                                    "y": 3
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
-                        "fields": {
-                            "topLeft": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": -15,
-                                    "y": 45
-                                }
-                            },
-                            "bottomRight": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 0,
-                                    "y": -55
-                                }
-                            },
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "houseExt"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
-                        "fields": {
-                            "topLeft": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": -15,
-                                    "y": -65
-                                }
-                            },
-                            "bottomRight": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 0,
-                                    "y": -75
-                                }
-                            },
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "houseInt"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "teleport",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "extDoor",
-                                    "destination": {
-                                        "pos": {
-                                            "class": "ecs.engr302.team14.gothim.util.Point",
-                                            "fields": {
-                                                "x": -8,
-                                                "y": -46
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": -8,
-                                    "y": -10
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "access",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "teleportIn",
-                                    "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
-                                        "fields": {
-                                            "identity": {
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
-                                                "fields": {
-                                                    "Family": "STEALALOTS"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": -8,
-                                    "y": -46
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "teleport",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "intDoor"
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": -8,
-                                    "y": -45
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "bin"
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 0,
-                                    "y": -45
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
-                        "fields": {
-                            "topLeft": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 50,
-                                    "y": -45
-                                }
-                            },
-                            "bottomRight": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 65,
-                                    "y": -55
-                                }
-                            },
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "houseExt"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
-                        "fields": {
-                            "topLeft": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 50,
-                                    "y": -65
-                                }
-                            },
-                            "bottomRight": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 65,
-                                    "y": -75
-                                }
-                            },
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "houseInt"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "teleport",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "extDoor",
+                                    "style": "intDoor",
                                     "destination": {
                                         "pos": {
                                             "class": "ecs.engr302.team14.gothim.util.Point",
                                             "fields": {
                                                 "x": 58,
-                                                "y": -66
+                                                "y": 4
                                             }
                                         }
                                     }
                                 }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 58,
-                                    "y": -45
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "access",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "teleportIn",
-                                    "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
-                                        "fields": {
-                                            "identity": {
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
-                                                "fields": {
-                                                    "Family": "CROOKS"
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 58,
-                                    "y": -66
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "teleport",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "intDoor"
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 58,
-                                    "y": -65
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "class": "ecs.engr302.team14.gothim.map.shapes.Single",
-                        "fields": {
-                            "type": "solid",
-                            "properties": {
-                                "kind": "map",
-                                "class": "java.util.HashMap",
-                                "valueType": "String",
-                                "entries": {
-                                    "style": "bin"
-                                }
-                            },
-                            "pos": {
-                                "class": "ecs.engr302.team14.gothim.util.Point",
-                                "fields": {
-                                    "x": 65,
-                                    "y": -43
-                                }
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        "clues": {
-            "class": "ecs.engr302.team14.gothim.logic.ClueHolder",
-            "fields": {
-                "clues": {
-                    "kind": "collection",
-                    "class": "java.util.HashSet",
-                    "values": [
-                        {
-                            "class": "ecs.engr302.team14.gothim.logic.Clue",
-                            "fields": {
-                                "modifier": {
-                                    "kind": "constant",
-                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                    "name": "Public"
-                                },
-                                "id": "tutFestival",
-                                "description": "The festival is in 3 days"
                             }
                         },
-                        {
-                            "class": "ecs.engr302.team14.gothim.logic.Clue",
+                        "pos": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
                             "fields": {
-                                "modifier": {
-                                    "kind": "constant",
-                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                    "name": "Public"
-                                },
-                                "id": "tutCowGon",
-                                "description": "The town mascot cow has been stolen"
-                            }
-                        },
-                        {
-                            "class": "ecs.engr302.team14.gothim.logic.Clue",
-                            "fields": {
-                                "modifier": {
-                                    "kind": "constant",
-                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                    "name": "Public"
-                                },
-                                "id": "lastCaring",
-                                "description": "The Theiftons were the ones taking care of the cow last night"
-                            }
-                        },
-                        {
-                            "class": "ecs.engr302.team14.gothim.logic.Clue",
-                            "fields": {
-                                "modifier": {
-                                    "kind": "constant",
-                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                    "name": "Static"
-                                },
-                                "id": "newspaper",
-                                "description": "The Robbersons are no longer the town providers of wheat\nafter a big fall out with the mayor"
-                            }
-                        },
-                        {
-                            "class": "ecs.engr302.team14.gothim.logic.Clue",
-                            "fields": {
-                                "modifier": {
-                                    "kind": "constant",
-                                    "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
-                                    "name": "Static"
-                                },
-                                "id": "noticeboard",
-                                "description": "Purple Cabbage is ILLEGAL"
+                                "x": 58,
+                                "y": 25
                             }
                         }
-                    ]
                 },
-                "foundClues": {
-                    "kind": "collection",
-                    "class": "java.util.HashSet",
-                    "values": [
-                        "tutFestival",
-                        "tutCowGon"
+                {
+                    "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                    "fields": {
+                        "type": "solid",
+                        "properties": {
+                            "kind": "map",
+                            "class": "java.util.HashMap",
+                            "valueType": "String",
+                            "entries": {
+                                "style": "bin"
+                            }
+                        },
+                        "pos": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
+                            "fields": {
+                                "x": 65,
+                                "y": 3
+                            }
+                        }
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                    "fields": {
+                        "topLeft": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
+                            "fields": {
+                                "x": -15,
+                                "y": 45
+                            }
+                        },
+                        "bottomRight": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
+                            "fields": {
+                                "x": 0,
+                                "y": -55
+                            }
+                        },
+                        "type": "solid",
+                        "properties": {
+                            "kind": "map",
+                            "class": "java.util.HashMap",
+                            "valueType": "String",
+                            "entries": {
+                                "style": "houseExt"
+                            }
+                        }
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                    "fields": {
+                        "topLeft": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
+                            "fields": {
+                                "x": -15,
+                                "y": -65
+                            }
+                        },
+                        "bottomRight": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
+                            "fields": {
+                                "x": 0,
+                                "y": -75
+                            }
+                        },
+                        "type": "solid",
+                        "properties": {
+                            "kind": "map",
+                            "class": "java.util.HashMap",
+                            "valueType": "String",
+                            "entries": {
+                                "style": "houseInt"
+                            }
+                        }
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                    "fields": {
+                        "type": "teleport",
+                        "properties": {
+                            "kind": "map",
+                            "class": "java.util.HashMap",
+                            "valueType": "String",
+                            "entries": {
+                                "style": "extDoor",
+                                "destination": {
+                                    "pos": {
+                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                        "fields": {
+                                            "x": -8,
+                                            "y": -46
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "pos": {
+                            "class": "ecs.engr302.team14.gothim.util.Point",
+                            "fields": {
+                                "x": -8,
+                                "y": -10
+                            }
+                        }
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                    "fields": {
+                        "type": "access",
+                        "properties": {
+                            "kind": "map",
+                            "class": "java.util.HashMap",
+                            "valueType": "String",
+                            "entries": {
+                                "style": "teleportIn",
+                                "cond": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.SeenAs",
+                                    "fields": {
+                                        "identity": {
+                                            "kind": "constant",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                            "family": "Stealalots"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": -8,
+                            "y": -46
+                        }
+                    }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                "fields": {
+                    "type": "teleport",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "intDoor",
+                            "destination": {
+                                "pos": {
+                                    "class": "ecs.engr302.team14.gothim.util.Point",
+                                    "fields": {
+                                        "x": -8,
+                                        "y": -9
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": -8,
+                            "y": -45
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                "fields": {
+                    "type": "solid",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "bin"
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 0,
+                            "y": -45
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                "fields": {
+                    "topLeft": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 50,
+                            "y": -45
+                        }
+                    },
+                    "bottomRight": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 65,
+                            "y": -55
+                        }
+                    },
+                    "type": "solid",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "houseExt"
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                "fields": {
+                    "topLeft": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 50,
+                            "y": -65
+                        }
+                    },
+                    "bottomRight": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 65,
+                            "y": -75
+                        }
+                    },
+                    "type": "solid",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "houseInt"
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                "fields": {
+                    "type": "teleport",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "extDoor",
+                            "destination": {
+                                "pos": {
+                                    "class": "ecs.engr302.team14.gothim.util.Point",
+                                    "fields": {
+                                        "x": 58,
+                                        "y": -66
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 58,
+                            "y": -45
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                "fields": {
+                    "type": "access",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "teleportIn",
+                            "cond": {
+                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.SeenAs",
+                                "fields": {
+                                    "identity": {
+                                        "kind": "constant",
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                        "family": "Crooks"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 58,
+                            "y": -66
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                "fields": {
+                    "type": "teleport",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "intDoor",
+                            "destination": {
+                                "pos": {
+                                    "class": "ecs.engr302.team14.gothim.util.Point",
+                                    "fields": {
+                                        "x": 58,
+                                        "y": -44
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 58,
+                            "y": -65
+                        }
+                    }
+                }
+            },
+            {
+                "class": "ecs.engr302.team14.gothim.map.shapes.Single",
+                "fields": {
+                    "type": "solid",
+                    "properties": {
+                        "kind": "map",
+                        "class": "java.util.HashMap",
+                        "valueType": "String",
+                        "entries": {
+                            "style": "bin"
+                        }
+                    },
+                    "pos": {
+                        "class": "ecs.engr302.team14.gothim.util.Point",
+                        "fields": {
+                            "x": 65,
+                            "y": -43
+                        }
+                    }
+                }
+            }
+        ]
+    }
+},
+"clues": {
+    "class": "ecs.engr302.team14.gothim.logic.ClueHolder",
+    "fields": {
+        "clues": {
+            "kind": "collection",
+            "class": "java.util.HashSet",
+            "values": [
+                {
+                    "class": "ecs.engr302.team14.gothim.logic.Clue",
+                    "fields": {
+                        "modifier": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                            "name": "Public"
+                        },
+                        "id": "tutFestival",
+                        "description": "The festival is in 3 days"
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.logic.Clue",
+                    "fields": {
+                        "modifier": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                            "name": "Public"
+                        },
+                        "id": "tutCowGon",
+                        "description": "The town mascot cow has been stolen"
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.logic.Clue",
+                    "fields": {
+                        "modifier": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                            "name": "Public"
+                        },
+                        "id": "lastCaring",
+                        "description": "The Theiftons were the ones taking care of the cow last night"
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.logic.Clue",
+                    "fields": {
+                        "modifier": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                            "name": "Static"
+                        },
+                        "id": "newspaper",
+                        "description": "The Robbersons are no longer the town providers of wheat\nafter a big fall out with the mayor"
+                    }
+                },
+                {
+                    "class": "ecs.engr302.team14.gothim.logic.Clue",
+                    "fields": {
+                        "modifier": {
+                            "kind": "constant",
+                            "class": "ecs.engr302.team14.gothim.logic.AccessModifier",
+                            "name": "Static"
+                        },
+                        "id": "noticeboard",
+                        "description": "Purple Cabbage is ILLEGAL"
+                    }
+                }
+            ]
+        },
+        "foundClues": {
+            "kind": "collection",
+            "class": "java.util.HashSet",
+            "values": [
+                "tutFestival",
+                "tutCowGon"
+            ]
+        }
+    }
+},
+"entities": [
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "Notice Board",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                    "x": 28,
+                    "y": -7
+                }
+            },
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                "fields": {
+                    "text": "NB dialogue root",
+                    "options": [
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                            "fields": {
+                                "text": "getClue",
+                                "result": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                    "fields": {
+                                        "text": "static clue got",
+                                        "options": [],
+                                        "clueID": "noticeboard"
+                                    }
+                                }
+                            }
+                        }
                     ]
                 }
             }
-        },
-        "entities": [
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "townsperson",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
                 "fields": {
-                    "name": "Notice Board",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": 28,
-                            "y": -7
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                        "fields": {
-                            "text": "NB dialogue root",
-                            "options": [
-                                {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
-                                    "fields": {
-                                        "text": "getClue",
-                                        "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
-                                            "fields": {
-                                                "text": "static clue got",
-                                                "options": [],
-                                                "clueID": "noticeboard"
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
+                    "x": 23,
+                    "y": -31
                 }
             },
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
                 "fields": {
-                    "name": "townsperson",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": 23,
-                            "y": -31
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                        "fields": {
-                            "text": "tp dialogue root",
-                            "options": [
-                                {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                    "text": "tp dialogue root",
+                    "options": [
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                            "fields": {
+                                "text": "who was caring for the cow the night of the disappearance",
+                                "result": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
                                     "fields": {
-                                        "text": "who was caring for the cow the night of the disappearance",
-                                        "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
-                                            "fields": {
-                                                "text": "the Theiftons were",
-                                                "clueID": "lastCaring",
-                                                "options": []
-                                            }
-                                        }
+                                        "text": "the Theiftons were",
+                                        "clueID": "lastCaring",
+                                        "options": []
                                     }
                                 }
-                            ]
+                            }
                         }
-                    }
-                }
-            },
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
-                "fields": {
-                    "name": "thiefton",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": -5,
-                            "y": 30
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                        "fields": {
-                            "text": "tp dialogue root",
-                            "options": [
-                                {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
-                                    "fields": {
-                                        "text": "Hi im Joe Thiefton",
-                                        "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                                            "fields": {
-                                                "text": "",
-                                                "clueID": "",
-                                                "options": []
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
-                "fields": {
-                    "name": "robberson",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": 60,
-                            "y": 30
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                        "fields": {
-                            "text": "tp dialogue root",
-                            "options": [
-                                {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
-                                    "fields": {
-                                        "text": "Hi I'm Ben Robberson",
-                                        "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                                            "fields": {
-                                                "text": "",
-                                                "clueID": "",
-                                                "options": []
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
-                "fields": {
-                    "name": "crook",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": -5,
-                            "y": -70
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                        "fields": {
-                            "text": "tp dialogue root",
-                            "options": [
-                                {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
-                                    "fields": {
-                                        "text": "Hi I'm Sally Crook",
-                                        "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                                            "fields": {
-                                                "text": "",
-                                                "clueID": "",
-                                                "options": []
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
-                "fields": {
-                    "name": "stealalot",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": -60,
-                            "y": -70
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                        "fields": {
-                            "text": "tp dialogue root",
-                            "options": [
-                                {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
-                                    "fields": {
-                                        "text": "Hi I'm Jerry Stealalot",
-                                        "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
-                                            "fields": {
-                                                "text": "",
-                                                "clueID": "",
-                                                "options": []
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                "class": "ecs.engr302.team14.gothim.entities.NPC",
-                "fields": {
-                    "name": "newspaper",
-                    "pos": {
-                        "class": "ecs.engr302.team14.gothim.util.Point",
-                        "fields": {
-                            "x": 4,
-                            "y": -2
-                        }
-                    },
-                    "dialogue": {
-                        "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
-                        "fields": {
-                            "text": "The Robbersons lost the wheat deal",
-                            "clueID": "newspaper",
-                            "options": []
-                        }
-                    }
+                    ]
                 }
             }
-        ],
-        "players": [],
-        "spawnPoint": {
-            "class": "ecs.engr302.team14.gothim.util.Point",
-            "fields": {
-                "x": 30,
-                "y": -10
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "thiefton",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                    "x": -5,
+                    "y": 30
+                }
+            },
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                "fields": {
+                    "text": "tp dialogue root",
+                    "options": [
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                            "fields": {
+                                "text": "Hi im Joe Thiefton",
+                                "result": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                    "fields": {
+                                        "text": "",
+                                        "clueID": "",
+                                        "options": []
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "robberson",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                    "x": 60,
+                    "y": 30
+                }
+            },
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                "fields": {
+                    "text": "tp dialogue root",
+                    "options": [
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                            "fields": {
+                                "text": "Hi I'm Ben Robberson",
+                                "result": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                    "fields": {
+                                        "text": "",
+                                        "clueID": "",
+                                        "options": []
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "crook",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                    "x": -5,
+                    "y": -70
+                }
+            },
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                "fields": {
+                    "text": "tp dialogue root",
+                    "options": [
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                            "fields": {
+                                "text": "Hi I'm Sally Crook",
+                                "result": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                    "fields": {
+                                        "text": "",
+                                        "clueID": "",
+                                        "options": []
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "stealalot",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                    "x": -60,
+                    "y": -70
+                }
+            },
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                "fields": {
+                    "text": "tp dialogue root",
+                    "options": [
+                        {
+                            "class": "ecs.engr302.team14.gothim.logic.dialogue.GenericDialogueOption",
+                            "fields": {
+                                "text": "Hi I'm Jerry Stealalot",
+                                "result": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                    "fields": {
+                                        "text": "",
+                                        "clueID": "",
+                                        "options": []
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    {
+        "class": "ecs.engr302.team14.gothim.entities.NPC",
+        "fields": {
+            "name": "newspaper",
+            "pos": {
+                "class": "ecs.engr302.team14.gothim.util.Point",
+                "fields": {
+                    "x": 4,
+                    "y": -2
+                }
+            },
+            "dialogue": {
+                "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                "fields": {
+                    "text": "The Robbersons lost the wheat deal",
+                    "clueID": "newspaper",
+                    "options": []
+                }
             }
         }
     }
+],
+"players": [],
+"spawnPoint": {
+    "class": "ecs.engr302.team14.gothim.util.Point",
+    "fields": {
+        "x": 30,
+        "y": -10
+    }
+}
+}
 }

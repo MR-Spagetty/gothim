@@ -139,7 +139,7 @@
                             }
                         }
                     },
-                     {
+                    {
                         "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
                         "fields": {
                             "topLeft": {
@@ -196,6 +196,21 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
+                                 "destination": {
+                                    "pos": {
+                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                        "fields": {
+                                            "x": -8,
+                                            "y": -26
+                                        }
+                                    }
+                                },
+                                "cond": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
+                                    "fields": {
+                                        "clueID": "RobbersonsCostume"
+                                    }
+                                },
                                 "entries": {
                                     "style": "teleportIn"
                                 }
@@ -280,7 +295,7 @@
                         }
                     },
                     {
-                       "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
                         "fields": {
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
@@ -306,7 +321,8 @@
                                 }
                             }
                         }
-                    },{
+                    },
+                    {
                         "class": "ecs.engr302.team14.gothim.map.shapes.Single",
                         "fields": {
                             "type": "teleport",
@@ -335,6 +351,21 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
+                                "destination": {
+                                    "pos": {
+                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                        "fields": {
+                                            "x": 58,
+                                            "y": 26
+                                        }
+                                    }
+                                },
+                                "cond": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
+                                    "fields": {
+                                        "clueID": "crookCostume"
+                                    }
+                                },
                                 "entries": {
                                     "style": "teleportIn"
                                 }
@@ -418,8 +449,8 @@
                             }
                         }
                     },
-                     {
-                       "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
                         "fields": {
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
@@ -475,6 +506,21 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
+                                "destination": {
+                                    "pos": {
+                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                        "fields": {
+                                            "x": -8,
+                                            "y": 46
+                                        }
+                                    }
+                                },
+                                "cond": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
+                                    "fields": {
+                                        "clueID": "stealalotCostume"
+                                    }
+                                },
                                 "entries": {
                                     "style": "teleportIn"
                                 }
@@ -558,8 +604,8 @@
                             }
                         }
                     },
-                     {
-                       "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
+                    {
+                        "class": "ecs.engr302.team14.gothim.map.shapes.FilledRect",
                         "fields": {
                             "topLeft": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
@@ -615,6 +661,21 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
+                                "destination": {
+                                    "pos": {
+                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                        "fields": {
+                                            "x": 58,
+                                            "y": -66
+                                        }
+                                    }
+                                },
+                                "cond": {
+                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
+                                    "fields": {
+                                        "clueID": "thieftonCostume"
+                                    }
+                                },
                                 "entries": {
                                     "style": "teleportIn"
                                 }
@@ -844,7 +905,7 @@
                                     "fields": {
                                         "text": "Hi im Joe Thiefton",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",
@@ -858,7 +919,7 @@
                     }
                 }
             },
-             {
+            {
                 "class": "ecs.engr302.team14.gothim.entities.NPC",
                 "fields": {
                     "name": "robberson",
@@ -879,7 +940,7 @@
                                     "fields": {
                                         "text": "Hi I'm Ben Robberson",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",
@@ -914,7 +975,7 @@
                                     "fields": {
                                         "text": "Hi I'm Sally Crook",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",
@@ -928,7 +989,7 @@
                     }
                 }
             },
-             {
+            {
                 "class": "ecs.engr302.team14.gothim.entities.NPC",
                 "fields": {
                     "name": "stealalot",
@@ -949,7 +1010,7 @@
                                     "fields": {
                                         "text": "Hi I'm Jerry Stealalot",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",

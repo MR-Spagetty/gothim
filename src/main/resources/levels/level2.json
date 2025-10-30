@@ -213,11 +213,11 @@
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.SeenAs",
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.SeenAs",
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
                                                 "name": "Robbersons"
                                             }
                                         }
@@ -377,11 +377,11 @@
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.SeenAs",
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.SeenAs",
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
                                                 "name": "Theiftons"
                                             }
                                         }
@@ -541,11 +541,11 @@
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
-                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.SeenAs",
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.SeenAs",
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
                                                 "name": "Stealalots"
                                             }
                                         }
@@ -709,7 +709,7 @@
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequistes.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
                                                 "name": "Crooks"
                                             }
                                         }

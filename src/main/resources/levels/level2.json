@@ -176,7 +176,16 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "extDoor"
+                                    "style": "extDoor",
+                                    "destination": {
+                                        "pos": {
+                                            "class": "ecs.engr302.team14.gothim.util.Point",
+                                            "fields": {
+                                                "x": -8,
+                                                "y": 26
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "pos": {
@@ -196,30 +205,26 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
-                                 "destination": {
-                                    "pos": {
-                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                "entries": {
+                                    "style": "teleportIn",
+                                    "cond": {
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
                                         "fields": {
-                                            "x": -8,
-                                            "y": -26
+                                            "identity": {
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
+                                                "fields": {
+                                                    "Family": "ROBBERSONS"
+                                                }
+                                            }
                                         }
                                     }
-                                },
-                                "cond": {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
-                                    "fields": {
-                                        "clueID": "robbersonCostume"
-                                    }
-                                },
-                                "entries": {
-                                    "style": "teleportIn"
                                 }
                             },
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
                                     "x": -8,
-                                    "y": -24
+                                    "y": 26
                                 }
                             }
                         }
@@ -331,7 +336,16 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "extDoor"
+                                    "style": "extDoor",
+                                    "destination": {
+                                        "pos": {
+                                            "class": "ecs.engr302.team14.gothim.util.Point",
+                                            "fields": {
+                                                "x": 58,
+                                                "y": 26
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "pos": {
@@ -351,30 +365,26 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
-                                "destination": {
-                                    "pos": {
-                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                "entries": {
+                                    "style": "teleportIn",
+                                    "cond": {
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
                                         "fields": {
-                                            "x": 58,
-                                            "y": 26
+                                            "identity": {
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
+                                                "fields": {
+                                                    "Family": "THIEFTONS"
+                                                }
+                                            }
                                         }
                                     }
-                                },
-                                "cond": {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
-                                    "fields": {
-                                        "clueID": "crookCostume"
-                                    }
-                                },
-                                "entries": {
-                                    "style": "teleportIn"
                                 }
                             },
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
                                     "x": 58,
-                                    "y": 24
+                                    "y": 26
                                 }
                             }
                         }
@@ -486,7 +496,16 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "extDoor"
+                                    "style": "extDoor",
+                                    "destination": {
+                                        "pos": {
+                                            "class": "ecs.engr302.team14.gothim.util.Point",
+                                            "fields": {
+                                                "x": -8,
+                                                "y": -46
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "pos": {
@@ -506,30 +525,26 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
-                                "destination": {
-                                    "pos": {
-                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                "entries": {
+                                    "style": "teleportIn",
+                                    "cond": {
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
                                         "fields": {
-                                            "x": -8,
-                                            "y": 46
+                                            "identity": {
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
+                                                "fields": {
+                                                    "Family": "STEALALOTS"
+                                                }
+                                            }
                                         }
                                     }
-                                },
-                                "cond": {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
-                                    "fields": {
-                                        "clueID": "stealalotCostume"
-                                    }
-                                },
-                                "entries": {
-                                    "style": "teleportIn"
                                 }
                             },
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
                                     "x": -8,
-                                    "y": -44
+                                    "y": -46
                                 }
                             }
                         }
@@ -641,7 +656,16 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "extDoor"
+                                    "style": "extDoor",
+                                    "destination": {
+                                        "pos": {
+                                            "class": "ecs.engr302.team14.gothim.util.Point",
+                                            "fields": {
+                                                "x": 58,
+                                                "y": -66
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             "pos": {
@@ -661,30 +685,26 @@
                                 "kind": "map",
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
-                                "destination": {
-                                    "pos": {
-                                        "class": "ecs.engr302.team14.gothim.util.Point",
+                                "entries": {
+                                    "style": "teleportIn",
+                                    "cond": {
+                                        "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.SeenAs",
                                         "fields": {
-                                            "x": 58,
-                                            "y": -66
+                                            "identity": {
+                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.Family",
+                                                "fields": {
+                                                    "Family": "CROOKS"
+                                                }
+                                            }
                                         }
                                     }
-                                },
-                                "cond": {
-                                    "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
-                                    "fields": {
-                                        "clueID": "thieftonCostume"
-                                    }
-                                },
-                                "entries": {
-                                    "style": "teleportIn"
                                 }
                             },
                             "pos": {
                                 "class": "ecs.engr302.team14.gothim.util.Point",
                                 "fields": {
                                     "x": 58,
-                                    "y": -64
+                                    "y": -66
                                 }
                             }
                         }

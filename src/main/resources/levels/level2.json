@@ -208,7 +208,7 @@
                                 "cond": {
                                     "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequiste.ClueFound",
                                     "fields": {
-                                        "clueID": "RobbersonsCostume"
+                                        "clueID": "robbersonCostume"
                                     }
                                 },
                                 "entries": {

@@ -10,6 +10,8 @@ public class LevelManager {
 
     static LevelHolder currentLevelData;
 
+    private static LevelEnum currLevel = null;
+
     /**
      * Load and set the current level.
      *
@@ -19,6 +21,7 @@ public class LevelManager {
         if (level == null) {
             throw new IllegalArgumentException("Level cannot be null");
         }
+        currLevel = level;
 
         try {
             System.out.println("Loading level: " + level.name());
@@ -27,6 +30,10 @@ public class LevelManager {
         } catch (Exception e) {
             throw new IllegalArgumentException("Failed to load the level: " + level, e);
         }
+    }
+
+    public static LevelEnum currLevel() {
+        return currLevel;
     }
 
     /**

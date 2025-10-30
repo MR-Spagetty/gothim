@@ -74,6 +74,9 @@ public class Main {
         Timer gameLoop = new Timer(200, _ -> {
             if (currentState == GameState.Playing) {
                 rendererPanel.repaint();
+                if (LevelManager.getLevelData().clues().allCluesFound()) {
+                    LevelManager.setLevel(LevelManager.currLevel().nextLevel());
+                }
             }
         });
         gameLoop.start();

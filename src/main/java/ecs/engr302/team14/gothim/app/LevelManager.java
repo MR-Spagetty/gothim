@@ -19,17 +19,20 @@ public class LevelManager {
      */
     public static void setLevel(LevelEnum level) {
         if (level == null) {
-            throw new IllegalArgumentException("Level cannot be null");
+            System.out.println("No level provided");
+            return;
         }
-        currLevel = level;
 
         try {
             System.out.println("Loading level: " + level.name());
             currentLevelData = Serialization.loadLevel(level.filename());
             currentLevelData.getPlayer(0);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Failed to load the level: " + level, e);
+            System.err.println("Failed to load the level: " + level);
+            e.printStackTrace();
+            return;
         }
+        currLevel = level;
     }
 
     public static LevelEnum currLevel() {

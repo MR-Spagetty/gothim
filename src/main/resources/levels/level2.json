@@ -141,7 +141,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "houseExt"
+                                    "style": "townhouse"
                                 }
                             }
                         }
@@ -183,7 +183,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "extDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -242,7 +242,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "intDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -305,7 +305,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "houseExt"
+                                    "style": "townhouse"
                                 }
                             }
                         }
@@ -347,7 +347,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "extDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -406,7 +406,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "intDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -469,7 +469,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "houseExt"
+                                    "style": "townhouse"
                                 }
                             }
                         }
@@ -511,7 +511,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "extDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -570,7 +570,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "intDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -633,7 +633,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "String",
                                 "entries": {
-                                    "style": "houseExt"
+                                    "style": "townhouse"
                                 }
                             }
                         }
@@ -675,7 +675,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "extDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -734,7 +734,7 @@
                                 "class": "java.util.HashMap",
                                 "valueType": "Object",
                                 "entries": {
-                                    "style": "intDoor",
+                                    "style": "door",
                                     "destination": {
                                         "class": "ecs.engr302.team14.gothim.util.Point",
                                         "fields": {
@@ -948,7 +948,7 @@
                                     "fields": {
                                         "text": "Hi im Joe Thiefton",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",
@@ -983,7 +983,7 @@
                                     "fields": {
                                         "text": "Hi I'm Ben Robberson",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",
@@ -1018,7 +1018,7 @@
                                     "fields": {
                                         "text": "Hi I'm Sally Crook",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",
@@ -1039,7 +1039,7 @@
                     "pos": {
                         "class": "ecs.engr302.team14.gothim.util.Point",
                         "fields": {
-                            "x": -60,
+                            "x": 60,
                             "y": -70
                         }
                     },
@@ -1053,7 +1053,7 @@
                                     "fields": {
                                         "text": "Hi I'm Jerry Stealalot",
                                         "result": {
-                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.Dialogue",
+                                            "class": "ecs.engr302.team14.gothim.logic.dialogue.DialogueClue",
                                             "fields": {
                                                 "text": "",
                                                 "clueID": "",

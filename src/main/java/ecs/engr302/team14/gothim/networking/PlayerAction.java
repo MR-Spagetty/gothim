@@ -16,14 +16,7 @@ public enum PlayerAction {
     @SerializedConstant MoveDown(Direction.Down),
     @SerializedConstant MoveLeft(Direction.Left),
     @SerializedConstant MoveRight(Direction.Right),
-    @SerializedConstant InteractN(Direction.Up),
-    @SerializedConstant InteractNE(Direction.UpRight),
-    @SerializedConstant InteractE(Direction.Right),
-    @SerializedConstant InteractSE(Direction.DownRight),
-    @SerializedConstant InteractS(Direction.Down),
-    @SerializedConstant InteractSW(Direction.DownLeft),
-    @SerializedConstant InteractW(Direction.Left),
-    @SerializedConstant InteractNW(Direction.UpLeft);
+    @SerializedConstant Interact(Direction.None);
 
     public final Direction dir;
 

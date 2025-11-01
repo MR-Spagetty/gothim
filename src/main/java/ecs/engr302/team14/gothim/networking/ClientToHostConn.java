@@ -5,9 +5,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.stream.IntStream;
 
+import javax.swing.SwingUtilities;
+
+import ecs.engr302.team14.gothim.app.ActionHandler;
 import ecs.engr302.team14.gothim.app.LevelManager;
+import ecs.engr302.team14.gothim.app.Main;
 import ecs.engr302.team14.gothim.entities.Disguise;
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.renderer.Renderer;
+import ecs.engr302.team14.gothim.util.Direction;
 
 /**
  * Basic implementation of a connection for client to host communication.
@@ -53,6 +59,11 @@ public class ClientToHostConn extends Connection {
         while (hasPacket()) {
             Packet packet = nextPacket();
             switch (packet) {
+                case Packet.Request req -> {
+                    if (ActionHandler.currMove != Direction.None) {
+                        sendPacket(new Packet.Action(Main.playerID, PlayerAction.values()[ActionHandler.currMove.ordinal()]));
+                    }
+                }
                 case Packet.Update up -> {
                     var data = up.update();
                     if (!data.levelID().equals(LevelManager.getLevelData().levelID())) {
@@ -83,6 +94,7 @@ public class ClientToHostConn extends Connection {
                         }
                     });
                     data.foundClues().forEach(LevelManager.getLevelData().clues()::findClue);
+                    SwingUtilities.invokeLater(Renderer.getInstance()::repaint);
                 }
                 default -> {System.out.println("Ignored Packet: "+ packet);}
             }

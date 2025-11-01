@@ -46,7 +46,7 @@ public class Main {
     public static int playerID = 0;
     private Set<Integer> pressedKeys = new HashSet<>();
 
-    private static Connection conn = null;
+    public static Connection conn = null;
 
     private Main() {
         currentState = GameState.Menu;

@@ -1,5 +1,8 @@
 package ecs.engr302.team14.gothim.entities;
 
+import ecs.engr302.team14.gothim.app.Main;
+import ecs.engr302.team14.gothim.networking.Packet;
+import ecs.engr302.team14.gothim.networking.PlayerAction;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializationExtends;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
@@ -14,7 +17,7 @@ import ecs.engr302.team14.gothim.util.Point;
 public class Item extends InteractableEntity {
 
     @SerializedField
-    private boolean collected;
+    protected boolean collected;
     @SerializedField
     private String description;
 
@@ -43,6 +46,9 @@ public class Item extends InteractableEntity {
     public void interact(Player p) {
         if (!collected) {
             collected = true;
+        }
+        if (Main.playerID != 0 && Main.conn != null) {
+            Main.conn.sendPacket(new Packet.Action(Main.playerID, PlayerAction.Interact));
         }
     }
 

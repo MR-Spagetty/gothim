@@ -9,7 +9,7 @@ import ecs.engr302.team14.gothim.util.Direction;
 public class ActionHandler {
     public ActionHandler() {}
 
-    static Direction currMove = Direction.None;
+    public static Direction currMove = Direction.None;
 
     /**
      * handles moving the player in the given direction.

@@ -84,6 +84,7 @@ public class Main {
             try {
                 conn = new HostToClientConn(new ServerSocket(PORT).accept());
                 conn.start();
+                LevelManager.getLevelData().getPlayer(1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -132,6 +133,9 @@ public class Main {
         }
         if (LevelManager.getLevelData().clues().allCluesFound()) {
             LevelManager.setLevel(LevelManager.currLevel().nextLevel());
+            if (conn != null) {
+                LevelManager.getLevelData().getPlayer(1);
+            }
         }
         if (conn != null && playerID == 0) {
             conn.sendPacket(new Packet.Update(playerID, new UpdateData(data.levelID(),

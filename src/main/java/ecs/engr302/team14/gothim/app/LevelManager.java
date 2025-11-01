@@ -23,6 +23,10 @@ public class LevelManager {
             return;
         }
 
+        if (level.filename() == null) {
+            System.out.println("no level resource specified for: " + level.name());
+        }
+
         try {
             System.out.println("Loading level: " + level.name());
             currentLevelData = Serialization.loadLevel(level.filename());

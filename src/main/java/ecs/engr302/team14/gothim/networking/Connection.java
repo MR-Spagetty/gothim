@@ -63,7 +63,7 @@ public abstract class Connection extends Thread implements Closeable {
         packetQueue.offer(p);
     }
 
-    private void recvPackets() {
+    protected void recvPackets() {
         String working = "";
         while (in.hasNext()) {
             working += in.next();

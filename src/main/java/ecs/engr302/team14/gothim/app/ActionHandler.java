@@ -9,14 +9,13 @@ import ecs.engr302.team14.gothim.util.Direction;
 public class ActionHandler {
     public ActionHandler() {}
 
+    static Direction currMove = Direction.None;
+
     /**
      * handles moving the player in the given direction.
      */
     public static void handleMove(Direction direction) {
-        LevelManager.getLevelData().movePlayer(Main.playerID, direction);
-        if (Main.rendererPanel != null) {
-            Main.rendererPanel.revalidate();
-        }
+        currMove = direction;
     }
 
     public static void handleInteract() {

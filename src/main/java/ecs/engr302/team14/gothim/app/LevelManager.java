@@ -12,6 +12,16 @@ public class LevelManager {
 
     private static LevelEnum currLevel = null;
 
+    public static void setLevel(String levelID) {
+        setLevel(
+                switch (levelID) {
+                    case "level1" -> LevelEnum.ONE;
+                    case "level2" -> LevelEnum.TWO;
+                    case "level3" -> LevelEnum.THREE;
+                    default -> null;
+            });
+    }
+
     /**
      * Load and set the current level.
      *

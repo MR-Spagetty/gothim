@@ -105,6 +105,9 @@ public record LevelHolder(@SerializedField String levelID,
             return false;
         }
         newLoc.enter(toMove);
+        if (toMove instanceof Player p) {
+            p.updateDisguise();
+        }
         return true;
     }
 

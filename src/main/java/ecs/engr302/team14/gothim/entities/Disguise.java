@@ -44,5 +44,6 @@ public class Disguise extends Item {
             posTile.setOccupant(d);
         }, () -> posTile.setOccupant(null));
         p.disguise = this;
+        this.position = p.position;
     }
 }

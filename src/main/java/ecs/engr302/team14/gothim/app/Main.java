@@ -1,16 +1,25 @@
 package ecs.engr302.team14.gothim.app;
 
 import ecs.engr302.team14.gothim.entities.Player;
+import ecs.engr302.team14.gothim.logic.LevelHolder;
 import ecs.engr302.team14.gothim.logic.dialogue.Dialogue;
 import ecs.engr302.team14.gothim.logic.dialogue.DialogueOption;
+import ecs.engr302.team14.gothim.networking.Connection;
+import ecs.engr302.team14.gothim.networking.HostToClientConn;
+import ecs.engr302.team14.gothim.networking.Packet;
+import ecs.engr302.team14.gothim.networking.UpdateData;
 import ecs.engr302.team14.gothim.renderer.Renderer;
+import ecs.engr302.team14.gothim.util.Direction;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -23,12 +32,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-
-
 /**
  * Class for initialising the game and running it.
  */
 public class Main {
+    private static final int PORT = 9999;
+    static boolean mp = false;
     private static Main instance;
     public static JFrame frame;
     public static JPanel rendererPanel;
@@ -36,6 +45,8 @@ public class Main {
     public static GameState currentState;
     public static int playerID = 0;
     private Set<Integer> pressedKeys = new HashSet<>();
+
+    private static Connection conn = null;
 
     private Main() {
         currentState = GameState.Menu;
@@ -45,7 +56,7 @@ public class Main {
         buttonPanel = new JPanel();
         new ButtonManager();
 
-        //Set frame size
+        // Set frame size
         frame.setSize(900, 900);
         buttonPanel.setPreferredSize(new Dimension(174, 800));
 
@@ -57,29 +68,77 @@ public class Main {
         // temp so <Developer 1> can change to her keybinds later
         setupKeyListeners();
 
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         updateGUI();
         frame.setVisible(true);
 
         rendererPanel.repaint();
-        //Another change (just for reference)
+        // Another change (just for reference)
         startGameLoop();
     }
 
-    //Added game loop for things happening
+    // Added game loop for things happening
     private void startGameLoop() {
+        if (mp) {
+            try {
+                conn = new HostToClientConn(new ServerSocket(PORT).accept());
+                conn.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         // Simple game loop using Swing Timer
-        Timer gameLoop = new Timer(200, _ -> {
-            if (currentState == GameState.Playing) {
-                rendererPanel.repaint();
-                if (LevelManager.getLevelData().clues().allCluesFound()) {
-                    LevelManager.setLevel(LevelManager.currLevel().nextLevel());
+        Timer gameLoop = new Timer(200, this::tick);
+        gameLoop.start();
+    }
+
+    private void tick(ActionEvent e) {
+        if (currentState != GameState.Playing) {
+            return;
+        }
+        LevelHolder data = LevelManager.getLevelData();
+        LevelManager.getLevelData().movePlayer(playerID, ActionHandler.currMove);
+        ActionHandler.currMove = Direction.None;
+        if (conn != null && playerID == 0) {
+            conn.sendPacket(new Packet.Request(0, "tick"));
+            while (!conn.hasPacket()) {
+            }
+            while (conn.hasPacket()) {
+                Packet curr = conn.nextPacket();
+                switch (curr) {
+                    case Packet.Request r -> {
+                        System.out.println("Received request: " + r.request() + " from player "
+                                + r.playerId());
+                    }
+                    case Packet.Action a -> {
+                        Direction dir = a.act().dir;
+                        if (a.act().name().startsWith("Move")) {
+                            LevelManager.getLevelData().movePlayer(a.playerId(), dir);
+                        } else {
+                            LevelManager.getLevelData().getPlayer(a.playerId()).interact();
+                        }
+                    }
+                    case Packet.Sync s -> {
+                        System.out.println("Received sync request from player " + s.playerId());
+                        conn.sendPacket(new Packet.Sync.Reply(0, new UpdateData(data.levelID(),
+                                data.players(), data.entities(), data.clues().getFoundClueIds())));
+                    }
+                    default -> {
+                        System.out.println("Received unknown packet type");
+                    }
                 }
             }
-        });
-        gameLoop.start();
+        }
+        if (LevelManager.getLevelData().clues().allCluesFound()) {
+            LevelManager.setLevel(LevelManager.currLevel().nextLevel());
+        }
+        if (conn != null && playerID == 0) {
+            conn.sendPacket(new Packet.Update(playerID, new UpdateData(data.levelID(),
+                    data.players(), data.entities(), data.clues().getFoundClueIds())));
+        }
+        rendererPanel.repaint();
+
     }
 
     /**
@@ -178,8 +237,7 @@ public class Main {
             int chosen = JOptionPane.showOptionDialog(frame, curr.get().say(), sourceName,
                     JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null,
                     curr.get().getOptions(p).stream().map(DialogueOption::text).toArray(),
-                    DialogueOption.GoodBye.text()
-            );
+                    DialogueOption.GoodBye.text());
             if (chosen == JOptionPane.CLOSED_OPTION) {
                 return;
             }

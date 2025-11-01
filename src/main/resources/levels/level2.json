@@ -97,7 +97,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "door",
                                     "destination": {
@@ -181,7 +181,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "extDoor",
                                     "destination": {
@@ -209,7 +209,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
@@ -217,7 +217,7 @@
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.Family",
                                                 "name": "Robbersons"
                                             }
                                         }
@@ -240,7 +240,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "intDoor",
                                     "destination": {
@@ -345,7 +345,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "extDoor",
                                     "destination": {
@@ -373,7 +373,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
@@ -381,7 +381,7 @@
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.Family",
                                                 "name": "Theiftons"
                                             }
                                         }
@@ -404,7 +404,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "intDoor",
                                     "destination": {
@@ -415,13 +415,13 @@
                                         }
                                     }
                                 }
-                            }
-                        },
-                        "pos": {
-                            "class": "ecs.engr302.team14.gothim.util.Point",
-                            "fields": {
-                                "x": 58,
-                                "y": 25
+                            },
+                            "pos": {
+                                "class": "ecs.engr302.team14.gothim.util.Point",
+                                "fields": {
+                                    "x": 58,
+                                    "y": 25
+                                }
                             }
                         }
                     },
@@ -509,7 +509,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "extDoor",
                                     "destination": {
@@ -537,7 +537,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
@@ -545,20 +545,20 @@
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.Family",
                                                 "name": "Stealalots"
                                             }
                                         }
                                     }
                                 }
-                            }
-                        },
+                            },
                         "pos": {
                             "class": "ecs.engr302.team14.gothim.util.Point",
                             "fields": {
                                 "x": -8,
                                 "y": -46
                             }
+                        }
                         }
                     },
                     {
@@ -568,7 +568,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "intDoor",
                                     "destination": {
@@ -673,7 +673,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "extDoor",
                                     "destination": {
@@ -701,7 +701,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "teleportIn",
                                     "cond": {
@@ -709,7 +709,7 @@
                                         "fields": {
                                             "identity": {
                                                 "kind": "constant",
-                                                "class": "ecs.engr302.team14.gothim.logic.dialogue.prerequisites.Family",
+                                                "class": "ecs.engr302.team14.gothim.logic.Family",
                                                 "name": "Crooks"
                                             }
                                         }
@@ -732,7 +732,7 @@
                             "properties": {
                                 "kind": "map",
                                 "class": "java.util.HashMap",
-                                "valueType": "String",
+                                "valueType": "Object",
                                 "entries": {
                                     "style": "intDoor",
                                     "destination": {

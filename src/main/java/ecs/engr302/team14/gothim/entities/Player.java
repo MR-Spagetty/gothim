@@ -65,4 +65,17 @@ public class Player extends Entity {
         ies.get(0).interact(this);
     }
 
+    public Disguise getDisguise() {
+        return this.disguise;
+    }
+
+    /**
+     * Update the position of the disguise to match the player's position.
+     */
+    public void updateDisguise() {
+        if (this.disguise != null) {
+            this.disguise.position = this.position;
+        }
+    }
+
 }

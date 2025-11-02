@@ -38,11 +38,14 @@ public class Disguise extends Item {
         if (this.isCollected()) {
             return;
         }
+        super.interact(p);
         PrimitiveTile posTile = LevelManager.getLevelData().map().getTile(this.position);
         Optional.ofNullable(p.disguise).ifPresentOrElse(d -> {
             d.position = this.position;
+            d.collected = false;
             posTile.setOccupant(d);
         }, () -> posTile.setOccupant(null));
         p.disguise = this;
+        this.position = p.position;
     }
 }

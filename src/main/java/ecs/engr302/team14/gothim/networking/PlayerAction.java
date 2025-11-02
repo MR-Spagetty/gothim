@@ -3,6 +3,7 @@ package ecs.engr302.team14.gothim.networking;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.HasSerializedConstants;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedConstant;
+import ecs.engr302.team14.gothim.util.Direction;
 
 /**
  * Enum of all grid based Player actions for use in Action packets.
@@ -11,16 +12,15 @@ import ecs.engr302.team14.gothim.persistancy.annotations.SerializedConstant;
  */
 @HasSerializedConstants
 public enum PlayerAction {
-    @SerializedConstant MoveUp,
-    @SerializedConstant MoveDown,
-    @SerializedConstant MoveLeft,
-    @SerializedConstant MoveRight,
-    @SerializedConstant InteractN,
-    @SerializedConstant InteractNE,
-    @SerializedConstant InteractE,
-    @SerializedConstant InteractSE,
-    @SerializedConstant InteractS,
-    @SerializedConstant InteractSW,
-    @SerializedConstant InteractW,
-    @SerializedConstant InteractNW
+    @SerializedConstant MoveUp(Direction.Up),
+    @SerializedConstant MoveDown(Direction.Down),
+    @SerializedConstant MoveLeft(Direction.Left),
+    @SerializedConstant MoveRight(Direction.Right),
+    @SerializedConstant Interact(Direction.None);
+
+    public final Direction dir;
+
+    PlayerAction(Direction dir) {
+        this.dir = dir;
+    }
 }

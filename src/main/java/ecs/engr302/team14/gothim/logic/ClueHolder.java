@@ -280,4 +280,8 @@ public class ClueHolder {
         return totalStatic() - foundStatic();
     }
 
+    public Set<String> getFoundClueIds() {
+        return Collections.unmodifiableSet(foundClues);
+    }
+
 }

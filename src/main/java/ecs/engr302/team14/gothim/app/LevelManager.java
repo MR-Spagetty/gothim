@@ -10,6 +10,18 @@ public class LevelManager {
 
     static LevelHolder currentLevelData;
 
+    private static LevelEnum currLevel = null;
+
+    public static void setLevel(String levelID) {
+        setLevel(
+                switch (levelID) {
+                    case "level1" -> LevelEnum.ONE;
+                    case "level2" -> LevelEnum.TWO;
+                    case "level3" -> LevelEnum.THREE;
+                    default -> null;
+            });
+    }
+
     /**
      * Load and set the current level.
      *
@@ -17,7 +29,12 @@ public class LevelManager {
      */
     public static void setLevel(LevelEnum level) {
         if (level == null) {
-            throw new IllegalArgumentException("Level cannot be null");
+            System.out.println("No level provided");
+            return;
+        }
+
+        if (level.filename() == null) {
+            System.out.println("no level resource specified for: " + level.name());
         }
 
         try {
@@ -25,8 +42,15 @@ public class LevelManager {
             currentLevelData = Serialization.loadLevel(level.filename());
             currentLevelData.getPlayer(0);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Failed to load the level: " + level, e);
+            System.err.println("Failed to load the level: " + level);
+            e.printStackTrace();
+            return;
         }
+        currLevel = level;
+    }
+
+    public static LevelEnum currLevel() {
+        return currLevel;
     }
 
     /**

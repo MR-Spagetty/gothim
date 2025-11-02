@@ -2,6 +2,7 @@ package ecs.engr302.team14.gothim.networking;
 
 import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
+import ecs.engr302.team14.gothim.util.Direction;
 
 /**
  * Interface to lump all packet types together.

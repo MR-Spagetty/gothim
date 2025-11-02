@@ -21,8 +21,6 @@ public record UpdateData(
         @SerializedField
         List<Entity> nonPlayersData,
         @SerializedField
-        Taskbook taskbookData,
-        @SerializedField
         Set<String> foundClues) {
 
     /**
@@ -36,7 +34,6 @@ public record UpdateData(
         "levelID",
         "playerData",
         "nonPlayersData",
-        "taskbookData",
         "found clues" })
     public UpdateData {}
 

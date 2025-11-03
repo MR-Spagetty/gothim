@@ -1,12 +1,13 @@
 package ecs.engr302.team14.gothim.entities;
 
+import java.util.List;
+import java.util.Optional;
+
 import ecs.engr302.team14.gothim.app.LevelManager;
 import ecs.engr302.team14.gothim.logic.DisguiseableAs;
 import ecs.engr302.team14.gothim.logic.Family;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import ecs.engr302.team14.gothim.util.Point;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Basic player class.
@@ -61,7 +62,7 @@ public class Player extends Entity {
         if (ies.size() != 1) {
             return;
         }
-        ies.getFirst().interact(this);
+        ies.get(0).interact(this);
     }
 
     public Disguise getDisguise() {

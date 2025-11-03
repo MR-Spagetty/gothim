@@ -183,7 +183,7 @@ public class Renderer extends JPanel {
             BufferedImage tileImg = sprites.get(type);
             g.drawImage(tileImg, tileX, tileY, TILE_SIZE, TILE_SIZE, this);
         } catch (UncheckedExecutionException | ExecutionException e) {
-            System.err.println("Could not find texture for tile: " + type);
+            System.err.println("Could not find texture for tile: " + type + " at : " + pos);
             drawUnknown(pos, g);
         }
     }

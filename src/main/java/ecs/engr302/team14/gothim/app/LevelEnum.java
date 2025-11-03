@@ -9,7 +9,7 @@ public enum LevelEnum {
         }
     },
     TWO {
-        public String filename() { return null; /*to be replaced*/ }
+        public String filename() { return "level2"; } //testing if level 2 plays
 
         public LevelEnum nextLevel() { return THREE; }
     },

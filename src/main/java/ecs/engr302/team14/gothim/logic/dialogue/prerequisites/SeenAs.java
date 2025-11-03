@@ -2,6 +2,7 @@ package ecs.engr302.team14.gothim.logic.dialogue.prerequisites;
 
 import ecs.engr302.team14.gothim.entities.Player;
 import ecs.engr302.team14.gothim.logic.DisguiseableAs;
+import ecs.engr302.team14.gothim.persistancy.annotations.DeserializationMethod;
 import ecs.engr302.team14.gothim.persistancy.annotations.SerializedField;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -19,6 +20,7 @@ public final class SeenAs implements DialoguePrerequisite {
      * @param identity the identity the player needs to be seen as
      * @return the dialogue prereq
      */
+    @DeserializationMethod(serialFieldNames = { "identity" })
     public static DialoguePrerequisite of(DisguiseableAs identity) {
         SeenAs key = new SeenAs(identity);
         try {

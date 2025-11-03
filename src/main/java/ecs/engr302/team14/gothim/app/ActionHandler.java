@@ -28,7 +28,7 @@ public class ActionHandler {
     public static void handleNewGame() {
         Main main = Main.getMainInstance();
         main.setGameState(GameState.Playing);
-        LevelManager.setLevel(LevelEnum.TWO);
+        LevelManager.setLevel(LevelEnum.ONE);
     }
 
     /**
